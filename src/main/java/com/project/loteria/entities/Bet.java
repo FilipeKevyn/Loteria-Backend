@@ -2,22 +2,23 @@ package com.project.loteria.entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_bets")
-public class Bet {
+public class Bet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String code;
     private String[] bet;
     @ManyToOne
     @JoinColumn(name = "contest_id")
     private Contest contest;
 
-    @OneToOne
+    @OneToOne(mappedBy = "bet", cascade = CascadeType.ALL)
     private Result result;
     private static final double valueInvested = 4.0;
 
@@ -63,6 +64,14 @@ public class Bet {
 
     public void setContest(Contest contest) {
         this.contest = contest;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
     }
 
     @Override

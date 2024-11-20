@@ -2,11 +2,12 @@ package com.project.loteria.entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_results")
-public class Result {
+public class Result implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +23,6 @@ public class Result {
         this.id = id;
         this.matched = matched;
     }
-
     public Long getId() {
         return id;
     }
@@ -37,6 +37,22 @@ public class Result {
 
     public void setMatched(int matched) {
         this.matched = matched;
+    }
+
+    public Contest getContest() {
+        return contest;
+    }
+
+    public void setContest(Contest contest) {
+        this.contest = contest;
+    }
+
+    public Bet getBet() {
+        return bet;
+    }
+
+    public void setBet(Bet bet) {
+        this.bet = bet;
     }
 
     @Override
