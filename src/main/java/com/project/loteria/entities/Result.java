@@ -3,14 +3,13 @@ package com.project.loteria.entities;
 import jakarta.persistence.*;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_results")
 public class Result {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private int matched;
     @ManyToOne
     @JoinColumn(name = "contest_id")
@@ -19,16 +18,16 @@ public class Result {
     private Bet bet;
     public Result(){}
 
-    public Result(UUID id, int matched) {
+    public Result(Long id, int matched) {
         this.id = id;
         this.matched = matched;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

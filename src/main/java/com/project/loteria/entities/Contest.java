@@ -8,8 +8,8 @@ import java.util.*;
 @Table(name = "tb_contest")
 public class Contest {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String[] drawnNumbers;
     private Date date;
     @OneToMany(mappedBy = "contest")
@@ -19,17 +19,17 @@ public class Contest {
 
     public Contest(){}
 
-    public Contest(UUID id, String[] drawnNumbers, Date date) {
+    public Contest(Long id, String[] drawnNumbers, Date date) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
         this.date = date;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

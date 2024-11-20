@@ -3,14 +3,13 @@ package com.project.loteria.entities;
 import jakarta.persistence.*;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_bets")
 public class Bet {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(unique = true, nullable = false)
     private String code;
     private String[] bet;
@@ -24,17 +23,17 @@ public class Bet {
 
     public Bet(){}
 
-    public Bet(UUID id, String code, String[] bet) {
+    public Bet(Long id, String code, String[] bet) {
         this.id = id;
         this.code = code;
         this.bet = bet;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
