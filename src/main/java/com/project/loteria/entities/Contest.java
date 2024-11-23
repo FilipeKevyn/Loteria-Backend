@@ -14,8 +14,6 @@ public class Contest implements Serializable {
     private String[] drawnNumbers;
     private Date date;
     @OneToMany(mappedBy = "contest")
-    private Set<Bet> bets = new HashSet<>();
-    @OneToMany(mappedBy = "contest")
     private Set<Result> results = new HashSet<>();
 
     public Contest(){}
@@ -53,10 +51,6 @@ public class Contest implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Set<Bet> getBets() {
-        return bets;
     }
 
     public Set<Result> getResults() {

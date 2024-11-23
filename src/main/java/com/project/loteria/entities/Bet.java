@@ -14,9 +14,6 @@ public class Bet implements Serializable {
     @Column(nullable = false)
     private String code;
     private String[] bet;
-    @ManyToOne
-    @JoinColumn(name = "contest_id")
-    private Contest contest;
 
     @OneToOne(mappedBy = "bet", cascade = CascadeType.ALL)
     private Result result;
@@ -56,14 +53,6 @@ public class Bet implements Serializable {
 
     public static double getValueInvested() {
         return valueInvested;
-    }
-
-    public Contest getContest() {
-        return contest;
-    }
-
-    public void setContest(Contest contest) {
-        this.contest = contest;
     }
 
     public Result getResult() {
