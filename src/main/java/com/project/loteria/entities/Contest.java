@@ -1,5 +1,6 @@
 package com.project.loteria.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -13,7 +14,9 @@ public class Contest implements Serializable {
     private Long id;
     private String[] drawnNumbers;
     private Date date;
-    @OneToMany(mappedBy = "contest")
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
     private Set<Result> results = new HashSet<>();
 
     public Contest(){}
