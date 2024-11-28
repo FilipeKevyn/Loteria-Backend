@@ -16,6 +16,7 @@ public class Result implements Serializable {
     @JoinColumn(name = "contest_id")
     private Contest contest;
     @OneToOne
+    @JoinColumn(name = "bet_id")
     private Bet bet;
     public Result(){}
 

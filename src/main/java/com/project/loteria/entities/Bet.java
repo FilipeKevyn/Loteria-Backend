@@ -1,5 +1,6 @@
 package com.project.loteria.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -14,7 +15,11 @@ public class Bet implements Serializable {
     @Column(nullable = false)
     private String code;
     private String[] bet;
+    @ManyToOne
+    @JoinColumn(name = "contest_id")
+    private Contest contest;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "bet", cascade = CascadeType.ALL)
     private Result result;
     private static final double valueInvested = 4.0;
@@ -53,6 +58,14 @@ public class Bet implements Serializable {
 
     public static double getValueInvested() {
         return valueInvested;
+    }
+
+    public Contest getContest() {
+        return contest;
+    }
+
+    public void setContest(Contest contest) {
+        this.contest = contest;
     }
 
     public Result getResult() {

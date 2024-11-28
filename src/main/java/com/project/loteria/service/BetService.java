@@ -14,16 +14,12 @@ public class BetService {
     @Autowired
     private BetRepository betRepository;
 
-    @Autowired
-    private ResultService result;
-
     public Bet findById(Long id){
         Optional<Bet> bet = betRepository.findById(id);
         return bet.orElseThrow(() -> new RuntimeException()); // criar excesão personalizada
     }
-    @Transactional
     public Bet insert(Bet obj){
-        obj.setResult(result.insertBet(obj));
+        System.out.println("       | INSERINDO BET |   betservice     ");
         return betRepository.save(obj);
     }
 }

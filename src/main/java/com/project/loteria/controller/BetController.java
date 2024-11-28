@@ -20,6 +20,7 @@ public class BetController {
 
     @PostMapping
     public ResponseEntity<Bet> insert(@RequestBody Bet obj){
+        System.out.println("       | INSERINDO BET | no controller        ");
         obj = betService.insert(obj);
         return ResponseEntity.ok().body(obj); // trocar para um Response created
     }
