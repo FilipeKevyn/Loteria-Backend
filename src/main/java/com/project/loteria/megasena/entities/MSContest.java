@@ -1,6 +1,7 @@
 package com.project.loteria.megasena.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.loteria.megasena.dtos.MSContestDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -25,6 +26,12 @@ public class MSContest implements Serializable {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
         this.date = date;
+    }
+
+    public MSContest(MSContestDTO msContestDTO){
+        this.id = msContestDTO.id();
+        this.drawnNumbers = msContestDTO.drawNumbers();
+        this.date = msContestDTO.date();
     }
 
     public void addResult(MSResult result){

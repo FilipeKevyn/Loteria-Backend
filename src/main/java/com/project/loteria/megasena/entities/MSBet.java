@@ -1,6 +1,7 @@
 package com.project.loteria.megasena.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.loteria.megasena.dtos.MSBetDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -30,6 +31,12 @@ public class MSBet implements Serializable {
         this.id = id;
         this.code = code;
         this.bet = bet;
+    }
+
+    public MSBet(MSBetDTO msBetDTO){
+        this.id = msBetDTO.id();
+        this.code = msBetDTO.code();
+        this.bet = msBetDTO.bet();
     }
 
     public Long getId() {
