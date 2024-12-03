@@ -1,4 +1,4 @@
-package com.project.loteria.entities;
+package com.project.loteria.megasena.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_bets")
-public class Bet implements Serializable {
+@Table(name = "tb_bets_megasena'")
+public class MSBet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,16 +17,16 @@ public class Bet implements Serializable {
     private String[] bet;
     @ManyToOne
     @JoinColumn(name = "contest_id")
-    private Contest contest;
+    private MSContest contest;
 
     @JsonIgnore
     @OneToOne(mappedBy = "bet", cascade = CascadeType.ALL)
-    private Result result;
+    private MSResult result;
     private static final double valueInvested = 4.0;
 
-    public Bet(){}
+    public MSBet(){}
 
-    public Bet(Long id, String code, String[] bet) {
+    public MSBet(Long id, String code, String[] bet) {
         this.id = id;
         this.code = code;
         this.bet = bet;
@@ -60,19 +60,19 @@ public class Bet implements Serializable {
         return valueInvested;
     }
 
-    public Contest getContest() {
+    public MSContest getContest() {
         return contest;
     }
 
-    public void setContest(Contest contest) {
+    public void setContest(MSContest contest) {
         this.contest = contest;
     }
 
-    public Result getResult() {
+    public MSResult getResult() {
         return result;
     }
 
-    public void setResult(Result result) {
+    public void setResult(MSResult result) {
         this.result = result;
     }
 
@@ -80,7 +80,7 @@ public class Bet implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Bet bet = (Bet) o;
+        MSBet bet = (MSBet) o;
         return Objects.equals(id, bet.id);
     }
 

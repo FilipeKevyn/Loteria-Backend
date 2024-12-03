@@ -1,4 +1,4 @@
-package com.project.loteria.entities;
+package com.project.loteria.megasena.entities;
 
 import jakarta.persistence.*;
 
@@ -6,21 +6,21 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_results")
-public class Result implements Serializable {
+@Table(name = "tb_results_megasena")
+public class MSResult implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int matched;
     @ManyToOne
     @JoinColumn(name = "contest_id")
-    private Contest contest;
+    private MSContest contest;
     @OneToOne
     @JoinColumn(name = "bet_id")
-    private Bet bet;
-    public Result(){}
+    private MSBet bet;
+    public MSResult(){}
 
-    public Result(Long id, int matched) {
+    public MSResult(Long id, int matched) {
         this.id = id;
         this.matched = matched;
     }
@@ -40,19 +40,19 @@ public class Result implements Serializable {
         this.matched = matched;
     }
 
-    public Contest getContest() {
+    public MSContest getContest() {
         return contest;
     }
 
-    public void setContest(Contest contest) {
+    public void setContest(MSContest contest) {
         this.contest = contest;
     }
 
-    public Bet getBet() {
+    public MSBet getBet() {
         return bet;
     }
 
-    public void setBet(Bet bet) {
+    public void setBet(MSBet bet) {
         this.bet = bet;
     }
 
@@ -60,7 +60,7 @@ public class Result implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Result results = (Result) o;
+        MSResult results = (MSResult) o;
         return Objects.equals(id, results.id);
     }
 

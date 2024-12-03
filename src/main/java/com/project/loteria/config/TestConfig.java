@@ -1,34 +1,30 @@
 package com.project.loteria.config;
 
-import com.project.loteria.entities.Bet;
-import com.project.loteria.entities.Contest;
-import com.project.loteria.repositories.BetRepository;
-import com.project.loteria.service.BetService;
-import com.project.loteria.service.ContestService;
-import com.project.loteria.service.ResultService;
+import com.project.loteria.megasena.entities.MSBet;
+import com.project.loteria.megasena.repositories.MSBetRepository;
+import com.project.loteria.megasena.service.MSContestService;
+import com.project.loteria.megasena.service.MSResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import java.util.Date;
-
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
     @Autowired
-    private BetRepository betRepository;
+    private MSBetRepository betRepository;
 
     @Autowired
-    private ContestService contestService;
+    private MSContestService contestService;
 
     @Autowired
-    private ResultService resultService;
+    private MSResultService resultService;
 
     @Override
     public void run(String... args) throws Exception {
         String[] jogo = new String[] {"1","2","4"};
-        Bet bet1 = new Bet(null, "312", jogo);
+        MSBet bet1 = new MSBet(null, "312", jogo);
 
         resultService.insertBet(betRepository.save(bet1));
 
