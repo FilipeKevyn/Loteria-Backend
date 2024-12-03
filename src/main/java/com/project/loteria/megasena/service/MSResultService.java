@@ -1,5 +1,6 @@
 package com.project.loteria.megasena.service;
 
+import com.project.loteria.interfaces.ResultService;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSContest;
 import com.project.loteria.megasena.entities.MSResult;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MSResultService {
+public class MSResultService implements ResultService<MSResult, MSBet, MSContest> {
     @Autowired
     private MSResultRepository resultRepository;
 

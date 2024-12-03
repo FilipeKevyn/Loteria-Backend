@@ -1,5 +1,6 @@
 package com.project.loteria.megasena.service;
 
+import com.project.loteria.interfaces.BetService;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.repositories.MSBetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class MSBetService{
+public class MSBetService implements BetService<MSBet> {
     @Autowired
     private MSBetRepository betRepository;
 
