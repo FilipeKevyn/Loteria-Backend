@@ -13,7 +13,7 @@ public class MSContest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String[] drawnNumbers;
+    private Integer[] drawnNumbers = new Integer[6];
     private Date date;
 
     @JsonIgnore
@@ -22,7 +22,7 @@ public class MSContest implements Serializable {
 
     public MSContest(){}
 
-    public MSContest(Long id, String[] drawnNumbers, Date date) {
+    public MSContest(Long id, Integer[] drawnNumbers, Date date) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
         this.date = date;
@@ -47,11 +47,11 @@ public class MSContest implements Serializable {
         this.id = id;
     }
 
-    public String[] getDrawnNumbers() {
+    public Integer[] getDrawnNumbers() {
         return drawnNumbers;
     }
 
-    public void setDrawnNumbers(String[] drawnNumbers) {
+    public void setDrawnNumbers(Integer[] drawnNumbers) {
         this.drawnNumbers = drawnNumbers;
     }
 
