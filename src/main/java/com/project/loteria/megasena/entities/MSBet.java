@@ -2,20 +2,25 @@ package com.project.loteria.megasena.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.megasena.dtos.MSBetDTO;
+import com.project.loteria.service.MathService;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_bets_megasena'")
+@Table(name = "tb_bets_megasena")
 public class MSBet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String code;
-    private String[] bet;
+
+    private int quantityNumbers;
+    private Integer[] bet = new Integer[quantityNumbers];
     @ManyToOne
     @JoinColumn(name = "contest_id")
     private MSContest contest;
@@ -23,20 +28,24 @@ public class MSBet implements Serializable {
     @JsonIgnore
     @OneToOne(mappedBy = "bet", cascade = CascadeType.ALL)
     private MSResult result;
-    private static final double valueInvested = 4.0;
+    private double valueInvested;
 
     public MSBet(){}
 
-    public MSBet(Long id, String code, String[] bet) {
+    public MSBet(Long id, String code, Integer[] bet, int quantityNumbers) {
         this.id = id;
         this.code = code;
         this.bet = bet;
+        this.quantityNumbers = quantityNumbers;
+        valueInvested = MathService.combination(quantityNumbers, 6) * 5;
     }
 
     public MSBet(MSBetDTO msBetDTO){
         this.id = msBetDTO.id();
         this.code = msBetDTO.code();
         this.bet = msBetDTO.bet();
+        this.quantityNumbers = msBetDTO.quantityNumbers();
+        valueInvested = MathService.combination(quantityNumbers, 6) * 5;
     }
 
     public Long getId() {
@@ -55,16 +64,12 @@ public class MSBet implements Serializable {
         this.code = code;
     }
 
-    public String[] getBet() {
+    public Integer[] getBet() {
         return bet;
     }
 
-    public void setBet(String[] bet) {
+    public void setBet(Integer[] bet) {
         this.bet = bet;
-    }
-
-    public static double getValueInvested() {
-        return valueInvested;
     }
 
     public MSContest getContest() {
@@ -81,6 +86,18 @@ public class MSBet implements Serializable {
 
     public void setResult(MSResult result) {
         this.result = result;
+    }
+
+    public int getQuantityNumbers() {
+        return quantityNumbers;
+    }
+
+    public void setQuantityNumbers(int quantityNumbers) {
+        this.quantityNumbers = quantityNumbers;
+    }
+
+    public double getValueInvested() {
+        return valueInvested;
     }
 
     @Override
