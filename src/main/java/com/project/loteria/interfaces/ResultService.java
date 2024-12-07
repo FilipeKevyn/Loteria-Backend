@@ -1,8 +1,9 @@
 package com.project.loteria.interfaces;
 
+import com.project.loteria.megasena.entities.MSResult;
+
 import java.util.List;
 
-public interface ResultService<T, B, C> {
-    T insertBet(B bet);
-    List<T> insertContest(C contest);
+public interface ResultService<T> {
+    T addResultToPool(Long id, T result);
 }
