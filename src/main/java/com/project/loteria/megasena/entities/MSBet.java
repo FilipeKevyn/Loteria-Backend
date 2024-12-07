@@ -18,17 +18,18 @@ public class MSBet implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String code;
-
+    private double valueInvested;
     private int quantityNumbers;
     private Integer[] bet = new Integer[quantityNumbers];
     @ManyToOne
     @JoinColumn(name = "contest_id")
     private MSContest contest;
-
     @JsonIgnore
     @OneToOne(mappedBy = "bet", cascade = CascadeType.ALL)
     private MSResult result;
-    private double valueInvested;
+    @ManyToOne
+    @JoinColumn(name = "pool_id")
+    private MSPool pool;
 
     public MSBet(){}
 
@@ -98,6 +99,14 @@ public class MSBet implements Serializable {
 
     public double getValueInvested() {
         return valueInvested;
+    }
+
+    public MSPool getPool() {
+        return pool;
+    }
+
+    public void setPool(MSPool pool) {
+        this.pool = pool;
     }
 
     @Override
