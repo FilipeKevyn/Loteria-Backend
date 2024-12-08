@@ -1,14 +1,13 @@
 package com.project.loteria.megasena.service;
 
 import com.project.loteria.megasena.entities.MSBet;
-import com.project.loteria.megasena.entities.MSContest;
 import com.project.loteria.megasena.entities.MSPool;
 import com.project.loteria.megasena.entities.MSResult;
 import com.project.loteria.megasena.repositories.MSPoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
+@Service
 public class MSPoolService {
     @Autowired
     private MSPoolRepository repository;
@@ -30,5 +29,10 @@ public class MSPoolService {
     public void addResultToPool(MSPool pool, MSResult result){
         pool.getResults().add(result);
         repository.save(pool);
+    }
+
+    public Double getValueTotal(Long id){
+        MSPool pool = findById(id);
+        return pool.getBets().stream().mapToDouble(MSBet::getValueInvested).sum();
     }
 }
