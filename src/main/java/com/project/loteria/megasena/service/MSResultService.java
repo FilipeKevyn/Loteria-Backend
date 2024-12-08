@@ -20,9 +20,9 @@ public class MSResultService implements ResultService<MSResult> {
         return resultRepository.save(new MSResult());
     }
 
-    public MSResult addResultToPool(Long puulId, MSResult result){
+    public MSResult addResultToPool(Long poolId, MSResult result){
         result = creat();
-        MSPool pool = poolService.findById(puulId);
+        MSPool pool = poolService.findById(poolId);
         poolService.addResultToPool(pool, result);
         return result;
     }
