@@ -40,7 +40,6 @@ public class MSResultServiceTest {
 
     @Test
     void testVerifyAllBets() {
-        // Configuração
         Long poolId = 1L;
         Integer[] drawNumbers = {1, 10, 16, 24, 33, 50};
         MSPool pool = mock(MSPool.class);
