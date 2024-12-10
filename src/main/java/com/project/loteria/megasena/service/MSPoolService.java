@@ -1,5 +1,6 @@
 package com.project.loteria.megasena.service;
 
+import com.project.loteria.interfaces.PoolService;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSPool;
 import com.project.loteria.megasena.entities.MSResult;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MSPoolService {
+public class MSPoolService implements PoolService<MSPool, MSBet, MSResult> {
     @Autowired
     private MSPoolRepository repository;
 
-    public MSPool creatPool(){
+    public MSPool createPool(){
         MSPool pool = new MSPool();
         return repository.save(pool);
     }
