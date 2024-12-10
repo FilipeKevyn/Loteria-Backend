@@ -2,7 +2,6 @@ package com.project.loteria.megasena.service;
 
 import com.project.loteria.interfaces.ResultService;
 import com.project.loteria.megasena.entities.MSBet;
-import com.project.loteria.megasena.entities.MSContest;
 import com.project.loteria.megasena.entities.MSPool;
 import com.project.loteria.megasena.entities.MSResult;
 import com.project.loteria.megasena.repositories.MSResultRepository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class MSResultService implements ResultService<MSResult> {
@@ -20,6 +18,9 @@ public class MSResultService implements ResultService<MSResult> {
 
     @Autowired
     private MSPoolService poolService;
+
+    @Autowired
+    private MSBetService betService;
 
     public MSResult creat(int matched){
         MSResult result = new MSResult(null, matched);
@@ -38,8 +39,11 @@ public class MSResultService implements ResultService<MSResult> {
         List<MSBet> bets = poolService.getAllBets(pool);
 
         for (MSBet bet : bets){
-            MSResult result = creat(verifyMatched(bet.getBet(), drawnNumbers));
-            addResultToPool(poolId, result);
+            if (bet.getResult() == null){
+                MSResult result = creat(verifyMatched(bet.getBet(), drawnNumbers));
+                betService.setResult(bet, result);
+                addResultToPool(poolId, result);
+            }
         }
     }
 

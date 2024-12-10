@@ -5,6 +5,7 @@ import com.project.loteria.interfaces.BetService;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSContest;
 import com.project.loteria.megasena.entities.MSPool;
+import com.project.loteria.megasena.entities.MSResult;
 import com.project.loteria.megasena.repositories.MSBetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,11 @@ public class MSBetService implements BetService<MSBet> {
         MSPool pool = msPoolService.findById(poolId);
         msPoolService.addBetToPool(pool, betSaved);
         return betSaved;
+    }
+
+    public void setResult(MSBet bet, MSResult result){
+        bet.setResult(result);
+        betRepository.save(bet);
     }
 
     public void validate(Integer[] numbers) {
