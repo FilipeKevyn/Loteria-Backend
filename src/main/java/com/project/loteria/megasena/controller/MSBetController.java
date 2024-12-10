@@ -5,6 +5,7 @@ import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.service.MSBetService;
 import com.project.loteria.megasena.service.MSResultService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +25,10 @@ public class MSBetController {
         return ResponseEntity.ok().body(bet);
     }
 
-    @PostMapping
-    public ResponseEntity<MSBet> insert(@RequestBody MSBetDTO obj){
-        System.out.println("       | INSERINDO BET | no controller        ");
+    @PostMapping(value = "/{poolId}")
+    public ResponseEntity<MSBet> addBet(@PathVariable Long poolId, @RequestBody MSBetDTO obj){
         MSBet bet = new MSBet(obj);
-        resultService.insertBet(bet);
-        return ResponseEntity.status(HttpStatus.CREATED).body(bet); // trocar para um Response created
+        betService.addBetToPool(poolId, bet);
+        return ResponseEntity.status(HttpStatus.CREATED).body(bet);
     }
 }

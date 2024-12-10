@@ -20,10 +20,11 @@ public class MSContestController {
         return ResponseEntity.ok().body(contest);
     }
 
-    @PostMapping
-    public ResponseEntity<MSContest> insert(@RequestBody MSContestDTO obj){
+    @PostMapping(value = "/{poolId}")
+    public ResponseEntity<MSContest> addContest(@PathVariable Long poolId, @RequestBody MSContestDTO obj){
         MSContest contest = new MSContest(obj);
         contest = contestService.insert(contest);
+        contestService.setContestInPool(poolId, contest);
         return ResponseEntity.status(HttpStatus.CREATED).body(contest);
     }
 }

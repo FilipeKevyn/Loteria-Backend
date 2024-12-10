@@ -18,6 +18,10 @@ public class MSResult implements Serializable {
     @OneToOne
     @JoinColumn(name = "bet_id")
     private MSBet bet;
+
+    @ManyToOne
+    @JoinColumn(name = "pool_id")
+    private MSPool pool;
     public MSResult(){}
 
     public MSResult(Long id, int matched) {

@@ -20,6 +20,9 @@ public class MSContest implements Serializable {
     @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
     private Set<MSResult> results = new HashSet<>();
 
+    @OneToOne
+    private MSPool pool;
+
     public MSContest(){}
 
     public MSContest(Long id, Integer[] drawnNumbers, Date date) {
