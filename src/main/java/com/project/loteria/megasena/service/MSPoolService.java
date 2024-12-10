@@ -7,6 +7,8 @@ import com.project.loteria.megasena.repositories.MSPoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MSPoolService {
     @Autowired
@@ -21,6 +23,10 @@ public class MSPoolService {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Pool not found with id "+ id));
     }
 
+    public List<MSBet> getAllBets(MSPool pool){
+        return pool.getBets().stream().toList();
+    }
+
     public void addBetToPool(MSPool pool, MSBet bet){
         pool.getBets().add(bet);
         repository.save(pool);
@@ -31,8 +37,9 @@ public class MSPoolService {
         repository.save(pool);
     }
 
-    public Double getValueTotal(Long id){
+    public void getValueTotal(Long id){
         MSPool pool = findById(id);
-        return pool.getBets().stream().mapToDouble(MSBet::getValueInvested).sum();
+        double valueTotal = pool.getBets().stream().mapToDouble(MSBet::getValueInvested).sum();
+        pool.setValueTotal(valueTotal);
     }
 }

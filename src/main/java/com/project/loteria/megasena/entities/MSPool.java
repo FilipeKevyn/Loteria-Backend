@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,7 @@ public class MSPool implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Optional<Double> valueTotal;
+    private double valueTotal;
 
     @OneToOne
     private MSContest contest;
@@ -51,11 +50,11 @@ public class MSPool implements Serializable {
         this.contest = contest;
     }
 
-    public Optional<Double> getValueTotal() {
+    public double getValueTotal() {
         return valueTotal;
     }
 
-    public void setValueTotal(Optional<Double> valueTotal) {
+    public void setValueTotal(double valueTotal) {
         this.valueTotal = valueTotal;
     }
 
