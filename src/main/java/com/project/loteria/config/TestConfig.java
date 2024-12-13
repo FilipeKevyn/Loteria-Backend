@@ -5,7 +5,6 @@ import com.project.loteria.megasena.repositories.MSBetRepository;
 import com.project.loteria.megasena.service.MSBetService;
 import com.project.loteria.megasena.service.MSContestService;
 import com.project.loteria.megasena.service.MSPoolService;
-import com.project.loteria.megasena.service.MSResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +15,6 @@ import org.springframework.context.annotation.Profile;
 public class TestConfig implements CommandLineRunner {
     @Autowired
     private MSContestService contestService;
-
-    @Autowired
-    private MSResultService resultService;
 
     @Autowired
     private MSBetService betService;

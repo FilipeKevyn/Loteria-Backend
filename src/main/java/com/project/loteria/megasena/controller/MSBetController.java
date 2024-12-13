@@ -3,9 +3,7 @@ package com.project.loteria.megasena.controller;
 import com.project.loteria.megasena.dtos.MSBetDTO;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.service.MSBetService;
-import com.project.loteria.megasena.service.MSResultService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/megasena_bet")
 public class MSBetController {
-    @Autowired
-    private MSResultService resultService;
-
     @Autowired
     private MSBetService betService;
 

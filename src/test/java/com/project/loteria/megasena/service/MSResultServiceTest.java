@@ -1,12 +1,9 @@
 package com.project.loteria.megasena.service;
 
+import com.project.loteria.interfaces.ResultService;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSContest;
 import com.project.loteria.megasena.entities.MSPool;
-import com.project.loteria.megasena.entities.MSResult;
-import com.project.loteria.megasena.repositories.MSResultRepository;
-import com.project.loteria.megasena.service.MSResultService;
-import com.project.loteria.megasena.service.MSPoolService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,7 +29,7 @@ public class MSResultServiceTest {
     private MSBetService betService;
 
     @InjectMocks
-    private MSResultService resultService;
+    private ResultService resultService;
 
     @BeforeEach
     void setUp() {

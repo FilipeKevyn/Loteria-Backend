@@ -3,20 +3,24 @@ package com.project.loteria.megasena.service;
 import com.project.loteria.interfaces.BetService;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSPool;
-import com.project.loteria.megasena.entities.MSResult;
 import com.project.loteria.megasena.repositories.MSBetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class MSBetService implements BetService<MSBet, MSResult> {
+public class MSBetService {
     @Autowired
     private MSBetRepository betRepository;
 
     @Autowired
     private MSPoolService msPoolService;
+
+    @Autowired
+    @Lazy // gambiarra grande
+    private MSResultService resultService;
 
     public MSBet findById(Long id){
         Optional<MSBet> bet = betRepository.findById(id);
@@ -31,11 +35,14 @@ public class MSBetService implements BetService<MSBet, MSResult> {
         MSPool pool = msPoolService.findById(poolId);
         bet.setPool(pool);
         MSBet betSaved = insert(bet);
+        if (pool.getContest() != null) {
+            resultService.verifyBet(poolId, betSaved);
+        }
         msPoolService.addBetToPool(pool, betSaved);
     }
 
-    public void setResult(MSBet bet, MSResult result){
-        bet.setResult(result);
+    public void setMatched(MSBet bet, int matched){
+        bet.setMatched(matched);
         betRepository.save(bet);
     }
 

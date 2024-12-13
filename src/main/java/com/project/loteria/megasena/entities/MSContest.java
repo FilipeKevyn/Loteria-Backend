@@ -16,9 +16,6 @@ public class MSContest implements Serializable {
     private Integer[] drawnNumbers = new Integer[6];
     private Date date;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
-    private Set<MSResult> results = new HashSet<>();
 
     @OneToOne
     private MSPool pool;
@@ -35,11 +32,6 @@ public class MSContest implements Serializable {
         this.id = msContestDTO.id();
         this.drawnNumbers = msContestDTO.drawNumbers();
         this.date = msContestDTO.date();
-    }
-
-    public void addResult(MSResult result){
-        results.add(result);
-        result.setContest(this);
     }
 
     public Long getId() {
@@ -66,12 +58,12 @@ public class MSContest implements Serializable {
         this.date = date;
     }
 
-    public Set<MSResult> getResults() {
-        return results;
+    public MSPool getPool() {
+        return pool;
     }
 
-    public void setResults(Set<MSResult> results) {
-        this.results = results;
+    public void setPool(MSPool pool) {
+        this.pool = pool;
     }
 
     @Override
