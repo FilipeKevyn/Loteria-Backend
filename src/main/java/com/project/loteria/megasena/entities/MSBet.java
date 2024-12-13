@@ -27,6 +27,8 @@ public class MSBet implements Serializable {
     @JsonIgnore
     @OneToOne(mappedBy = "bet", cascade = CascadeType.ALL)
     private MSResult result;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pool_id")
     private MSPool pool;

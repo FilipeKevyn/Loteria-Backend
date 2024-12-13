@@ -24,7 +24,6 @@ public class MSBetController {
         MSBet bet = betService.findById(id);
         return ResponseEntity.ok().body(bet);
     }
-
     @PostMapping(value = "/{poolId}")
     public ResponseEntity<MSBet> addBet(@PathVariable Long poolId, @RequestBody MSBetDTO obj){
         MSBet bet = new MSBet(obj);

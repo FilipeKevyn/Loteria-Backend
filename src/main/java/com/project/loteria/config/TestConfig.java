@@ -1,6 +1,7 @@
 package com.project.loteria.config;
 
 import com.project.loteria.megasena.entities.MSBet;
+import com.project.loteria.megasena.repositories.MSBetRepository;
 import com.project.loteria.megasena.service.MSBetService;
 import com.project.loteria.megasena.service.MSContestService;
 import com.project.loteria.megasena.service.MSPoolService;
@@ -23,10 +24,13 @@ public class TestConfig implements CommandLineRunner {
     private MSBetService betService;
 
     @Autowired
-    private MSPoolService service;
+    MSBetRepository betRepository;
+
+    @Autowired
+    private MSPoolService poolService;
     @Override
     public void run(String... args) throws Exception {
-        service.creatPool();
+        poolService.creatPool();
 
         Integer[] jogo = new Integer[]{1,2,3,4,5,6,7,8,9,10};
         MSBet bet1 = new MSBet(null, "312", jogo, 10);

@@ -27,6 +27,10 @@ public class MSPoolService {
         return pool.getBets().stream().toList();
     }
 
+    public List<MSPool> findAll(){
+        return repository.findAll();
+    }
+
     public void addBetToPool(MSPool pool, MSBet bet){
         pool.getBets().add(bet);
         repository.save(pool);

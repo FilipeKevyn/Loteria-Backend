@@ -30,11 +30,11 @@ public class MSBetService implements BetService<MSBet> {
         return betRepository.save(obj);
     }
 
-    public MSBet addBetToPool(Long poolId, MSBet bet){
-        MSBet betSaved = insert(bet);
+    public void addBetToPool(Long poolId, MSBet bet){
         MSPool pool = msPoolService.findById(poolId);
+        bet.setPool(pool);
+        MSBet betSaved = insert(bet);
         msPoolService.addBetToPool(pool, betSaved);
-        return betSaved;
     }
 
     public void setResult(MSBet bet, MSResult result){

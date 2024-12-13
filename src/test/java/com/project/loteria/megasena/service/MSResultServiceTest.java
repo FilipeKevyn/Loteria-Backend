@@ -28,6 +28,9 @@ public class MSResultServiceTest {
     @Mock
     private MSPoolService poolService;
 
+    @Mock
+    private MSBetService betService;
+
     @InjectMocks
     private MSResultService resultService;
 
