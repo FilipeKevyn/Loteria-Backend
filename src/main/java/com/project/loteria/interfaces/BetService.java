@@ -1,10 +1,10 @@
 package com.project.loteria.interfaces;
 
-import com.project.loteria.exceptions.ValidateException;
 
-import java.util.List;
 
-public interface BetService<T> {
-    T insert(T obj);
+public interface BetService<B, R> {
+    B insert(B obj);
+    void addBetToPool(Long poolId, B bet);
+    void setResult(B bet, R result);
     void validate(Integer[] numbers);
 }

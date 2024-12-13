@@ -19,7 +19,7 @@ public class MSPoolController {
 
     @PostMapping("/creat")
     public ResponseEntity<Void> creatPool(){
-        service.creatPool();
+        service.createPool();
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
