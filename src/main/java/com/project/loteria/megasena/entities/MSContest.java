@@ -2,6 +2,7 @@ package com.project.loteria.megasena.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.megasena.dtos.MSContestDTO;
+import com.project.loteria.model.Contest;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -9,12 +10,12 @@ import java.util.*;
 
 @Entity
 @Table(name = "tb_contest_megasena")
-public class MSContest implements Serializable {
+public class MSContest extends Contest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer[] drawnNumbers = new Integer[6];
-    private Date date;
+    private String codeContest;
 
 
     @OneToOne
@@ -22,16 +23,16 @@ public class MSContest implements Serializable {
 
     public MSContest(){}
 
-    public MSContest(Long id, Integer[] drawnNumbers, Date date) {
+    public MSContest(Long id, Integer[] drawnNumbers, String codeContest) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
-        this.date = date;
+        this.codeContest = codeContest;
     }
 
     public MSContest(MSContestDTO msContestDTO){
         this.id = msContestDTO.id();
         this.drawnNumbers = msContestDTO.drawNumbers();
-        this.date = msContestDTO.date();
+        this.codeContest = msContestDTO.codeContest();
     }
 
     public Long getId() {
@@ -50,12 +51,12 @@ public class MSContest implements Serializable {
         this.drawnNumbers = drawnNumbers;
     }
 
-    public Date getDate() {
-        return date;
+    public String getCodeContest() {
+        return codeContest;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCodeContest(String codeContest) {
+        this.codeContest = codeContest;
     }
 
     public MSPool getPool() {
