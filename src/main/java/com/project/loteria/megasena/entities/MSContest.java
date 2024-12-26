@@ -2,7 +2,6 @@ package com.project.loteria.megasena.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.megasena.dtos.MSContestDTO;
-import com.project.loteria.model.Contest;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -10,7 +9,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "tb_contest_megasena")
-public class MSContest extends Contest implements Serializable {
+public class MSContest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +17,7 @@ public class MSContest extends Contest implements Serializable {
     private String codeContest;
 
 
+    @JsonIgnore
     @OneToOne
     private MSPool pool;
 
