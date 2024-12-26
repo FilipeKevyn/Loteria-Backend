@@ -14,6 +14,7 @@ public class MSContestService implements ContestService<MSContest> {
     @Autowired
     private MSContestRepository contestRepository;
 
+    @Autowired
     private MSPoolService msPoolService;
 
     public MSContest findById(Long id){
@@ -29,5 +30,6 @@ public class MSContestService implements ContestService<MSContest> {
         MSContest contestSaved = insert(contest);
         MSPool pool = msPoolService.findById(id);
         pool.setContest(contestSaved);
+        contestSaved.setPool(pool);
     }
 }

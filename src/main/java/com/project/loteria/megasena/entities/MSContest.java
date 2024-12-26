@@ -14,32 +14,25 @@ public class MSContest implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer[] drawnNumbers = new Integer[6];
-    private Date date;
+    private String codeContest;
+
 
     @JsonIgnore
-    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
-    private Set<MSResult> results = new HashSet<>();
-
     @OneToOne
     private MSPool pool;
 
     public MSContest(){}
 
-    public MSContest(Long id, Integer[] drawnNumbers, Date date) {
+    public MSContest(Long id, Integer[] drawnNumbers, String codeContest) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
-        this.date = date;
+        this.codeContest = codeContest;
     }
 
     public MSContest(MSContestDTO msContestDTO){
         this.id = msContestDTO.id();
         this.drawnNumbers = msContestDTO.drawNumbers();
-        this.date = msContestDTO.date();
-    }
-
-    public void addResult(MSResult result){
-        results.add(result);
-        result.setContest(this);
+        this.codeContest = msContestDTO.codeContest();
     }
 
     public Long getId() {
@@ -58,20 +51,20 @@ public class MSContest implements Serializable {
         this.drawnNumbers = drawnNumbers;
     }
 
-    public Date getDate() {
-        return date;
+    public String getCodeContest() {
+        return codeContest;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCodeContest(String codeContest) {
+        this.codeContest = codeContest;
     }
 
-    public Set<MSResult> getResults() {
-        return results;
+    public MSPool getPool() {
+        return pool;
     }
 
-    public void setResults(Set<MSResult> results) {
-        this.results = results;
+    public void setPool(MSPool pool) {
+        this.pool = pool;
     }
 
     @Override

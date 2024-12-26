@@ -21,13 +21,10 @@ public class MSBet implements Serializable {
     private double valueInvested;
     private int quantityNumbers;
     private Integer[] bet = new Integer[quantityNumbers];
+    private int matched;
     @ManyToOne
     @JoinColumn(name = "contest_id")
     private MSContest contest;
-    @JsonIgnore
-    @OneToOne(mappedBy = "bet", cascade = CascadeType.ALL)
-    private MSResult result;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pool_id")
@@ -75,22 +72,6 @@ public class MSBet implements Serializable {
         this.bet = bet;
     }
 
-    public MSContest getContest() {
-        return contest;
-    }
-
-    public void setContest(MSContest contest) {
-        this.contest = contest;
-    }
-
-    public MSResult getResult() {
-        return result;
-    }
-
-    public void setResult(MSResult result) {
-        this.result = result;
-    }
-
     public int getQuantityNumbers() {
         return quantityNumbers;
     }
@@ -101,6 +82,18 @@ public class MSBet implements Serializable {
 
     public double getValueInvested() {
         return valueInvested;
+    }
+
+    public void setValueInvested(double valueInvested) {
+        this.valueInvested = valueInvested;
+    }
+
+    public int getMatched() {
+        return matched;
+    }
+
+    public void setMatched(int matched) {
+        this.matched = matched;
     }
 
     public MSPool getPool() {

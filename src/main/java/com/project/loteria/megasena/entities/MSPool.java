@@ -22,9 +22,6 @@ public class MSPool implements Serializable {
     @OneToMany(mappedBy = "pool", fetch = FetchType.EAGER)
     private Set<MSBet> bets = new HashSet<>();
 
-    @OneToMany(mappedBy = "pool", fetch = FetchType.EAGER)
-    private Set<MSResult> results = new HashSet<>();
-
     public MSPool(Long id, MSContest contest) {
         this.id = id;
         this.contest = contest;
@@ -56,10 +53,6 @@ public class MSPool implements Serializable {
 
     public void setValueTotal(double valueTotal) {
         this.valueTotal = valueTotal;
-    }
-
-    public Set<MSResult> getResults() {
-        return results;
     }
 
     public Set<MSBet> getBets() {
