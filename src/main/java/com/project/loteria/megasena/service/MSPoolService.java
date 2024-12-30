@@ -1,5 +1,6 @@
 package com.project.loteria.megasena.service;
 
+import com.project.loteria.exceptions.PoolNotFoundException;
 import com.project.loteria.interfaces.PoolService;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSPool;
@@ -20,7 +21,7 @@ public class MSPoolService implements PoolService<MSPool, MSBet> {
     }
 
     public MSPool findById(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Pool not found with id "+ id));
+        return repository.findById(id).orElseThrow(() -> new PoolNotFoundException(id));
     }
 
     public List<MSBet> getAllBets(MSPool pool){

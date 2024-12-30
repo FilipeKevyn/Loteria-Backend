@@ -1,5 +1,6 @@
 package com.project.loteria.megasena.service;
 
+import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.interfaces.BetService;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSPool;
@@ -24,7 +25,7 @@ public class MSBetService {
 
     public MSBet findById(Long id){
         Optional<MSBet> bet = betRepository.findById(id);
-        return bet.orElseThrow(() -> new RuntimeException()); // criar excesão personalizada
+        return bet.orElseThrow(() -> new BetNotFoundException(id)); // criar excesão personalizada
     }
     public MSBet insert(MSBet obj){
         validate(obj.getBet());
