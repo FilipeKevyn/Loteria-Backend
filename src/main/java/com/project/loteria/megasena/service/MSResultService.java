@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class MSResultService{
+public class MSResultService implements ResultService{
 
     @Autowired
     private MSPoolService poolService;

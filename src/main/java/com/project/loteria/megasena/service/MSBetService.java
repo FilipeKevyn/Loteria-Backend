@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class MSBetService {
+public class MSBetService implements BetService<MSBet>{
     @Autowired
     private MSBetRepository betRepository;
 
