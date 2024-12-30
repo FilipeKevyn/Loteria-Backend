@@ -26,7 +26,7 @@ public class TestConfig implements CommandLineRunner {
     private MSPoolService poolService;
     @Override
     public void run(String... args) throws Exception {
-        poolService.createPool();
+        poolService.createPool("oi");
 
         Integer[] jogo = new Integer[]{1,2,3,4,5,6,7,8,9,10};
         MSBet bet1 = new MSBet(null, "312", jogo, 10);

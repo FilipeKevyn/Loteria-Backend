@@ -14,8 +14,8 @@ public class MSPoolService implements PoolService<MSPool, MSBet> {
     @Autowired
     private MSPoolRepository repository;
 
-    public MSPool createPool(){
-        MSPool pool = new MSPool();
+    public MSPool createPool(String name){
+        MSPool pool = new MSPool(name);
         return repository.save(pool);
     }
 
@@ -33,12 +33,12 @@ public class MSPoolService implements PoolService<MSPool, MSBet> {
 
     public void addBetToPool(MSPool pool, MSBet bet){
         pool.getBets().add(bet);
+        setValueTotal(pool, bet);
         repository.save(pool);
     }
 
-    public void getValueTotal(Long id){
-        MSPool pool = findById(id);
-        double valueTotal = pool.getBets().stream().mapToDouble(MSBet::getValueInvested).sum();
+    public void setValueTotal(MSPool pool, MSBet bet){
+        double valueTotal = pool.getValueTotal() + bet.getValueInvested();
         pool.setValueTotal(valueTotal);
     }
 }
