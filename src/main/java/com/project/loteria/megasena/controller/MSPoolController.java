@@ -4,6 +4,7 @@ import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSPool;
 import com.project.loteria.megasena.service.MSPoolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class MSPoolController {
     private MSPoolService service;
 
     @PostMapping(value = "/create")
-    public MSPool creatPool(String name){
-        return service.createPool(name);
+    public ResponseEntity<MSPool> creatPool(@RequestBody String name){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createPool(name));
     }
 
     @GetMapping(value = "/{poolId}/bets")
