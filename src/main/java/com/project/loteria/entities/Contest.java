@@ -1,7 +1,7 @@
 package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.loteria.megasena.dtos.MSContestDTO;
+import com.project.loteria.dtos.ContestDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -29,7 +29,7 @@ public class Contest implements Serializable {
         this.codeContest = codeContest;
     }
 
-    public Contest(MSContestDTO msContestDTO){
+    public Contest(ContestDTO msContestDTO){
         this.id = msContestDTO.id();
         this.drawnNumbers = msContestDTO.drawNumbers();
         this.codeContest = msContestDTO.codeContest();

@@ -1,7 +1,7 @@
 package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.loteria.megasena.dtos.MSBetDTO;
+import com.project.loteria.dtos.BetDTO;
 import com.project.loteria.service.MathService;
 import jakarta.persistence.*;
 
@@ -38,7 +38,7 @@ public class Bet implements Serializable {
         valueInvested = MathService.combination(quantityNumbers, 6) * 5;
     }
 
-    public Bet(MSBetDTO msBetDTO){
+    public Bet(BetDTO msBetDTO){
         this.id = msBetDTO.id();
         this.code = msBetDTO.code();
         this.bet = msBetDTO.bet();
