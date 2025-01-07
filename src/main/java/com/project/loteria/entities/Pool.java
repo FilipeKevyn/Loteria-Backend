@@ -1,7 +1,7 @@
 package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.loteria.megasena.dtos.MSPoolDTO;
+import com.project.loteria.dtos.PoolDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,6 +17,8 @@ public class Pool implements Serializable {
     private Long id;
 
     private String title;
+
+    private String type;
 
     private double valueTotal;
 
@@ -37,7 +39,7 @@ public class Pool implements Serializable {
         this.contest = contest;
     }
 
-    public Pool(MSPoolDTO pool) {
+    public Pool(PoolDTO pool) {
         this.title = pool.title();
     }
 
@@ -61,6 +63,14 @@ public class Pool implements Serializable {
         this.title = title;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public Contest getContest() {
         return contest;
     }
@@ -80,7 +90,6 @@ public class Pool implements Serializable {
     public Set<Bet> getBets() {
         return bets;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
