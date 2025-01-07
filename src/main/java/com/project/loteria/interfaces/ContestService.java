@@ -1,6 +1,8 @@
 package com.project.loteria.interfaces;
 
-public interface ContestService<T> {
-    T insert(T obj);
-    void setContestInPool(Long Id, T contest);
+import com.project.loteria.entities.Contest;
+
+public interface ContestService {
+    Contest insert(Contest obj);
+    void setContestInPool(Long Id, Contest contest);
 }
