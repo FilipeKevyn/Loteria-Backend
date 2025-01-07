@@ -1,7 +1,7 @@
 package com.project.loteria.megasena.controller;
 
 import com.project.loteria.megasena.dtos.MSBetDTO;
-import com.project.loteria.megasena.entities.MSBet;
+import com.project.loteria.entities.MSBet;
 import com.project.loteria.megasena.service.MSBetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

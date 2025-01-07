@@ -1,10 +1,9 @@
 package com.project.loteria.megasena.service;
 
 import com.project.loteria.exceptions.PoolNotFoundException;
-import com.project.loteria.interfaces.PoolService;
 import com.project.loteria.megasena.dtos.MSPoolDTO;
-import com.project.loteria.megasena.entities.MSBet;
-import com.project.loteria.megasena.entities.MSPool;
+import com.project.loteria.entities.MSBet;
+import com.project.loteria.entities.MSPool;
 import com.project.loteria.megasena.repositories.MSPoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

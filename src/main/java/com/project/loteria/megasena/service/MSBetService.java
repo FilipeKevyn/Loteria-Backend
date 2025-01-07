@@ -2,8 +2,8 @@ package com.project.loteria.megasena.service;
 
 import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.interfaces.BetService;
-import com.project.loteria.megasena.entities.MSBet;
-import com.project.loteria.megasena.entities.MSPool;
+import com.project.loteria.entities.MSBet;
+import com.project.loteria.entities.MSPool;
 import com.project.loteria.megasena.repositories.MSBetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

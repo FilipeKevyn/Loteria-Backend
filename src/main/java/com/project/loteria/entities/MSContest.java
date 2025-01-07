@@ -1,4 +1,4 @@
-package com.project.loteria.megasena.entities;
+package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.megasena.dtos.MSContestDTO;

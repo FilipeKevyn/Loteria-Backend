@@ -1,7 +1,7 @@
 package com.project.loteria.megasena.controller;
 
 import com.project.loteria.megasena.dtos.MSContestDTO;
-import com.project.loteria.megasena.entities.MSContest;
+import com.project.loteria.entities.MSContest;
 import com.project.loteria.megasena.service.MSContestService;
 import com.project.loteria.megasena.service.MSResultService;
 import org.springframework.beans.factory.annotation.Autowired;

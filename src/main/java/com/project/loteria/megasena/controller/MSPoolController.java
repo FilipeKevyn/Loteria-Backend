@@ -1,15 +1,14 @@
 package com.project.loteria.megasena.controller;
 
 import com.project.loteria.megasena.dtos.MSPoolDTO;
-import com.project.loteria.megasena.entities.MSBet;
-import com.project.loteria.megasena.entities.MSPool;
+import com.project.loteria.entities.MSBet;
+import com.project.loteria.entities.MSPool;
 import com.project.loteria.megasena.service.MSPoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.processing.Generated;
 import java.util.List;
 
 @RestController

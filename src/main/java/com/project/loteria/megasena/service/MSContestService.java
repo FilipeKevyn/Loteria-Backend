@@ -1,8 +1,8 @@
 package com.project.loteria.megasena.service;
 
 import com.project.loteria.interfaces.ContestService;
-import com.project.loteria.megasena.entities.MSContest;
-import com.project.loteria.megasena.entities.MSPool;
+import com.project.loteria.entities.MSContest;
+import com.project.loteria.entities.MSPool;
 import com.project.loteria.megasena.repositories.MSContestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
