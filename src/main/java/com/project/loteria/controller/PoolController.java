@@ -20,7 +20,7 @@ public class PoolController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/create")
-    public ResponseEntity<Pool> create(PoolDTO dto){
+    public ResponseEntity<Pool> create(@RequestBody PoolDTO dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createPool(dto));
     }
 

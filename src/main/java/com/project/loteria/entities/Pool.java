@@ -41,6 +41,7 @@ public class Pool implements Serializable {
 
     public Pool(PoolDTO pool) {
         this.title = pool.title();
+        this.type = pool.type();
     }
 
     public Pool(){
