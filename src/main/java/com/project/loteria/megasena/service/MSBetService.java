@@ -2,9 +2,11 @@ package com.project.loteria.megasena.service;
 
 import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.interfaces.BetService;
-import com.project.loteria.entities.MSBet;
-import com.project.loteria.entities.MSPool;
-import com.project.loteria.megasena.repositories.MSBetRepository;
+import com.project.loteria.entities.Bet;
+import com.project.loteria.entities.Pool;
+import com.project.loteria.repositories.BetRepository;
+import com.project.loteria.service.PoolService;
+import com.project.loteria.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -12,37 +14,37 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class MSBetService implements BetService<MSBet>{
+public class MSBetService implements BetService{
     @Autowired
-    private MSBetRepository betRepository;
+    private BetRepository betRepository;
 
     @Autowired
-    private MSPoolService msPoolService;
+    private PoolService poolService;
 
     @Autowired
-    @Lazy // gambiarra grande
-    private MSResultService resultService;
+    @Lazy
+    private ResultService resultService;
 
-    public MSBet findById(Long id){
-        Optional<MSBet> bet = betRepository.findById(id);
-        return bet.orElseThrow(() -> new BetNotFoundException(id)); // criar excesão personalizada
+    public Bet findById(Long id){
+        Optional<Bet> bet = betRepository.findById(id);
+        return bet.orElseThrow(() -> new BetNotFoundException(id));
     }
-    public MSBet insert(MSBet obj){
+    public Bet insert(Bet obj){
         validate(obj.getBet());
         return betRepository.save(obj);
     }
 
-    public void addBetToPool(Long poolId, MSBet bet){
-        MSPool pool = msPoolService.findById(poolId);
+    public void addBetToPool(Long poolId, Bet bet){
+        Pool pool = poolService.findById(poolId);
         bet.setPool(pool);
-        MSBet betSaved = insert(bet);
+        Bet betSaved = insert(bet);
         if (pool.getContest() != null) {
             resultService.verifyBet(poolId, betSaved);
         }
-        msPoolService.addBetToPool(pool, betSaved);
+        poolService.addBetToPool(pool, betSaved);
     }
 
-    public void setMatched(MSBet bet, int matched){
+    public void setMatched(Bet bet, int matched){
         bet.setMatched(matched);
         betRepository.save(bet);
     }

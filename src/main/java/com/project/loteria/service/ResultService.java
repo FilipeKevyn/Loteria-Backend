@@ -1,8 +1,9 @@
-package com.project.loteria.megasena.service;
+package com.project.loteria.service;
 
-import com.project.loteria.interfaces.ResultService;
-import com.project.loteria.entities.MSBet;
-import com.project.loteria.entities.MSPool;
+import com.project.loteria.interfaces.BetService;
+import com.project.loteria.interfaces.PoolService;
+import com.project.loteria.entities.Bet;
+import com.project.loteria.entities.Pool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,20 +11,23 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class MSResultService implements ResultService{
+public class ResultService implements com.project.loteria.interfaces.ResultService {
+    @Autowired
+    private PoolService poolService;
+
+    private final BetService betService;
 
     @Autowired
-    private MSPoolService poolService;
-
-    @Autowired
-    private MSBetService betService;
+    public ResultService(BetService betService) {
+        this.betService = betService;
+    }
 
     public void verifyAllBets(Long poolId){
-        MSPool pool = poolService.findById(poolId);
+        Pool pool = poolService.findById(poolId);
         Integer[] drawnNumbers = pool.getContest().getDrawnNumbers();
-        List<MSBet> bets = poolService.getAllBets(pool);
+        List<Bet> bets = poolService.getAllBets(pool);
 
-        for (MSBet bet : bets){
+        for (Bet bet : bets){
             if (bet.getMatched() == 0){
                 int matched = verifyMatched(bet.getBet(), drawnNumbers);
                 betService.setMatched(bet, matched);
@@ -31,7 +35,7 @@ public class MSResultService implements ResultService{
         }
     }
 
-    public void verifyBet(Long poolId, MSBet bet){
+    public void verifyBet(Long poolId, Bet bet){
         Integer[] drawNumbers = poolService.findById(poolId).getContest().getDrawnNumbers();
         int matched = verifyMatched(bet.getBet(), drawNumbers);
         betService.setMatched(bet, matched);
