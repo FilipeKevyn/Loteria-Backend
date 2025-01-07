@@ -10,8 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "tb_pool_megasena")
-public class MSPool implements Serializable {
+@Table(name = "tb_pool")
+public class Pool implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,26 +22,26 @@ public class MSPool implements Serializable {
 
     @JsonIgnore
     @OneToOne
-    private MSContest contest;
+    private Contest contest;
 
     @JsonIgnore
     @OneToMany(mappedBy = "pool", fetch = FetchType.EAGER)
-    private Set<MSBet> bets = new HashSet<>();
+    private Set<Bet> bets = new HashSet<>();
 
-    public MSPool(String name){
+    public Pool(String name){
         this.title = name;
     }
 
-    public MSPool(Long id, MSContest contest) {
+    public Pool(Long id, Contest contest) {
         this.id = id;
         this.contest = contest;
     }
 
-    public MSPool(MSPoolDTO pool) {
+    public Pool(MSPoolDTO pool) {
         this.title = pool.title();
     }
 
-    public MSPool(){
+    public Pool(){
 
     }
 
@@ -61,11 +61,11 @@ public class MSPool implements Serializable {
         this.title = title;
     }
 
-    public MSContest getContest() {
+    public Contest getContest() {
         return contest;
     }
 
-    public void setContest(MSContest contest) {
+    public void setContest(Contest contest) {
         this.contest = contest;
     }
 
@@ -77,7 +77,7 @@ public class MSPool implements Serializable {
         this.valueTotal = valueTotal;
     }
 
-    public Set<MSBet> getBets() {
+    public Set<Bet> getBets() {
         return bets;
     }
 
@@ -85,7 +85,7 @@ public class MSPool implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MSPool msPool = (MSPool) o;
+        Pool msPool = (Pool) o;
         return Objects.equals(id, msPool.id);
     }
 

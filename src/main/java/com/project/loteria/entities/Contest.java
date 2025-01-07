@@ -8,8 +8,8 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-@Table(name = "tb_contest_megasena")
-public class MSContest implements Serializable {
+@Table(name = "tb_contest")
+public class Contest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,17 +19,17 @@ public class MSContest implements Serializable {
 
     @JsonIgnore
     @OneToOne
-    private MSPool pool;
+    private Pool pool;
 
-    public MSContest(){}
+    public Contest(){}
 
-    public MSContest(Long id, Integer[] drawnNumbers, String codeContest) {
+    public Contest(Long id, Integer[] drawnNumbers, String codeContest) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
         this.codeContest = codeContest;
     }
 
-    public MSContest(MSContestDTO msContestDTO){
+    public Contest(MSContestDTO msContestDTO){
         this.id = msContestDTO.id();
         this.drawnNumbers = msContestDTO.drawNumbers();
         this.codeContest = msContestDTO.codeContest();
@@ -59,11 +59,11 @@ public class MSContest implements Serializable {
         this.codeContest = codeContest;
     }
 
-    public MSPool getPool() {
+    public Pool getPool() {
         return pool;
     }
 
-    public void setPool(MSPool pool) {
+    public void setPool(Pool pool) {
         this.pool = pool;
     }
 
@@ -71,7 +71,7 @@ public class MSContest implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MSContest contest = (MSContest) o;
+        Contest contest = (Contest) o;
         return Objects.equals(id, contest.id);
     }
 

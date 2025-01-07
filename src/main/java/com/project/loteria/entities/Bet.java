@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_bets_megasena")
-public class MSBet implements Serializable {
+@Table(name = "tb_bets")
+public class Bet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,15 +22,15 @@ public class MSBet implements Serializable {
     private int matched;
     @ManyToOne
     @JoinColumn(name = "contest_id")
-    private MSContest contest;
+    private Contest contest;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pool_id")
-    private MSPool pool;
+    private Pool pool;
 
-    public MSBet(){}
+    public Bet(){}
 
-    public MSBet(Long id, String code, Integer[] bet, int quantityNumbers) {
+    public Bet(Long id, String code, Integer[] bet, int quantityNumbers) {
         this.id = id;
         this.code = code;
         this.bet = bet;
@@ -38,7 +38,7 @@ public class MSBet implements Serializable {
         valueInvested = MathService.combination(quantityNumbers, 6) * 5;
     }
 
-    public MSBet(MSBetDTO msBetDTO){
+    public Bet(MSBetDTO msBetDTO){
         this.id = msBetDTO.id();
         this.code = msBetDTO.code();
         this.bet = msBetDTO.bet();
@@ -94,11 +94,11 @@ public class MSBet implements Serializable {
         this.matched = matched;
     }
 
-    public MSPool getPool() {
+    public Pool getPool() {
         return pool;
     }
 
-    public void setPool(MSPool pool) {
+    public void setPool(Pool pool) {
         this.pool = pool;
     }
 
@@ -106,7 +106,7 @@ public class MSBet implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MSBet bet = (MSBet) o;
+        Bet bet = (Bet) o;
         return Objects.equals(id, bet.id);
     }
 
