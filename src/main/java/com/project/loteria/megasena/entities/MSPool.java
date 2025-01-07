@@ -1,6 +1,7 @@
 package com.project.loteria.megasena.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.loteria.megasena.dtos.MSPoolDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ public class MSPool implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
     private double valueTotal;
 
@@ -28,12 +29,16 @@ public class MSPool implements Serializable {
     private Set<MSBet> bets = new HashSet<>();
 
     public MSPool(String name){
-        this.name = name;
+        this.title = name;
     }
 
     public MSPool(Long id, MSContest contest) {
         this.id = id;
         this.contest = contest;
+    }
+
+    public MSPool(MSPoolDTO pool) {
+        this.title = pool.title();
     }
 
     public MSPool(){
@@ -48,12 +53,12 @@ public class MSPool implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public MSContest getContest() {

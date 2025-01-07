@@ -1,5 +1,6 @@
 package com.project.loteria.megasena.controller;
 
+import com.project.loteria.megasena.dtos.MSPoolDTO;
 import com.project.loteria.megasena.entities.MSBet;
 import com.project.loteria.megasena.entities.MSPool;
 import com.project.loteria.megasena.service.MSPoolService;
@@ -17,9 +18,10 @@ public class MSPoolController {
     @Autowired
     private MSPoolService service;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/create")
-    public ResponseEntity<MSPool> creatPool(@RequestBody String name){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createPool(name));
+    public ResponseEntity<MSPool> creatPool(@RequestBody MSPoolDTO poolDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createPool(poolDTO));
     }
 
     @GetMapping(value = "/{poolId}/bets")
@@ -27,6 +29,7 @@ public class MSPoolController {
         return service.getAllBets(service.findById(poolId));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity<List<MSPool>> getAll(){
         return ResponseEntity.ok().body(service.findAll());
