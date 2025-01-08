@@ -13,7 +13,7 @@ public class Contest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer[] drawnNumbers = new Integer[6];
+    private List<Integer> drawnNumbers = new ArrayList<>();
     private String codeContest;
 
 
@@ -23,7 +23,7 @@ public class Contest implements Serializable {
 
     public Contest(){}
 
-    public Contest(Long id, Integer[] drawnNumbers, String codeContest) {
+    public Contest(Long id, List<Integer> drawnNumbers, String codeContest) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
         this.codeContest = codeContest;
@@ -43,11 +43,11 @@ public class Contest implements Serializable {
         this.id = id;
     }
 
-    public Integer[] getDrawnNumbers() {
+    public List<Integer> getDrawnNumbers() {
         return drawnNumbers;
     }
 
-    public void setDrawnNumbers(Integer[] drawnNumbers) {
+    public void setDrawnNumbers(List<Integer> drawnNumbers) {
         this.drawnNumbers = drawnNumbers;
     }
 

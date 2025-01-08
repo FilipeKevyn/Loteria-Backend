@@ -1,4 +1,6 @@
 package com.project.loteria.dtos;
 
-public record ContestDTO(Long id, Integer[] drawNumbers, String codeContest){
+import java.util.List;
+
+public record ContestDTO(Long id, List<Integer> drawNumbers, String codeContest){
 }

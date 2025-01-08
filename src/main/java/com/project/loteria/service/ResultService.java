@@ -7,6 +7,7 @@ import com.project.loteria.entities.Pool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ResultService implements com.project.loteria.interfaces.ResultServi
 
     public void verifyAllBets(Long poolId){
         Pool pool = poolService.findById(poolId);
-        Integer[] drawnNumbers = pool.getContest().getDrawnNumbers();
+        List<Integer> drawnNumbers = pool.getContest().getDrawnNumbers();
         List<Bet> bets = poolService.getAllBets(pool);
 
         for (Bet bet : bets){
@@ -36,16 +37,16 @@ public class ResultService implements com.project.loteria.interfaces.ResultServi
     }
 
     public void verifyBet(Long poolId, Bet bet){
-        Integer[] drawNumbers = poolService.findById(poolId).getContest().getDrawnNumbers();
+        List<Integer> drawNumbers = poolService.findById(poolId).getContest().getDrawnNumbers();
         int matched = verifyMatched(bet.getBet(), drawNumbers);
         betService.setMatched(bet, matched);
     }
 
-    public int verifyMatched(Integer[] bet, Integer[] drawNumbers){
+    public int verifyMatched(List<Integer> bet, List<Integer> drawNumbers){
         int count = 0;
 
         for (Integer number : drawNumbers){
-            if (Arrays.asList(bet).contains(number)){
+            if (bet.contains(number)){
                 count++;
             }
         }

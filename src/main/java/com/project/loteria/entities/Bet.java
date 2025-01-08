@@ -6,6 +6,8 @@ import com.project.loteria.service.MathService;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,7 +20,7 @@ public class Bet implements Serializable {
     private String code;
     private double valueInvested;
     private int quantityNumbers;
-    private Integer[] bet = new Integer[quantityNumbers];
+    private List<Integer> bet = new ArrayList<>();
     private int matched;
     @ManyToOne
     @JoinColumn(name = "contest_id")
@@ -30,7 +32,7 @@ public class Bet implements Serializable {
 
     public Bet(){}
 
-    public Bet(Long id, String code, Integer[] bet, int quantityNumbers) {
+    public Bet(Long id, String code, List<Integer> bet, int quantityNumbers) {
         this.id = id;
         this.code = code;
         this.bet = bet;
@@ -62,16 +64,16 @@ public class Bet implements Serializable {
         this.code = code;
     }
 
-    public Integer[] getBet() {
+    public List<Integer> getBet() {
         return bet;
     }
 
-    public void setBet(Integer[] bet) {
+    public void setBet(List<Integer> bet) {
         this.bet = bet;
     }
 
     public int getQuantityNumbers() {
-        return quantityNumbers;
+        return bet.size();
     }
 
     public void setQuantityNumbers(int quantityNumbers) {

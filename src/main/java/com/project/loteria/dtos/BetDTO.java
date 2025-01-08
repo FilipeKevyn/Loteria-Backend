@@ -1,4 +1,6 @@
 package com.project.loteria.dtos;
 
-public record BetDTO(Long id, String code, Integer[] bet, Integer quantityNumbers) {
+import java.util.List;
+
+public record BetDTO(Long id, String code, List<Integer> bet, Integer quantityNumbers) {
 }

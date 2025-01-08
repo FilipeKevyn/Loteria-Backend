@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,10 +50,10 @@ public class MSBetService implements BetService{
         betRepository.save(bet);
     }
 
-    public void validate(Integer[] numbers) {
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] < 0 || numbers[i] > 60){
-                throw new IllegalArgumentException("Number INVALID: " + numbers[i]);
+    public void validate(List<Integer> numbers) {
+        for (int i = 0; i < numbers.size(); i++) {
+            if (numbers.get(i) < 0 || numbers.get(i) > 60){
+                throw new IllegalArgumentException("Number INVALID: " + numbers.get(i));
             }
         }
     }
