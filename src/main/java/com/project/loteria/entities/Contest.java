@@ -1,36 +1,35 @@
-package com.project.loteria.megasena.entities;
+package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.loteria.megasena.dtos.MSContestDTO;
+import com.project.loteria.dtos.ContestDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
-@Table(name = "tb_contest_megasena")
-public class MSContest implements Serializable {
+@Table(name = "tb_contest")
+public class Contest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer[] drawnNumbers = new Integer[6];
+    private List<Integer> drawnNumbers = new ArrayList<>();
     private String codeContest;
 
 
     @JsonIgnore
     @OneToOne
-    private MSPool pool;
+    private Pool pool;
 
-    public MSContest(){}
+    public Contest(){}
 
-    public MSContest(Long id, Integer[] drawnNumbers, String codeContest) {
+    public Contest(Long id, List<Integer> drawnNumbers, String codeContest) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
         this.codeContest = codeContest;
     }
 
-    public MSContest(MSContestDTO msContestDTO){
-        this.id = msContestDTO.id();
+    public Contest(ContestDTO msContestDTO){
         this.drawnNumbers = msContestDTO.drawNumbers();
         this.codeContest = msContestDTO.codeContest();
     }
@@ -43,11 +42,11 @@ public class MSContest implements Serializable {
         this.id = id;
     }
 
-    public Integer[] getDrawnNumbers() {
+    public List<Integer> getDrawnNumbers() {
         return drawnNumbers;
     }
 
-    public void setDrawnNumbers(Integer[] drawnNumbers) {
+    public void setDrawnNumbers(List<Integer> drawnNumbers) {
         this.drawnNumbers = drawnNumbers;
     }
 
@@ -59,11 +58,11 @@ public class MSContest implements Serializable {
         this.codeContest = codeContest;
     }
 
-    public MSPool getPool() {
+    public Pool getPool() {
         return pool;
     }
 
-    public void setPool(MSPool pool) {
+    public void setPool(Pool pool) {
         this.pool = pool;
     }
 
@@ -71,7 +70,7 @@ public class MSContest implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MSContest contest = (MSContest) o;
+        Contest contest = (Contest) o;
         return Objects.equals(id, contest.id);
     }
 

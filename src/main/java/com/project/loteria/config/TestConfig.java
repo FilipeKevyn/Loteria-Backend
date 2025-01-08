@@ -1,41 +1,37 @@
 package com.project.loteria.config;
 
-import com.project.loteria.megasena.dtos.MSPoolDTO;
-import com.project.loteria.megasena.entities.MSBet;
-import com.project.loteria.megasena.repositories.MSBetRepository;
+import com.project.loteria.entities.Bet;
+import com.project.loteria.repositories.BetRepository;
 import com.project.loteria.megasena.service.MSBetService;
-import com.project.loteria.megasena.service.MSContestService;
-import com.project.loteria.megasena.service.MSPoolService;
+import com.project.loteria.service.ContestService;
+import com.project.loteria.service.PoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
     @Autowired
-    private MSContestService contestService;
+    private ContestService contestService;
 
     @Autowired
     private MSBetService betService;
 
     @Autowired
-    MSBetRepository betRepository;
+    BetRepository betRepository;
 
     @Autowired
-    private MSPoolService poolService;
+    private PoolService poolService;
     @Override
     public void run(String... args) throws Exception {
-        MSPoolDTO dto = new MSPoolDTO("oi");
-        poolService.createPool(dto);
+//        MSPoolDTO dto = new MSPoolDTO("oi");
+//        poolService.createPool(dto);
 
-        Integer[] jogo = new Integer[]{1,2,3,4,5,6,7,8,9,10};
-        MSBet bet1 = new MSBet(null, "312", jogo, 10);
-
-        betService.addBetToPool(1L, bet1);
+//        Integer[] jogo = new Integer[]{1,2,3,4,5,6,7,8,9,10};
+//        Bet bet1 = new Bet(null, "312", jogo, 10);
+//
+//        betService.addBetToPool(1L, bet1);
     }
 }

@@ -1,7 +1,7 @@
-package com.project.loteria.megasena.entities;
+package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.loteria.megasena.dtos.MSBetDTO;
+import com.project.loteria.dtos.BetDTO;
 import com.project.loteria.service.MathService;
 import jakarta.persistence.*;
 
@@ -11,40 +11,35 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_bets_megasena")
-public class MSBet implements Serializable {
+@Table(name = "tb_bets")
+public class Bet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String code;
     private double valueInvested;
-    private int quantityNumbers;
-    private Integer[] bet = new Integer[quantityNumbers];
+    private int quantityNumbers = 0;
+    private List<Integer> bet = new ArrayList<>();
     private int matched;
     @ManyToOne
     @JoinColumn(name = "contest_id")
-    private MSContest contest;
+    private Contest contest;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pool_id")
-    private MSPool pool;
+    private Pool pool;
 
-    public MSBet(){}
+    public Bet(){}
 
-    public MSBet(Long id, String code, Integer[] bet, int quantityNumbers) {
+    public Bet(Long id, List<Integer> bet, int quantityNumbers) {
         this.id = id;
-        this.code = code;
         this.bet = bet;
         this.quantityNumbers = quantityNumbers;
         valueInvested = MathService.combination(quantityNumbers, 6) * 5;
     }
 
-    public MSBet(MSBetDTO msBetDTO){
-        this.id = msBetDTO.id();
-        this.code = msBetDTO.code();
+    public Bet(BetDTO msBetDTO){
         this.bet = msBetDTO.bet();
-        this.quantityNumbers = msBetDTO.quantityNumbers();
+        setQuantityNumbers(bet.size());
         valueInvested = MathService.combination(quantityNumbers, 6) * 5;
     }
 
@@ -56,19 +51,11 @@ public class MSBet implements Serializable {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer[] getBet() {
+    public List<Integer> getBet() {
         return bet;
     }
 
-    public void setBet(Integer[] bet) {
+    public void setBet(List<Integer> bet) {
         this.bet = bet;
     }
 
@@ -96,11 +83,11 @@ public class MSBet implements Serializable {
         this.matched = matched;
     }
 
-    public MSPool getPool() {
+    public Pool getPool() {
         return pool;
     }
 
-    public void setPool(MSPool pool) {
+    public void setPool(Pool pool) {
         this.pool = pool;
     }
 
@@ -108,7 +95,7 @@ public class MSBet implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MSBet bet = (MSBet) o;
+        Bet bet = (Bet) o;
         return Objects.equals(id, bet.id);
     }
 

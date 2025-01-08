@@ -1,7 +1,7 @@
 package com.project.loteria.megasena.controller;
 
-import com.project.loteria.megasena.dtos.MSBetDTO;
-import com.project.loteria.megasena.entities.MSBet;
+import com.project.loteria.dtos.BetDTO;
+import com.project.loteria.entities.Bet;
 import com.project.loteria.megasena.service.MSBetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,13 +15,13 @@ public class MSBetController {
     private MSBetService betService;
 
     @GetMapping(value = "/{id}")
-    private ResponseEntity<MSBet> findById(@PathVariable Long id){
-        MSBet bet = betService.findById(id);
+    private ResponseEntity<Bet> findById(@PathVariable Long id){
+        Bet bet = betService.findById(id);
         return ResponseEntity.ok().body(bet);
     }
     @PostMapping(value = "/{poolId}")
-    public ResponseEntity<MSBet> addBet(@PathVariable Long poolId, @RequestBody MSBetDTO obj){
-        MSBet bet = new MSBet(obj);
+    public ResponseEntity<Bet> addBet(@PathVariable Long poolId, @RequestBody BetDTO obj){
+        Bet bet = new Bet(obj);
         betService.addBetToPool(poolId, bet);
         return ResponseEntity.status(HttpStatus.CREATED).body(bet);
     }
