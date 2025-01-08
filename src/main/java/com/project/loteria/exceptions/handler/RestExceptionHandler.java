@@ -17,7 +17,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(PoolNotFoundException.class)
-    public ResponseEntity<String> poolNotFoundHandler(BetNotFoundException e) {
+    public ResponseEntity<String> poolNotFoundHandler(PoolNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
