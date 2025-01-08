@@ -17,7 +17,7 @@ public class Bet implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double valueInvested;
-    private int quantityNumbers;
+    private int quantityNumbers = 0;
     private List<Integer> bet = new ArrayList<>();
     private int matched;
     @ManyToOne
@@ -38,9 +38,8 @@ public class Bet implements Serializable {
     }
 
     public Bet(BetDTO msBetDTO){
-        this.id = msBetDTO.id();
         this.bet = msBetDTO.bet();
-        this.quantityNumbers = msBetDTO.quantityNumbers();
+        setQuantityNumbers(bet.size());
         valueInvested = MathService.combination(quantityNumbers, 6) * 5;
     }
 
@@ -61,7 +60,7 @@ public class Bet implements Serializable {
     }
 
     public int getQuantityNumbers() {
-        return bet.size();
+        return quantityNumbers;
     }
 
     public void setQuantityNumbers(int quantityNumbers) {

@@ -30,7 +30,6 @@ public class Contest implements Serializable {
     }
 
     public Contest(ContestDTO msContestDTO){
-        this.id = msContestDTO.id();
         this.drawnNumbers = msContestDTO.drawNumbers();
         this.codeContest = msContestDTO.codeContest();
     }
