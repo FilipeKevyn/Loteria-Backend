@@ -24,6 +24,7 @@ public class PoolController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createPool(dto));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{poolId}/bets")
     public List<Bet> getAllBets(@PathVariable Long poolId){
         return service.getAllBets(service.findById(poolId));
