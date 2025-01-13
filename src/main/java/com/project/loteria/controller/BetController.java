@@ -1,18 +1,18 @@
-package com.project.loteria.megasena.controller;
+package com.project.loteria.controller;
 
 import com.project.loteria.dtos.BetDTO;
 import com.project.loteria.entities.Bet;
-import com.project.loteria.megasena.service.MSBetService;
+import com.project.loteria.service.BetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/megasena_bet")
-public class MSBetController {
+@RequestMapping(value = "/bet")
+public class BetController {
     @Autowired
-    private MSBetService betService;
+    private BetService betService;
 
     @GetMapping(value = "/{id}")
     private ResponseEntity<Bet> findById(@PathVariable Long id){

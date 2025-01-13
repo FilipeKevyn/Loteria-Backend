@@ -1,8 +1,7 @@
 package com.project.loteria.config;
 
-import com.project.loteria.entities.Bet;
 import com.project.loteria.repositories.BetRepository;
-import com.project.loteria.megasena.service.MSBetService;
+import com.project.loteria.service.BetService;
 import com.project.loteria.service.ContestService;
 import com.project.loteria.service.PoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class TestConfig implements CommandLineRunner {
     private ContestService contestService;
 
     @Autowired
-    private MSBetService betService;
+    private BetService betService;
 
     @Autowired
     BetRepository betRepository;

@@ -1,21 +1,17 @@
-package com.project.loteria.megasena.service;
+package com.project.loteria.service;
 
 import com.project.loteria.exceptions.BetNotFoundException;
-import com.project.loteria.interfaces.BetService;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.repositories.BetRepository;
-import com.project.loteria.service.PoolService;
-import com.project.loteria.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MSBetService implements BetService{
+public class BetService implements com.project.loteria.interfaces.BetService {
     @Autowired
     private BetRepository betRepository;
 
@@ -31,7 +27,6 @@ public class MSBetService implements BetService{
         return bet.orElseThrow(() -> new BetNotFoundException(id));
     }
     public Bet insert(Bet obj){
-        validate(obj.getBet());
         return betRepository.save(obj);
     }
 
@@ -48,14 +43,6 @@ public class MSBetService implements BetService{
     public void setMatched(Bet bet, int matched){
         bet.setMatched(matched);
         betRepository.save(bet);
-    }
-
-    public void validate(List<Integer> numbers) {
-        for (int i = 0; i < numbers.size(); i++) {
-            if (numbers.get(i) < 0 || numbers.get(i) > 60){
-                throw new IllegalArgumentException("Number INVALID: " + numbers.get(i));
-            }
-        }
     }
 
 }

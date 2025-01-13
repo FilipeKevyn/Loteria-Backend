@@ -1,8 +1,8 @@
-package com.project.loteria.megasena.controller;
+package com.project.loteria.controller;
 
 import com.project.loteria.dtos.ContestDTO;
 import com.project.loteria.entities.Contest;
-import com.project.loteria.megasena.service.MSBetService;
+import com.project.loteria.service.BetService;
 import com.project.loteria.service.ContestService;
 import com.project.loteria.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/contest")
-public class MSContestController {
+public class ContestController {
     @Autowired
     private ContestService contestService;
 
     @Autowired
-    private MSBetService betService;
+    private BetService betService;
 
     @Autowired
     private ResultService resultService;
