@@ -19,6 +19,8 @@ public class MSBetController {
         Bet bet = betService.findById(id);
         return ResponseEntity.ok().body(bet);
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
     public ResponseEntity<Bet> addBet(@PathVariable Long poolId, @RequestBody BetDTO obj){
         Bet bet = new Bet(obj);

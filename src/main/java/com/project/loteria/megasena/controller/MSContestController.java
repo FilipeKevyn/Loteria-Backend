@@ -28,6 +28,7 @@ public class MSContestController {
         return ResponseEntity.ok().body(contest);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
     public ResponseEntity<Contest> addContest(@PathVariable Long poolId, @RequestBody ContestDTO obj){
         Contest contest = new Contest(obj);
