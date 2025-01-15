@@ -31,6 +31,12 @@ public class PoolController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/{poolId}")
+    public ResponseEntity<Pool> getPool(@PathVariable Long poolId) {
+        return ResponseEntity.ok().body(service.findById(poolId));
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity<List<Pool>> getAll(){
         return ResponseEntity.ok().body(service.findAll());
