@@ -20,9 +20,7 @@ public class Bet implements Serializable {
     private int quantityNumbers = 0;
     private List<Integer> bet = new ArrayList<>();
     private int matched;
-    @ManyToOne
-    @JoinColumn(name = "contest_id")
-    private Contest contest;
+    private String gameType;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pool_id")
@@ -30,17 +28,11 @@ public class Bet implements Serializable {
 
     public Bet(){}
 
-    public Bet(Long id, List<Integer> bet, int quantityNumbers) {
-        this.id = id;
-        this.bet = bet;
-        this.quantityNumbers = quantityNumbers;
-        valueInvested = MathService.combination(quantityNumbers, 6) * 5;
-    }
-
     public Bet(BetDTO msBetDTO){
         this.bet = msBetDTO.bet();
+        this.gameType = msBetDTO.gameType();
         setQuantityNumbers(bet.size());
-        valueInvested = MathService.combination(quantityNumbers, 6) * 5;
+        setValueInvested(gameType, quantityNumbers);
     }
 
     public Long getId() {
@@ -71,8 +63,8 @@ public class Bet implements Serializable {
         return valueInvested;
     }
 
-    public void setValueInvested(double valueInvested) {
-        this.valueInvested = valueInvested;
+    public void setValueInvested(String type, int quantityNumbers) {
+        this.valueInvested = MathService.calculateValueInvested(type, quantityNumbers);
     }
 
     public int getMatched() {
@@ -89,6 +81,14 @@ public class Bet implements Serializable {
 
     public void setPool(Pool pool) {
         this.pool = pool;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setType() {
+        this.gameType = pool.getType();
     }
 
     @Override

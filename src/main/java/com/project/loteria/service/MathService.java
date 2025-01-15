@@ -18,4 +18,13 @@ public class MathService {
 
         return numerator / denominator;
     }
+
+    public static double calculateValueInvested(String type, int quantityNumbers){
+        if (type.contains("Mega-Sena")){
+            return MathService.combination(quantityNumbers, 6) * 5;
+        } else if (type.contains("Lotofácil")) {
+            return MathService.combination(quantityNumbers, 15) * 3;
+        }
+        throw new IllegalArgumentException();
+    }
 }
