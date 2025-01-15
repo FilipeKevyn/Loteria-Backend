@@ -29,10 +29,8 @@ public class ResultService implements com.project.loteria.interfaces.ResultServi
         List<Bet> bets = poolService.getAllBets(pool);
 
         for (Bet bet : bets){
-            if (bet.getMatched() == 0){
-                int matched = verifyMatched(bet.getBet(), drawnNumbers);
-                betService.setMatched(bet, matched);
-            }
+            int matched = verifyMatched(bet.getBet(), drawnNumbers);
+            betService.setMatched(bet, matched);
         }
     }
 

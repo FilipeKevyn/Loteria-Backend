@@ -32,7 +32,6 @@ public class ContestController {
     @PostMapping(value = "/{poolId}")
     public ResponseEntity<Contest> addContest(@PathVariable Long poolId, @RequestBody ContestDTO obj){
         Contest contest = new Contest(obj);
-        contest = contestService.insert(contest);
         contestService.setContestInPool(poolId, contest);
         resultService.verifyAllBets(poolId);
         return ResponseEntity.status(HttpStatus.CREATED).body(contest);

@@ -20,6 +20,10 @@ public class PoolService implements com.project.loteria.interfaces.PoolService {
         return repository.save(pool);
     }
 
+    public Pool update(Pool pool){
+        return repository.save(pool);
+    }
+
     public Pool findById(Long id){
         return repository.findById(id).orElseThrow(() -> new PoolNotFoundException(id));
     }

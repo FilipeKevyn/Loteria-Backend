@@ -14,7 +14,7 @@ public class ContestService implements com.project.loteria.interfaces.ContestSer
     private ContestRepository contestRepository;
 
     @Autowired
-    private PoolService msPoolService;
+    private PoolService poolService;
 
     public Contest findById(Long id){
         Optional<Contest> contest = contestRepository.findById(id);
@@ -26,9 +26,21 @@ public class ContestService implements com.project.loteria.interfaces.ContestSer
     }
 
     public void setContestInPool(Long id, Contest contest){
-        Contest contestSaved = insert(contest);
-        Pool pool = msPoolService.findById(id);
-        pool.setContest(contestSaved);
-        contestSaved.setPool(pool);
+        Pool pool = poolService.findById(id);
+        if (pool.getContest() != null){
+            updateContest(pool);
+        }
+        pool.setContest(contest);
+        contest.setPool(pool);
+        contestRepository.save(contest);
+        poolService.update(pool);
+    }
+
+    public void updateContest(Pool pool){
+        Contest contest = pool.getContest();
+        pool.setContest(null);
+        poolService.update(pool);
+
+        contestRepository.delete(contest);
     }
 }
