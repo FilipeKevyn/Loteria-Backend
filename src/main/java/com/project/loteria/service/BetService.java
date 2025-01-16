@@ -6,6 +6,8 @@ import com.project.loteria.entities.Pool;
 import com.project.loteria.repositories.BetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,6 +30,11 @@ public class BetService implements com.project.loteria.interfaces.BetService {
     }
     public Bet insert(Bet obj){
         return betRepository.save(obj);
+    }
+
+    public Page<Bet> findBetsByPool(Long poolId, Pageable pageable){
+        Pool pool = poolService.findById(poolId);
+        return betRepository.findByPool(pool, pageable);
     }
 
     public void addBetToPool(Long poolId, Bet bet){

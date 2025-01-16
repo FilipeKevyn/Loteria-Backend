@@ -27,7 +27,7 @@ public class Pool implements Serializable {
     private Contest contest;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pool", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pool", fetch = FetchType.LAZY)
     private Set<Bet> bets = new HashSet<>();
 
     public Pool(String name){
