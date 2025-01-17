@@ -23,6 +23,7 @@ public class BetController {
         return ResponseEntity.ok().body(bet);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{poolId}/")
     public ResponseEntity<Page<Bet>> getBetsByPool(@PathVariable Long poolId,
                                    @RequestParam(defaultValue = "0") int page,
