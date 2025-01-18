@@ -22,12 +22,6 @@ public class ContestController {
     @Autowired
     private ResultService resultService;
 
-    @GetMapping(value = "/{id}")
-    private ResponseEntity<Contest> findById(@PathVariable Long id){
-        Contest contest = contestService.findById(id);
-        return ResponseEntity.ok().body(contest);
-    }
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
     public ResponseEntity<Contest> addContest(@PathVariable Long poolId, @RequestBody ContestDTO obj){

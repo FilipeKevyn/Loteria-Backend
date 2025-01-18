@@ -17,12 +17,6 @@ public class BetController {
     @Autowired
     private BetService betService;
 
-    @GetMapping(value = "/{id}")
-    private ResponseEntity<Bet> findById(@PathVariable Long id){
-        Bet bet = betService.findById(id);
-        return ResponseEntity.ok().body(bet);
-    }
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{poolId}/")
     public ResponseEntity<Page<Bet>> getBetsByPool(@PathVariable Long poolId,

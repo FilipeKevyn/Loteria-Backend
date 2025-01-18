@@ -1,7 +1,6 @@
 package com.project.loteria.service;
 
 import com.project.loteria.exceptions.BetAlreadyExistsException;
-import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.repositories.BetRepository;
@@ -11,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,10 +26,6 @@ public class BetService implements com.project.loteria.interfaces.BetService {
     @Lazy
     private ResultService resultService;
 
-    public Bet findById(Long id){
-        Optional<Bet> bet = betRepository.findById(id);
-        return bet.orElseThrow(() -> new BetNotFoundException(id));
-    }
     public Bet insert(Bet obj){
         return betRepository.save(obj);
     }

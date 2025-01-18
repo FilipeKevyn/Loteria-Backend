@@ -1,13 +1,11 @@
 package com.project.loteria.service;
 
 import com.project.loteria.dtos.PoolDTO;
-import com.project.loteria.exceptions.PoolNotFoundException;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
+import com.project.loteria.exceptions.PoolNotFoundException;
 import com.project.loteria.repositories.PoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
