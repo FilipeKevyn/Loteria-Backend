@@ -1,5 +1,6 @@
 package com.project.loteria.service;
 
+import com.project.loteria.exceptions.BetAlreadyExistsException;
 import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
@@ -64,18 +65,18 @@ public class BetService implements com.project.loteria.interfaces.BetService {
         betRepository.save(bet);
     }
 
-    public List<Integer> sortBet(List<Integer> bet) {
-        List<Integer> betSorted = bet.stream().sorted().collect(Collectors.toList());
-        return betSorted;
-    }
-
     public Bet prepareBet(Bet bet, Pool pool){
         bet.setBet(sortBet(bet.getBet()));
         if (verifySameBet(bet, pool)) {
-            throw new IllegalArgumentException(); // fazer exception personalizada
+            throw new BetAlreadyExistsException();
         }
         bet.setPool(pool);
         return insert(bet);
+    }
+
+    public List<Integer> sortBet(List<Integer> bet) {
+        List<Integer> betSorted = bet.stream().sorted().collect(Collectors.toList());
+        return betSorted;
     }
 
 }
