@@ -1,5 +1,6 @@
 package com.project.loteria.controller;
 
+import com.project.loteria.dtos.BetDTO;
 import com.project.loteria.dtos.PoolDTO;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
@@ -26,8 +27,10 @@ public class PoolController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{poolId}/bets")
-    public List<Bet> getAllBets(@PathVariable Long poolId){
-        return service.getAllBets(service.findById(poolId));
+    public List<BetDTO> getAllBets(@PathVariable Long poolId){
+        return service.getAllBets(service.findById(poolId))
+                .stream().map(e -> new BetDTO(e.getBet(), e.getGameType()))
+                .toList();
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")

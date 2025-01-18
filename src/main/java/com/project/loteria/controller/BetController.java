@@ -29,9 +29,10 @@ public class BetController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
-    public ResponseEntity<Bet> addBet(@PathVariable Long poolId, @RequestBody BetDTO obj){
+    public ResponseEntity<BetDTO> addBet(@PathVariable Long poolId, @RequestBody BetDTO obj){
         Bet bet = new Bet(obj);
         betService.addBetToPool(poolId, bet);
-        return ResponseEntity.status(HttpStatus.CREATED).body(bet);
+        BetDTO betDTO = new BetDTO(bet.getBet(), bet.getGameType());
+        return ResponseEntity.status(HttpStatus.CREATED).body(betDTO);
     }
 }

@@ -24,10 +24,11 @@ public class ContestController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
-    public ResponseEntity<Contest> addContest(@PathVariable Long poolId, @RequestBody ContestDTO obj){
+    public ResponseEntity<ContestDTO> addContest(@PathVariable Long poolId, @RequestBody ContestDTO obj){
         Contest contest = new Contest(obj);
         contestService.setContestInPool(poolId, contest);
         resultService.verifyAllBets(poolId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(contest);
+        ContestDTO contestDTO = new ContestDTO(contest.getCodeContest(), contest.getDrawnNumbers());
+        return ResponseEntity.status(HttpStatus.CREATED).body(contestDTO);
     }
 }
