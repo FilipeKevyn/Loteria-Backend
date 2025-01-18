@@ -10,7 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BetService implements com.project.loteria.interfaces.BetService {
@@ -39,17 +43,39 @@ public class BetService implements com.project.loteria.interfaces.BetService {
 
     public void addBetToPool(Long poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
-        bet.setPool(pool);
-        Bet betSaved = insert(bet);
+        Bet betSaved = prepareBet(bet, pool);
         if (pool.getContest() != null) {
             resultService.verifyBet(poolId, betSaved);
         }
         poolService.addBetToPool(pool, betSaved);
     }
 
+    public boolean verifySameBet(Bet bet, Pool pool){
+        for (Bet bet1 : pool.getBets()){
+            if (bet1.getBet().equals(bet.getBet())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setMatched(Bet bet, int matched){
         bet.setMatched(matched);
         betRepository.save(bet);
+    }
+
+    public List<Integer> sortBet(List<Integer> bet) {
+        List<Integer> betSorted = bet.stream().sorted().collect(Collectors.toList());
+        return betSorted;
+    }
+
+    public Bet prepareBet(Bet bet, Pool pool){
+        bet.setBet(sortBet(bet.getBet()));
+        if (verifySameBet(bet, pool)) {
+            throw new IllegalArgumentException(); // fazer exception personalizada
+        }
+        bet.setPool(pool);
+        return insert(bet);
     }
 
 }
