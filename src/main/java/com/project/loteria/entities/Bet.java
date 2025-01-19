@@ -32,7 +32,6 @@ public class Bet implements Serializable {
         this.bet = msBetDTO.bet();
         this.gameType = msBetDTO.gameType();
         setQuantityNumbers(bet.size());
-        setValueInvested(gameType, quantityNumbers);
     }
 
     public Long getId() {
@@ -63,8 +62,8 @@ public class Bet implements Serializable {
         return valueInvested;
     }
 
-    public void setValueInvested(String type, int quantityNumbers) {
-        this.valueInvested = MathService.calculateValueInvested(type, quantityNumbers);
+    public void setValueInvested(double valueInvested) {
+        this.valueInvested = valueInvested;
     }
 
     public int getMatched() {
