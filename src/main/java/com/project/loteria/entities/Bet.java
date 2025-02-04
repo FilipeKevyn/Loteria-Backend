@@ -2,13 +2,11 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.BetDTO;
-import com.project.loteria.service.MathService;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "tb_bets")
@@ -18,7 +16,7 @@ public class Bet implements Serializable {
     private Long id;
     private double valueInvested;
     private int quantityNumbers = 0;
-    private List<Integer> bet = new ArrayList<>();
+    private List<Integer> betNumbers = new ArrayList<>();
     private int matched;
     private String gameType;
     @JsonIgnore
@@ -29,9 +27,9 @@ public class Bet implements Serializable {
     public Bet(){}
 
     public Bet(BetDTO msBetDTO){
-        this.bet = msBetDTO.bet();
+        this.betNumbers = msBetDTO.betNumbers();
         this.gameType = msBetDTO.gameType();
-        setQuantityNumbers(bet.size());
+        setQuantityNumbers(betNumbers.size());
     }
 
     public Long getId() {
@@ -42,12 +40,12 @@ public class Bet implements Serializable {
         this.id = id;
     }
 
-    public List<Integer> getBet() {
-        return bet;
+    public List<Integer> getBetNumbers() {
+        return betNumbers;
     }
 
-    public void setBet(List<Integer> bet) {
-        this.bet = bet;
+    public void setBetNumbers(List<Integer> betNumbers) {
+        this.betNumbers = betNumbers;
     }
 
     public int getQuantityNumbers() {
@@ -90,16 +88,4 @@ public class Bet implements Serializable {
         this.gameType = pool.getType();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Bet bet = (Bet) o;
-        return Objects.equals(id, bet.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

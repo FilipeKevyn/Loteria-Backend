@@ -1,18 +1,14 @@
 package com.project.loteria.service;
 
-import com.project.loteria.interfaces.BetService;
-import com.project.loteria.interfaces.PoolService;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class ResultService implements com.project.loteria.interfaces.ResultService {
+public class ResultService {
     @Autowired
     private PoolService poolService;
 
@@ -29,14 +25,14 @@ public class ResultService implements com.project.loteria.interfaces.ResultServi
         List<Bet> bets = poolService.getAllBets(pool);
 
         for (Bet bet : bets){
-            int matched = verifyMatched(bet.getBet(), drawnNumbers);
+            int matched = verifyMatched(bet.getBetNumbers(), drawnNumbers);
             betService.setMatched(bet, matched);
         }
     }
 
     public void verifyBet(Long poolId, Bet bet){
         List<Integer> drawNumbers = poolService.findById(poolId).getContest().getDrawnNumbers();
-        int matched = verifyMatched(bet.getBet(), drawNumbers);
+        int matched = verifyMatched(bet.getBetNumbers(), drawNumbers);
         betService.setMatched(bet, matched);
     }
 

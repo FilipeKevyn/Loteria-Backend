@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ContestService implements com.project.loteria.interfaces.ContestService {
+public class ContestService {
     @Autowired
     private ContestRepository contestRepository;
 
