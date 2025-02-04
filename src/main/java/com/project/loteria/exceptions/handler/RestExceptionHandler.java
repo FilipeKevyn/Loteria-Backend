@@ -1,6 +1,7 @@
 package com.project.loteria.exceptions.handler;
 
 import com.project.loteria.exceptions.BetAlreadyExistsException;
+import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.exceptions.PoolNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PoolNotFoundException.class)
-    public ResponseEntity<String> poolNotFoundHandler(PoolNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ResponseEntity<RestErrorMensage> poolNotFoundHandler(PoolNotFoundException e) {
+        RestErrorMensage response = new RestErrorMensage(HttpStatus.NOT_FOUND, e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(BetAlreadyExistsException.class)
@@ -22,4 +24,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
+    @ExceptionHandler(BetNotFoundException.class)
+    public ResponseEntity<RestErrorMensage> betNotFoundHandler(BetNotFoundException e){
+        RestErrorMensage response = new RestErrorMensage(HttpStatus.NOT_FOUND, e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 }
