@@ -11,13 +11,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PoolService implements com.project.loteria.interfaces.PoolService {
+public class PoolService {
     @Autowired
     private PoolRepository repository;
 
     public Pool createPool(PoolDTO poolDTO){
         Pool pool = new Pool(poolDTO);
         return repository.save(pool);
+    }
+
+    public void deletePool(Long id){
+        Pool pool = findById(id);
+        repository.delete(pool);
     }
 
     public Pool update(Pool pool){

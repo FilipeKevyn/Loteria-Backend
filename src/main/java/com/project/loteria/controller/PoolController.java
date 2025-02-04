@@ -2,7 +2,6 @@ package com.project.loteria.controller;
 
 import com.project.loteria.dtos.BetDTO;
 import com.project.loteria.dtos.PoolDTO;
-import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.service.PoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class PoolController {
     @GetMapping(value = "/{poolId}/bets")
     public List<BetDTO> getAllBets(@PathVariable Long poolId){
         return service.getAllBets(service.findById(poolId))
-                .stream().map(e -> new BetDTO(e.getBet(), e.getGameType()))
+                .stream().map(e -> new BetDTO(e.getBetNumbers(), e.getGameType()))
                 .toList();
     }
 
@@ -43,5 +42,11 @@ public class PoolController {
     @GetMapping
     public ResponseEntity<List<Pool>> getAll(){
         return ResponseEntity.ok().body(service.findAll());
+    }
+
+    @DeleteMapping(value = "/{poolId}")
+    public ResponseEntity<Void> deletePool(@PathVariable Long poolId){
+        service.deletePool(poolId);
+        return ResponseEntity.noContent().build();
     }
 }

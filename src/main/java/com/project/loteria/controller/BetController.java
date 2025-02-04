@@ -32,7 +32,13 @@ public class BetController {
     public ResponseEntity<BetDTO> addBet(@PathVariable Long poolId, @RequestBody BetDTO obj){
         Bet bet = new Bet(obj);
         betService.addBetToPool(poolId, bet);
-        BetDTO betDTO = new BetDTO(bet.getBet(), bet.getGameType());
+        BetDTO betDTO = new BetDTO(bet.getBetNumbers(), bet.getGameType());
         return ResponseEntity.status(HttpStatus.CREATED).body(betDTO);
+    }
+
+    @DeleteMapping(value = "/{betId}")
+    public ResponseEntity<Void> deleteBet(@PathVariable Long betId){
+        betService.delete(betId);
+        return ResponseEntity.noContent().build();
     }
 }

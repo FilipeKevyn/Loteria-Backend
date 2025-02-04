@@ -3,6 +3,7 @@ package com.project.loteria.service;
 import com.project.loteria.exceptions.BetAlreadyExistsException;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
+import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.interfaces.GameTypeStrategy;
 import com.project.loteria.repositories.BetRepository;
 import com.project.loteria.service.strategy.LotofacilStrategy;
@@ -15,10 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
-public class BetService implements com.project.loteria.interfaces.BetService {
+public class BetService {
     @Autowired
     private BetRepository betRepository;
 
@@ -36,13 +36,17 @@ public class BetService implements com.project.loteria.interfaces.BetService {
         return betRepository.save(obj);
     }
 
+    public Bet findById(Long id){
+        return betRepository.findById(id).orElseThrow(() -> new BetNotFoundException());
+    }
+
     public Page<Bet> findBetsByPool(Long poolId, Pageable pageable){
         Pool pool = poolService.findById(poolId);
         return betRepository.findByPool(pool, pageable);
     }
 
     public Bet prepareBet(Bet bet, Pool pool){
-        bet.setBet(sortBet(bet.getBet()));
+        bet.setBetNumbers(sortBet(bet.getBetNumbers()));
         if (verifySameBet(bet, pool)) {
             throw new BetAlreadyExistsException();
         }
@@ -62,7 +66,7 @@ public class BetService implements com.project.loteria.interfaces.BetService {
 
     public boolean verifySameBet(Bet bet, Pool pool){
         for (Bet bet1 : pool.getBets()){
-            if (bet1.getBet().equals(bet.getBet())) {
+            if (bet1.getBetNumbers().equals(bet.getBetNumbers())) {
                 return true;
             }
         }
@@ -81,8 +85,12 @@ public class BetService implements com.project.loteria.interfaces.BetService {
     }
 
     public List<Integer> sortBet(List<Integer> bet) {
-        List<Integer> betSorted = bet.stream().sorted().collect(Collectors.toList());
-        return betSorted;
+         return bet.stream().sorted().toList();
+    }
+
+    public void delete(Long id){
+        Bet bet = findById(id);
+        betRepository.delete(bet);
     }
 
 }
