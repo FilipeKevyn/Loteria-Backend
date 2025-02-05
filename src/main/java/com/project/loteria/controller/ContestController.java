@@ -24,7 +24,7 @@ public class ContestController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
-    public ResponseEntity<ContestDTO> addContest(@PathVariable Long poolId, @RequestBody ContestDTO obj){
+    public ResponseEntity<ContestDTO> create(@PathVariable Long poolId, @RequestBody ContestDTO obj){
         Contest contest = new Contest(obj);
         contestService.setContestInPool(poolId, contest);
         resultService.verifyAllBets(poolId);

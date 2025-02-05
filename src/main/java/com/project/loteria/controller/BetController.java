@@ -19,7 +19,7 @@ public class BetController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{poolId}/")
-    public ResponseEntity<Page<Bet>> getBetsByPool(@PathVariable Long poolId,
+    public ResponseEntity<Page<Bet>> findByPool(@PathVariable Long poolId,
                                    @RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size){
         Pageable pageable = PageRequest.of(page, size);
@@ -29,7 +29,7 @@ public class BetController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
-    public ResponseEntity<BetDTO> addBet(@PathVariable Long poolId, @RequestBody BetDTO obj){
+    public ResponseEntity<BetDTO> create(@PathVariable Long poolId, @RequestBody BetDTO obj){
         Bet bet = new Bet(obj);
         betService.addBetToPool(poolId, bet);
         BetDTO betDTO = new BetDTO(bet.getBetNumbers(), bet.getGameType());
@@ -37,7 +37,7 @@ public class BetController {
     }
 
     @DeleteMapping(value = "/{betId}")
-    public ResponseEntity<Void> deleteBet(@PathVariable Long betId){
+    public ResponseEntity<Void> remove(@PathVariable Long betId){
         betService.delete(betId);
         return ResponseEntity.noContent().build();
     }

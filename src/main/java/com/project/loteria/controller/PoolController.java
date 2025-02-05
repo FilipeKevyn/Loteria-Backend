@@ -26,7 +26,7 @@ public class PoolController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{poolId}/bets")
-    public List<BetDTO> getAllBets(@PathVariable Long poolId){
+    public List<BetDTO> findBetsByPoolId(@PathVariable Long poolId){
         return service.getAllBets(service.findById(poolId))
                 .stream().map(e -> new BetDTO(e.getBetNumbers(), e.getGameType()))
                 .toList();
@@ -34,7 +34,7 @@ public class PoolController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{poolId}")
-    public ResponseEntity<Pool> getPool(@PathVariable Long poolId) {
+    public ResponseEntity<Pool> findPoolById(@PathVariable Long poolId) {
         return ResponseEntity.ok().body(service.findById(poolId));
     }
 
@@ -45,7 +45,7 @@ public class PoolController {
     }
 
     @DeleteMapping(value = "/{poolId}")
-    public ResponseEntity<Void> deletePool(@PathVariable Long poolId){
+    public ResponseEntity<Void> remove(@PathVariable Long poolId){
         service.deletePool(poolId);
         return ResponseEntity.noContent().build();
     }
