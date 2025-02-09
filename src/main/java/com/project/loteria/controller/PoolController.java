@@ -44,6 +44,7 @@ public class PoolController {
         return ResponseEntity.ok().body(service.findAll());
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping(value = "/{poolId}")
     public ResponseEntity<Void> remove(@PathVariable Long poolId){
         service.deletePool(poolId);
