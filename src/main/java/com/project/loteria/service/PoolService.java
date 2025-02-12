@@ -43,12 +43,17 @@ public class PoolService {
 
     public void addBetToPool(Pool pool, Bet bet){
         pool.getBets().add(bet);
-        setValueTotal(pool, bet);
+        sumValueTotal(pool, bet);
         repository.save(pool);
     }
 
-    public void setValueTotal(Pool pool, Bet bet){
+    public void sumValueTotal(Pool pool, Bet bet){
         double valueTotal = pool.getValueTotal() + bet.getValueInvested();
+        pool.setValueTotal(valueTotal);
+    }
+
+    public void subtractValueTotal(Pool pool, Bet bet){
+        double valueTotal = pool.getValueTotal() - bet.getValueInvested();
         pool.setValueTotal(valueTotal);
     }
 }

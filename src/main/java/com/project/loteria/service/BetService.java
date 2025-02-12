@@ -90,6 +90,8 @@ public class BetService {
 
     public void delete(Long id){
         Bet bet = findById(id);
+        Pool pool = bet.getPool();
+        poolService.subtractValueTotal(pool, bet);
         betRepository.delete(bet);
     }
 

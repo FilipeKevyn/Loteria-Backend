@@ -36,6 +36,7 @@ public class BetController {
         return ResponseEntity.status(HttpStatus.CREATED).body(betDTO);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping(value = "/{betId}")
     public ResponseEntity<Void> remove(@PathVariable Long betId){
         betService.delete(betId);
