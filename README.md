@@ -38,9 +38,9 @@ _Request Body:_
 
 ### POOL (Bolões)
 
-#### Criar Bolão
+- Criar Bolão
 
-**POST** `/pool/create`
+  **POST** `/pool/create`
 
 _Request Body:_
 ```json
@@ -50,19 +50,20 @@ _Request Body:_
 }
 ```
 
-#### Encontrar todos os bolões
+- Encontrar todos os bolões
 
-**GET** `/pool`
+  **GET** `/pool`
 
-#### Remover bolão
+- Remover bolão
 
-**DELETE** `/pool/{poolId}`
+  **DELETE** `/pool/{poolId}`
 
 ---
 
 ### CONTEST (Concursos)
 
-#### Adicionar concurso ao bolão
+- Adicionar concurso ao bolão
+  
   **POST** `/contest/{poolID}`
 
 _Request Body:_
