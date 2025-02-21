@@ -16,7 +16,6 @@ public class SwaggerConfig {
                         .version("1.0")
                         .description("API que verifica apostas")
                         .license(new License().name("Apache 2.0")
-                                .url("https://www.apache.org/licenses/LICENSE-2.0")))
-                ;
+                                .url("https://www.apache.org/licenses/LICENSE-2.0")));
     }
 }
