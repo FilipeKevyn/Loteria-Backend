@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class BetService {
@@ -36,7 +37,7 @@ public class BetService {
         return betRepository.save(obj);
     }
 
-    public Bet findById(Long id){
+    public Bet findById(UUID id){
         return betRepository.findById(id).orElseThrow(() -> new BetNotFoundException());
     }
 
@@ -88,7 +89,7 @@ public class BetService {
          return bet.stream().sorted().toList();
     }
 
-    public void delete(Long id){
+    public void delete(UUID id){
         Bet bet = findById(id);
         Pool pool = bet.getPool();
         poolService.subtractValueTotal(pool, bet);

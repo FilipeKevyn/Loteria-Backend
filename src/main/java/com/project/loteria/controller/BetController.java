@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(value = "/bet")
 @Tag(name= "Bet", description = "Endpoints for managing bets")
@@ -90,7 +92,7 @@ public class BetController {
                 })
             }
     )
-    public ResponseEntity<Void> remove(@PathVariable Long betId){
+    public ResponseEntity<Void> remove(@PathVariable UUID betId){
         betService.delete(betId);
         return ResponseEntity.noContent().build();
     }
