@@ -7,13 +7,14 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_bets")
 public class Bet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     private double valueInvested;
     private int quantityNumbers = 0;
     private List<Integer> betNumbers = new ArrayList<>();
@@ -32,11 +33,11 @@ public class Bet implements Serializable {
         setQuantityNumbers(betNumbers.size());
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
