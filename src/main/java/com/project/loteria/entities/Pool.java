@@ -23,7 +23,7 @@ public class Pool implements Serializable {
     private double valueTotal;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Contest contest;
 
     @JsonIgnore
