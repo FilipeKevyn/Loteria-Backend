@@ -8,10 +8,12 @@ Este projeto foi desenvolvido com o objetivo de gerenciar grandes quantias de ap
 - Spring Boot
 - PostgreSQL
 - Swagger
+- Docker
 - Maven
 
 ## 📌 Endpoints
-
+Para uma documentação sólida dos endpoints, execute a aplicação e acesse:
+**localhost:8080/swagger-ui/index.html#/**
 ### BET (Apostas)
 
 - Adicionar nova aposta no bolão
@@ -73,3 +75,26 @@ _Request Body:_
   "drawNumbers": [0]
 }
 ```
+## 🚀 Passos para execução  
+
+### 1️⃣ Clone o repositório  
+```sh
+git clone https://github.com/FilipeKevyn/Loteria-Backend.git
+cd seu-repositorio
+```
+
+### 2️⃣ Criar a imagem Docker  
+```sh
+docker build -t loteria-backend .
+```
+
+### 3️⃣ Executar o container da aplicação  
+```sh
+docker run -p 8080:8080 loteria-backend
+```
+
+## 🌐 Interface Gráfica
+
+Para ter acesso a interface gráfica do projeto, basta acessar o repositório e rodar localmente junto desta aplicação.
+
+👉 [Acesse o repositório](https://github.com/Thoomaz/loteria-frontend)
