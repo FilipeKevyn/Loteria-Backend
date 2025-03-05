@@ -13,7 +13,7 @@ Este projeto foi desenvolvido com o objetivo de gerenciar grandes quantias de ap
 
 ## 📌 Endpoints
 Para uma documentação sólida dos endpoints, execute a aplicação e acesse:
-**localhost:8080/swagger-ui/index.html#/**
+**localhost:8090/swagger-ui/index.html#/**
 ### BET (Apostas)
 
 - Adicionar nova aposta no bolão
