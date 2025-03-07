@@ -76,6 +76,10 @@ _Request Body:_
 }
 ```
 ## 🚀 Passos para execução  
+📥 Pré-requisitos:
+Certifique-se de que possui os seguintes requisitos instalados no seu sistema:
+
+- [Docker](https://www.docker.com/get-started)  
 
 ### 1️⃣ Clone o repositório  
 ```sh
