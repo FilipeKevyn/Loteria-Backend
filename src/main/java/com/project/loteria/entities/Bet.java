@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "tb_bets")
 public class Bet implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private double valueInvested;
     private int quantityNumbers = 0;
