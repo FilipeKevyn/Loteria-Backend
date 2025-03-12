@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: loteria
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/loteria
+      DB_USER: user
+      DB_PASSWORD: senha
+    ports:
+      - "8080:8090"
+
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: loteria
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
