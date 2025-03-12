@@ -13,7 +13,7 @@ Este projeto foi desenvolvido com o objetivo de gerenciar grandes quantias de ap
 
 ## 📌 Endpoints
 Para uma documentação sólida dos endpoints, execute a aplicação e acesse:
-**localhost:8090/swagger-ui/index.html#/**
+**localhost:8080/swagger-ui/index.html#/**
 ### BET (Apostas)
 
 - Adicionar nova aposta no bolão
@@ -79,7 +79,7 @@ _Request Body:_
 📥 Pré-requisitos:
 Certifique-se de que possui os seguintes requisitos instalados no seu sistema:
 
-- [Docker](https://www.docker.com/get-started)  
+- [Docker Compose]((https://docs.docker.com/compose/install/)
 
 ### 1️⃣ Clone o repositório  
 ```sh
@@ -87,14 +87,9 @@ git clone https://github.com/FilipeKevyn/Loteria-Backend.git
 cd seu-repositorio
 ```
 
-### 2️⃣ Criar a imagem Docker  
+### 2️⃣ Executar aplicação via Docker Compose
 ```sh
-docker build -t loteria-backend .
-```
-
-### 3️⃣ Executar o container da aplicação  
-```sh
-docker run -p 8080:8080 loteria-backend
+docker-compose up -d
 ```
 
 ## 🌐 Interface Gráfica
