@@ -79,7 +79,7 @@ _Request Body:_
 📥 Pré-requisitos:
 Certifique-se de que possui os seguintes requisitos instalados no seu sistema:
 
-- [Docker Compose]((https://docs.docker.com/compose/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ### 1️⃣ Clone o repositório  
 ```sh
