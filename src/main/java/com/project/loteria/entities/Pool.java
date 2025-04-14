@@ -25,6 +25,7 @@ public class Pool implements Serializable {
     private String type;
 
     private double valueTotal;
+
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Contest contest;
