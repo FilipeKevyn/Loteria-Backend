@@ -9,13 +9,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_pool")
 public class Pool implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private UUID id;
 
     private static String cod = RandomStringUtils.randomAlphanumeric(6);
 
@@ -24,7 +25,6 @@ public class Pool implements Serializable {
     private String type;
 
     private double valueTotal;
-
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Contest contest;
@@ -33,11 +33,14 @@ public class Pool implements Serializable {
     @OneToMany(mappedBy = "pool", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Bet> bets = new HashSet<>();
 
+    @ManyToMany(mappedBy = "pools")
+    private Set<User> users = new HashSet<>();
+
     public Pool(String name){
         this.title = name;
     }
 
-    public Pool(Long id, Contest contest) {
+    public Pool(UUID id, Contest contest) {
         this.id = id;
         this.contest = contest;
     }
@@ -51,11 +54,11 @@ public class Pool implements Serializable {
 
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
