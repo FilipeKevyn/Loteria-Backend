@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,8 +15,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private String name;
+
     private String email;
+
+    private Double valueTotalInvested;
 
     @ManyToMany
     @JoinTable(
@@ -69,5 +74,26 @@ public class User {
 
     public Set<Pool> getPools() {
         return pools;
+    }
+
+    public Double getValueTotalInvested() {
+        return valueTotalInvested;
+    }
+
+    public void setValueTotalInvested(Double valueTotalInvested) {
+        this.valueTotalInvested = valueTotalInvested;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
