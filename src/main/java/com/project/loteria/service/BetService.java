@@ -1,6 +1,6 @@
 package com.project.loteria.service;
 
-import com.project.loteria.exceptions.BetAlreadyExistsException;
+import com.project.loteria.entities.BetNumber;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.exceptions.BetNotFoundException;
@@ -27,6 +27,8 @@ public class BetService {
     private PoolService poolService;
 
     @Autowired
+    private BetNumberService betNumberService;
+    @Autowired
     @Lazy
     private ResultService resultService;
 
@@ -41,28 +43,34 @@ public class BetService {
         return betRepository.findById(id).orElseThrow(() -> new BetNotFoundException());
     }
 
-    public Page<Bet> findBetsByPool(Long poolId, Pageable pageable){
+    public Page<Bet> findBetsByPool(UUID poolId, Pageable pageable){
         Pool pool = poolService.findById(poolId);
         return betRepository.findByPool(pool, pageable);
     }
 
     public Bet prepareBet(Bet bet, Pool pool){
         bet.setBetNumbers(sortBet(bet.getBetNumbers()));
-        if (verifySameBet(bet, pool)) {
-            throw new BetAlreadyExistsException();
-        }
         setValueInvested(bet);
         bet.setPool(pool);
+
         return insert(bet);
     }
 
-    public void addBetToPool(Long poolId, Bet bet){
+    public void insertNumbers(Bet bet){
+        for (int i = 0; i < bet.getQuantityNumbers(); i++) {
+            BetNumber betNumber = betNumberService.insertNumber(bet, bet.getBetNumbers().get(i));
+            bet.getNumbers().add(betNumber);
+        }
+    }
+
+    public void addBetToPool(UUID poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
         if (pool.getContest() != null) {
             resultService.verifyBet(poolId, betSaved);
         }
         poolService.addBetToPool(pool, betSaved);
+        insertNumbers(bet);
     }
 
     public boolean verifySameBet(Bet bet, Pool pool){

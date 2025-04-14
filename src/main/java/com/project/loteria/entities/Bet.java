@@ -5,9 +5,7 @@ import com.project.loteria.dtos.BetDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_bets")
@@ -17,7 +15,12 @@ public class Bet implements Serializable {
     private UUID id;
     private double valueInvested;
     private int quantityNumbers = 0;
+
+    @JsonIgnore
     private List<Integer> betNumbers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bet", cascade = CascadeType.ALL)
+    private Set<BetNumber> numbers = new HashSet<>();
     private int matched;
     private String gameType;
     @JsonIgnore
@@ -26,6 +29,11 @@ public class Bet implements Serializable {
     private Pool pool;
 
     public Bet(){}
+
+    public Bet(List<Integer> betNumbers, String gameType){
+        this.betNumbers = betNumbers;
+        this.gameType = gameType;
+    }
 
     public Bet(BetDTO msBetDTO){
         this.betNumbers = msBetDTO.betNumbers();
@@ -85,8 +93,11 @@ public class Bet implements Serializable {
         return gameType;
     }
 
-    public void setType() {
-        this.gameType = pool.getType();
+    public void setType(String type) {
+        this.gameType = type;
     }
 
+    public Set<BetNumber> getNumbers() {
+        return numbers;
+    }
 }
