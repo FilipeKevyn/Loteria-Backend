@@ -3,6 +3,7 @@ package com.project.loteria.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.PoolDTO;
 import jakarta.persistence.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,8 +14,10 @@ import java.util.Set;
 @Table(name = "tb_pool")
 public class Pool implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
+
+    private static String cod = RandomStringUtils.randomAlphanumeric(6);
 
     private String title;
 
@@ -86,6 +89,14 @@ public class Pool implements Serializable {
 
     public void setValueTotal(double valueTotal) {
         this.valueTotal = valueTotal;
+    }
+
+    public static String getCod() {
+        return cod;
+    }
+
+    public static void setCod(String cod) {
+        Pool.cod = cod;
     }
 
     public Set<Bet> getBets() {
