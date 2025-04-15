@@ -1,5 +1,6 @@
 package com.project.loteria.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -15,6 +16,7 @@ public class BetNumber {
 
     private boolean matched = false;
 
+    @JsonIgnore
     @ManyToOne
     private Bet bet;
 
