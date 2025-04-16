@@ -17,10 +17,10 @@ public class Bet implements Serializable {
     private int quantityNumbers = 0;
 
     @JsonIgnore
-    private List<Integer> betNumbers = new ArrayList<>();
+    private List<Integer> betNumbersArray = new ArrayList<>();
 
     @OneToMany(mappedBy = "bet", cascade = CascadeType.ALL)
-    private Set<BetNumber> numbers = new HashSet<>();
+    private Set<BetNumber> betNumbers = new HashSet<>();
     private int matched;
     private String gameType;
     @JsonIgnore
@@ -31,14 +31,14 @@ public class Bet implements Serializable {
     public Bet(){}
 
     public Bet(List<Integer> betNumbers, String gameType){
-        this.betNumbers = betNumbers;
+        this.betNumbersArray = betNumbers;
         this.gameType = gameType;
     }
 
     public Bet(BetDTO msBetDTO){
-        this.betNumbers = msBetDTO.betNumbers();
+        this.betNumbersArray = msBetDTO.betNumbers();
         this.gameType = msBetDTO.gameType();
-        setQuantityNumbers(betNumbers.size());
+        setQuantityNumbers(betNumbersArray.size());
     }
 
     public UUID getId() {
@@ -49,12 +49,12 @@ public class Bet implements Serializable {
         this.id = id;
     }
 
-    public List<Integer> getBetNumbers() {
-        return betNumbers;
+    public List<Integer> getBetNumbersArray() {
+        return betNumbersArray;
     }
 
-    public void setBetNumbers(List<Integer> betNumbers) {
-        this.betNumbers = betNumbers;
+    public void setBetNumbersArray(List<Integer> betNumbersArray) {
+        this.betNumbersArray = betNumbersArray;
     }
 
     public int getQuantityNumbers() {
@@ -97,7 +97,7 @@ public class Bet implements Serializable {
         this.gameType = type;
     }
 
-    public Set<BetNumber> getNumbers() {
-        return numbers;
+    public Set<BetNumber> getBetNumbers() {
+        return betNumbers;
     }
 }

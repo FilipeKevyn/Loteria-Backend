@@ -1,11 +1,9 @@
 package com.project.loteria.config;
 
 import com.project.loteria.entities.Bet;
-import com.project.loteria.entities.BetNumber;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.repositories.PoolRepository;
 import com.project.loteria.service.BetService;
-import com.project.loteria.service.PoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +12,6 @@ import org.springframework.context.annotation.Profile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @Configuration
 @Profile("test")
@@ -36,7 +33,7 @@ public class TestConfig implements CommandLineRunner {
 
         Bet bet = new Bet();
         bet.setPool(pool);
-        bet.setBetNumbers(list);
+        bet.setBetNumbersArray(list);
         bet.setQuantityNumbers(list.size());
         bet.setType("Mega-Sena");
 

@@ -3,6 +3,7 @@ package com.project.loteria.service;
 import com.project.loteria.entities.BetNumber;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
+import com.project.loteria.exceptions.BetAlreadyExistsException;
 import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.interfaces.GameTypeStrategy;
 import com.project.loteria.repositories.BetRepository;
@@ -49,7 +50,10 @@ public class BetService {
     }
 
     public Bet prepareBet(Bet bet, Pool pool){
-        bet.setBetNumbers(sortBet(bet.getBetNumbers()));
+        if (verifySameBet(bet, pool)){
+            throw new BetAlreadyExistsException();
+        }
+        bet.setBetNumbersArray(sortBet(bet.getBetNumbersArray()));
         setValueInvested(bet);
         bet.setPool(pool);
 
@@ -58,8 +62,8 @@ public class BetService {
 
     public void insertNumbers(Bet bet){
         for (int i = 0; i < bet.getQuantityNumbers(); i++) {
-            BetNumber betNumber = betNumberService.insertNumber(bet, bet.getBetNumbers().get(i));
-            bet.getNumbers().add(betNumber);
+            BetNumber betNumber = betNumberService.insertNumber(bet, bet.getBetNumbersArray().get(i));
+            bet.getBetNumbers().add(betNumber);
         }
     }
 
@@ -75,7 +79,7 @@ public class BetService {
 
     public boolean verifySameBet(Bet bet, Pool pool){
         for (Bet bet1 : pool.getBets()){
-            if (bet1.getBetNumbers().equals(bet.getBetNumbers())) {
+            if (bet1.getBetNumbersArray().equals(bet.getBetNumbersArray())) {
                 return true;
             }
         }

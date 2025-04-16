@@ -26,14 +26,14 @@ public class ResultService {
         List<Bet> bets = poolService.getAllBets(pool);
 
         for (Bet bet : bets){
-            int matched = verifyMatched(bet.getBetNumbers(), drawnNumbers);
+            int matched = verifyMatched(bet.getBetNumbersArray(), drawnNumbers);
             betService.setMatched(bet, matched);
         }
     }
 
     public void verifyBet(UUID poolId, Bet bet){
         List<Integer> drawNumbers = poolService.findById(poolId).getContest().getDrawnNumbers();
-        int matched = verifyMatched(bet.getBetNumbers(), drawNumbers);
+        int matched = verifyMatched(bet.getBetNumbersArray(), drawNumbers);
         betService.setMatched(bet, matched);
     }
 
