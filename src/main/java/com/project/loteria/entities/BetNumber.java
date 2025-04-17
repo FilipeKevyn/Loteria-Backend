@@ -17,8 +17,12 @@ public class BetNumber {
     private boolean matched = false;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToMany(mappedBy = "numbers")
     private Bet bet;
+
+    @ManyToOne
+    @JoinColumn(name = "pool_id")
+    private Pool pool;
 
     public BetNumber(int number, Bet bet) {
         this.number = number;
@@ -58,4 +62,6 @@ public class BetNumber {
     public void setMatched(boolean matched) {
         this.matched = matched;
     }
+
+
 }

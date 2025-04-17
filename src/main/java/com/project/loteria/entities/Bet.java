@@ -19,7 +19,12 @@ public class Bet implements Serializable {
     @JsonIgnore
     private List<Integer> betNumbersArray = new ArrayList<>();
 
-    @OneToMany(mappedBy = "bet", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "tb_bet_betnumbers",
+            joinColumns = @JoinColumn(name = "bet_id"),
+            inverseJoinColumns = @JoinColumn(name = "bet_numbers_id")
+    )
     private Set<BetNumber> betNumbers = new HashSet<>();
     private int matched;
     private String gameType;
