@@ -73,8 +73,8 @@ public class BetService {
         if (pool.getContest() != null) {
             resultService.verifyBet(poolId, betSaved);
         }
-        poolService.addBetToPool(pool, betSaved);
         insertNumbers(bet, pool);
+        poolService.addBetToPool(pool, betSaved);
     }
 
     public boolean verifySameBet(Bet bet, Pool pool){

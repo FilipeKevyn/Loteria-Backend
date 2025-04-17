@@ -14,16 +14,18 @@ public class Bet implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private double valueInvested;
+    @Transient
     private int quantityNumbers = 0;
 
     @JsonIgnore
+    @Transient
     private List<Integer> betNumbersArray = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "tb_bet_betnumbers",
             joinColumns = @JoinColumn(name = "bet_id"),
-            inverseJoinColumns = @JoinColumn(name = "bet_numbers_id")
+            inverseJoinColumns = @JoinColumn(name = "bet_number_id")
     )
     private Set<BetNumber> betNumbers = new HashSet<>();
     private int matched;

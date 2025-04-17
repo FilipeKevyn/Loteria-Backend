@@ -15,15 +15,17 @@ public class BetNumberService {
     private BetNumberRepository repository;
 
     public BetNumber insertNumber(Bet bet, Pool pool, int num){
-        // validar
+        if (validateNumberExist(pool.getBetNumbers(), num)){
+            BetNumber number = repository.findByNumberAndPool(num, pool);
+            return repository.save(number);
+        }
 
-        BetNumber number = new BetNumber(num, bet);
+        BetNumber number = new BetNumber(pool, bet, num);
         return repository.save(number);
     }
 
-    public boolean validateNumberExist(Pool pool, int num){
-        Set<BetNumber> numbers = pool.getBetNumbers();
-        for (BetNumber betNumber : numbers) {
+    public boolean validateNumberExist(Set<BetNumber> poolBetNumbers, int num){
+        for (BetNumber betNumber : poolBetNumbers) {
             if (betNumber.getNumber() == num) {
                 return true;
             }

@@ -3,6 +3,8 @@ package com.project.loteria.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -17,16 +19,17 @@ public class BetNumber {
     private boolean matched = false;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "numbers")
-    private Bet bet;
+    @ManyToMany(mappedBy = "betNumbers")
+    private Set<Bet> bets = new HashSet<>() ;
 
     @ManyToOne
     @JoinColumn(name = "pool_id")
     private Pool pool;
 
-    public BetNumber(int number, Bet bet) {
+    public BetNumber(Pool pool, Bet bet, int number) {
+        this.pool = pool;
         this.number = number;
-        this.bet = bet;
+        bets.add(bet);
     }
 
     public BetNumber(){}
@@ -47,12 +50,8 @@ public class BetNumber {
         this.number = number;
     }
 
-    public Bet getBet() {
-        return bet;
-    }
-
-    public void setBet(Bet bet) {
-        this.bet = bet;
+    public Set<Bet> getBet() {
+        return bets;
     }
 
     public boolean isMatched() {
