@@ -60,9 +60,9 @@ public class BetService {
         return insert(bet);
     }
 
-    public void insertNumbers(Bet bet){
+    public void insertNumbers(Bet bet, Pool pool){
         for (int i = 0; i < bet.getQuantityNumbers(); i++) {
-            BetNumber betNumber = betNumberService.insertNumber(bet, bet.getBetNumbersArray().get(i));
+            BetNumber betNumber = betNumberService.insertNumber(bet, pool, bet.getBetNumbersArray().get(i));
             bet.getBetNumbers().add(betNumber);
         }
     }
@@ -74,7 +74,7 @@ public class BetService {
             resultService.verifyBet(poolId, betSaved);
         }
         poolService.addBetToPool(pool, betSaved);
-        insertNumbers(bet);
+        insertNumbers(bet, pool);
     }
 
     public boolean verifySameBet(Bet bet, Pool pool){
