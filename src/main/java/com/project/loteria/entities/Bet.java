@@ -107,4 +107,21 @@ public class Bet implements Serializable {
     public Set<BetNumber> getBetNumbers() {
         return betNumbers;
     }
+
+    public void setBetNumbers(Set<BetNumber> betNumbers) {
+        this.betNumbers = betNumbers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bet bet = (Bet) o;
+        return Objects.equals(betNumbers, bet.betNumbers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(betNumbers);
+    }
 }

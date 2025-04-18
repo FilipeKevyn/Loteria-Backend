@@ -7,6 +7,7 @@ import com.project.loteria.repositories.BetNumberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -14,14 +15,30 @@ public class BetNumberService {
     @Autowired
     private BetNumberRepository repository;
 
-    public BetNumber insertNumber(Bet bet, Pool pool, int num){
-        if (validateNumberExist(pool.getBetNumbers(), num)){
-            BetNumber number = repository.findByNumberAndPool(num, pool);
-            return repository.save(number);
+    public void insertAll(Set<BetNumber> numbers){
+        repository.saveAll(numbers);
+    }
+
+    public Set<BetNumber> insertNumbers(Bet bet, Pool pool){
+        Set<BetNumber> numberSet = new HashSet<>();
+        for (int i = 0; i < bet.getQuantityNumbers(); i++) {
+            int num = bet.getBetNumbersArray().get(i);
+
+            if (validateNumberExist(pool.getBetNumbers(), num)){
+                BetNumber number = repository.findByNumberAndPool(num, pool);
+                numberSet.add(number);
+                System.out.println("Numero existente " + i);
+            }
+            else {
+                BetNumber betNumber = new BetNumber(pool, bet, num);
+                numberSet.add(betNumber);
+                System.out.println("Criando numero...");
+            }
         }
 
-        BetNumber number = new BetNumber(pool, bet, num);
-        return repository.save(number);
+        System.out.println("Numeros inseridos\n");
+
+        return numberSet;
     }
 
     public boolean validateNumberExist(Set<BetNumber> poolBetNumbers, int num){

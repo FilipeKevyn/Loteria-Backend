@@ -15,9 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BetService {
@@ -49,40 +47,42 @@ public class BetService {
         return betRepository.findByPool(pool, pageable);
     }
 
-    public Bet prepareBet(Bet bet, Pool pool){
-        if (verifySameBet(bet, pool)){
-            throw new BetAlreadyExistsException();
-        }
-        bet.setBetNumbersArray(sortBet(bet.getBetNumbersArray()));
-        setValueInvested(bet);
-        bet.setPool(pool);
-
-        return insert(bet);
-    }
-
-    public void insertNumbers(Bet bet, Pool pool){
-        for (int i = 0; i < bet.getQuantityNumbers(); i++) {
-            BetNumber betNumber = betNumberService.insertNumber(bet, pool, bet.getBetNumbersArray().get(i));
-            bet.getBetNumbers().add(betNumber);
-        }
-    }
-
     public void addBetToPool(UUID poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
         if (pool.getContest() != null) {
             resultService.verifyBet(poolId, betSaved);
         }
-        insertNumbers(bet, pool);
+
         poolService.addBetToPool(pool, betSaved);
     }
 
+    public Bet prepareBet(Bet bet, Pool pool){
+        Set<BetNumber> betNumbers = betNumberService.insertNumbers(bet, pool);
+        bet.setBetNumbers(betNumbers);
+
+        if (verifySameBet(bet, pool)){
+            throw new BetAlreadyExistsException();
+        }
+        setValueInvested(bet);
+        bet.setPool(pool);
+        insert(bet);
+
+        System.out.println("Salvando a bet... \n");
+
+        betNumberService.insertAll(betNumbers);
+
+
+        return bet;
+    }
+
     public boolean verifySameBet(Bet bet, Pool pool){
-        for (Bet bet1 : pool.getBets()){
-            if (bet1.getBetNumbersArray().equals(bet.getBetNumbersArray())) {
+        for (Bet betPool : pool.getBets()) {
+            if (bet.equals(betPool)){
                 return true;
             }
         }
+        System.out.println("Bets não iguais");
         return false;
     }
 
