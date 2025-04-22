@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ContestService {
@@ -16,7 +17,7 @@ public class ContestService {
     @Autowired
     private PoolService poolService;
 
-    public Contest findById(Long id){
+    public Contest findById(UUID id){
         Optional<Contest> contest = contestRepository.findById(id);
         return contest.orElseThrow(() -> new RuntimeException()); // criar excessão personalizada
     }
@@ -25,7 +26,7 @@ public class ContestService {
         return contestRepository.save(obj);
     }
 
-    public void setContestInPool(Long id, Contest contest){
+    public void setContestInPool(UUID id, Contest contest){
         Pool pool = poolService.findById(id);
         if (pool.getContest() != null){
             updateContest(pool);

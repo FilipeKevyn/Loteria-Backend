@@ -37,6 +37,11 @@ public class Pool implements Serializable {
     @ManyToMany(mappedBy = "pools")
     private Set<User> users = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "pool")
+    private Set<BetNumber> betNumbers = new HashSet<>();
+
+
     public Pool(String name){
         this.title = name;
     }
@@ -106,6 +111,11 @@ public class Pool implements Serializable {
     public Set<Bet> getBets() {
         return bets;
     }
+
+    public Set<BetNumber> getBetNumbers() {
+        return betNumbers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

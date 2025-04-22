@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PoolService {
@@ -20,7 +21,7 @@ public class PoolService {
         return repository.save(pool);
     }
 
-    public void deletePool(Long id){
+    public void deletePool(UUID id){
         Pool pool = findById(id);
         repository.delete(pool);
     }
@@ -29,7 +30,7 @@ public class PoolService {
         return repository.save(pool);
     }
 
-    public Pool findById(Long id){
+    public Pool findById(UUID id){
         return repository.findById(id).orElseThrow(() -> new PoolNotFoundException(id));
     }
 

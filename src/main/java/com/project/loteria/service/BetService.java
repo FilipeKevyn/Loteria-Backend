@@ -1,8 +1,9 @@
 package com.project.loteria.service;
 
-import com.project.loteria.exceptions.BetAlreadyExistsException;
+import com.project.loteria.entities.BetNumber;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
+import com.project.loteria.exceptions.BetAlreadyExistsException;
 import com.project.loteria.exceptions.BetNotFoundException;
 import com.project.loteria.interfaces.GameTypeStrategy;
 import com.project.loteria.repositories.BetRepository;
@@ -14,9 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BetService {
@@ -26,6 +25,8 @@ public class BetService {
     @Autowired
     private PoolService poolService;
 
+    @Autowired
+    private BetNumberService betNumberService;
     @Autowired
     @Lazy
     private ResultService resultService;
@@ -41,42 +42,55 @@ public class BetService {
         return betRepository.findById(id).orElseThrow(() -> new BetNotFoundException());
     }
 
-    public Page<Bet> findBetsByPool(Long poolId, Pageable pageable){
+    public Page<Bet> findBetsByPool(UUID poolId, Pageable pageable){
         Pool pool = poolService.findById(poolId);
         return betRepository.findByPool(pool, pageable);
     }
 
+    public void addBetToPool(UUID poolId, Bet bet){
+        Pool pool = poolService.findById(poolId);
+        Bet betSaved = prepareBet(bet, pool);
+        if (pool.getContest() != null) {
+            resultService.verifyBet(betSaved);
+        }
+
+        poolService.addBetToPool(pool, betSaved);
+    }
+
     public Bet prepareBet(Bet bet, Pool pool){
-        bet.setBetNumbers(sortBet(bet.getBetNumbers()));
-        if (verifySameBet(bet, pool)) {
+        Set<BetNumber> betNumbers = betNumberService.insertNumbers(bet, pool);
+        bet.setBetNumbers(betNumbers);
+
+        if (verifySameBet(bet, pool)){
             throw new BetAlreadyExistsException();
         }
         setValueInvested(bet);
         bet.setPool(pool);
-        return insert(bet);
-    }
+        insert(bet);
 
-    public void addBetToPool(Long poolId, Bet bet){
-        Pool pool = poolService.findById(poolId);
-        Bet betSaved = prepareBet(bet, pool);
-        if (pool.getContest() != null) {
-            resultService.verifyBet(poolId, betSaved);
-        }
-        poolService.addBetToPool(pool, betSaved);
+        betNumberService.insertAll(betNumbers);
+
+
+        return bet;
     }
 
     public boolean verifySameBet(Bet bet, Pool pool){
-        for (Bet bet1 : pool.getBets()){
-            if (bet1.getBetNumbers().equals(bet.getBetNumbers())) {
+        for (Bet betPool : pool.getBets()) {
+            if (bet.equals(betPool)){
                 return true;
             }
         }
+        System.out.println("Bets não iguais");
         return false;
     }
 
     public void setMatched(Bet bet, int matched){
         bet.setMatched(matched);
         betRepository.save(bet);
+    }
+
+    public int countMatched(Bet bet){
+        return betRepository.countMatchedNumbersByBet(bet);
     }
 
     public void setValueInvested(Bet bet){

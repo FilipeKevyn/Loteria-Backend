@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/pool")
@@ -57,7 +58,7 @@ public class PoolController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Pool> findPoolById(@PathVariable Long poolId) {
+    public ResponseEntity<Pool> findPoolById(@PathVariable UUID poolId) {
         return ResponseEntity.ok().body(service.findById(poolId));
     }
 
@@ -94,7 +95,7 @@ public class PoolController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Void> remove(@PathVariable Long poolId){
+    public ResponseEntity<Void> remove(@PathVariable UUID poolId){
         service.deletePool(poolId);
         return ResponseEntity.noContent().build();
     }

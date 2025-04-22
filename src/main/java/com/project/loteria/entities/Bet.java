@@ -5,9 +5,7 @@ import com.project.loteria.dtos.BetDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_bets")
@@ -16,8 +14,20 @@ public class Bet implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private double valueInvested;
+    @Transient
     private int quantityNumbers = 0;
-    private List<Integer> betNumbers = new ArrayList<>();
+
+    @JsonIgnore
+    @Transient
+    private List<Integer> betNumbersArray = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "tb_bet_betnumbers",
+            joinColumns = @JoinColumn(name = "bet_id"),
+            inverseJoinColumns = @JoinColumn(name = "bet_number_id")
+    )
+    private Set<BetNumber> betNumbers = new HashSet<>();
     private int matched;
     private String gameType;
     @JsonIgnore
@@ -27,10 +37,15 @@ public class Bet implements Serializable {
 
     public Bet(){}
 
+    public Bet(List<Integer> betNumbers, String gameType){
+        this.betNumbersArray = betNumbers;
+        this.gameType = gameType;
+    }
+
     public Bet(BetDTO msBetDTO){
-        this.betNumbers = msBetDTO.betNumbers();
+        this.betNumbersArray = msBetDTO.betNumbers();
         this.gameType = msBetDTO.gameType();
-        setQuantityNumbers(betNumbers.size());
+        setQuantityNumbers(betNumbersArray.size());
     }
 
     public UUID getId() {
@@ -41,12 +56,12 @@ public class Bet implements Serializable {
         this.id = id;
     }
 
-    public List<Integer> getBetNumbers() {
-        return betNumbers;
+    public List<Integer> getBetNumbersArray() {
+        return betNumbersArray;
     }
 
-    public void setBetNumbers(List<Integer> betNumbers) {
-        this.betNumbers = betNumbers;
+    public void setBetNumbersArray(List<Integer> betNumbersArray) {
+        this.betNumbersArray = betNumbersArray;
     }
 
     public int getQuantityNumbers() {
@@ -85,8 +100,28 @@ public class Bet implements Serializable {
         return gameType;
     }
 
-    public void setType() {
-        this.gameType = pool.getType();
+    public void setType(String type) {
+        this.gameType = type;
     }
 
+    public Set<BetNumber> getBetNumbers() {
+        return betNumbers;
+    }
+
+    public void setBetNumbers(Set<BetNumber> betNumbers) {
+        this.betNumbers = betNumbers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bet bet = (Bet) o;
+        return Objects.equals(betNumbers, bet.betNumbers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(betNumbers);
+    }
 }

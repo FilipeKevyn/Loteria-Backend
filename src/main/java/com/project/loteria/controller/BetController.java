@@ -45,7 +45,7 @@ public class BetController {
 
             }
     )
-    public ResponseEntity<Page<Bet>> findByPool(@PathVariable Long poolId,
+    public ResponseEntity<Page<Bet>> findByPool(@PathVariable UUID poolId,
                                    @RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size){
         Pageable pageable = PageRequest.of(page, size);
@@ -69,10 +69,10 @@ public class BetController {
                     }),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             })
-    public ResponseEntity<BetDTO> create(@PathVariable Long poolId, @RequestBody BetDTO obj){
+    public ResponseEntity<BetDTO> create(@PathVariable UUID poolId, @RequestBody BetDTO obj){
         Bet bet = new Bet(obj);
         betService.addBetToPool(poolId, bet);
-        BetDTO betDTO = new BetDTO(bet.getBetNumbers(), bet.getGameType());
+        BetDTO betDTO = new BetDTO(bet.getBetNumbersArray(), bet.getGameType());
         return ResponseEntity.status(HttpStatus.CREATED).body(betDTO);
     }
 
