@@ -15,8 +15,16 @@ public class BetNumberService {
     @Autowired
     private BetNumberRepository repository;
 
+    public BetNumber insert(BetNumber betNumber){
+        return repository.save(betNumber);
+    }
+
     public void insertAll(Set<BetNumber> numbers){
         repository.saveAll(numbers);
+    }
+
+    public BetNumber findByNumberAndPool(int num, Pool pool){
+        return repository.findByNumberAndPool(num, pool);
     }
 
     public Set<BetNumber> insertNumbers(Bet bet, Pool pool){

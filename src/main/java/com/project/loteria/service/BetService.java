@@ -51,7 +51,7 @@ public class BetService {
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
         if (pool.getContest() != null) {
-            resultService.verifyBet(poolId, betSaved);
+            resultService.verifyBet(betSaved);
         }
 
         poolService.addBetToPool(pool, betSaved);
@@ -67,8 +67,6 @@ public class BetService {
         setValueInvested(bet);
         bet.setPool(pool);
         insert(bet);
-
-        System.out.println("Salvando a bet... \n");
 
         betNumberService.insertAll(betNumbers);
 
@@ -89,6 +87,10 @@ public class BetService {
     public void setMatched(Bet bet, int matched){
         bet.setMatched(matched);
         betRepository.save(bet);
+    }
+
+    public int countMatched(Bet bet){
+        return betRepository.countMatchedNumbersByBet(bet);
     }
 
     public void setValueInvested(Bet bet){
