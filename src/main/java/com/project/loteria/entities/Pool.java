@@ -18,7 +18,8 @@ public class Pool implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private static String cod = RandomStringUtils.randomAlphanumeric(6);
+    @Column(unique = true)
+    private String code = RandomStringUtils.randomAlphanumeric(6);
 
     private String title;
 
@@ -100,12 +101,8 @@ public class Pool implements Serializable {
         this.valueTotal = valueTotal;
     }
 
-    public static String getCod() {
-        return cod;
-    }
-
-    public static void setCod(String cod) {
-        Pool.cod = cod;
+    public String getCode() {
+        return code;
     }
 
     public Set<Bet> getBets() {
