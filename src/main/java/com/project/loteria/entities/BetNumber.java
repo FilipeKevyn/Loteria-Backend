@@ -1,17 +1,12 @@
 package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity
-@Table(name = "tb_bet_numbers")
 public class BetNumber {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private int number;
@@ -19,11 +14,8 @@ public class BetNumber {
     private boolean matched = false;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "betNumbers")
     private Set<Bet> bets = new HashSet<>() ;
 
-    @ManyToOne
-    @JoinColumn(name = "pool_id")
     private Pool pool;
 
     public BetNumber(Pool pool, Bet bet, int number) {
@@ -61,6 +53,5 @@ public class BetNumber {
     public void setMatched(boolean matched) {
         this.matched = matched;
     }
-
 
 }

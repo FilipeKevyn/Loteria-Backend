@@ -2,37 +2,24 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.BetDTO;
-import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.*;
 
-@Entity
-@Table(name = "tb_bets")
 public class Bet implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private double valueInvested;
-    @Transient
+
     private int quantityNumbers = 0;
 
     @JsonIgnore
-    @Transient
     private List<Integer> betNumbersArray = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "tb_bet_betnumbers",
-            joinColumns = @JoinColumn(name = "bet_id"),
-            inverseJoinColumns = @JoinColumn(name = "bet_number_id")
-    )
     private Set<BetNumber> betNumbers = new HashSet<>();
     private int matched;
     private String gameType;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "pool_id")
     private Pool pool;
 
     public Bet(){}

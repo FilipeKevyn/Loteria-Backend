@@ -2,22 +2,19 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.ContestDTO;
-import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.*;
 
-@Entity
-@Table(name = "tb_contest")
+
 public class Contest implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private List<Integer> drawnNumbers = new ArrayList<>();
+
     private String codeContest;
 
     @JsonIgnore
-    @OneToOne
     private Pool pool;
 
     public Contest(){}

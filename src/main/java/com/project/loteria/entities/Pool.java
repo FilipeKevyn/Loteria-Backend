@@ -2,7 +2,6 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.PoolDTO;
-import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.Serializable;
@@ -11,14 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity
-@Table(name = "tb_pool")
 public class Pool implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+
     private UUID id;
 
-    @Column(unique = true)
     private String code = RandomStringUtils.randomAlphanumeric(6);
 
     private String title;
@@ -28,18 +23,14 @@ public class Pool implements Serializable {
     private double valueTotal;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
     private Contest contest;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pool", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Bet> bets = new HashSet<>();
 
-    @ManyToMany(mappedBy = "pools")
     private Set<User> users = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pool")
     private Set<BetNumber> betNumbers = new HashSet<>();
 
 
