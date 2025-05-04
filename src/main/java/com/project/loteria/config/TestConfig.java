@@ -1,10 +1,11 @@
 package com.project.loteria.config;
 
+import com.project.loteria.dao.repositories.BetDAOImpl;
+import com.project.loteria.dao.repositories.PoolDAOImpl;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.BetNumber;
-import com.project.loteria.repositories.PoolRepository;
-import com.project.loteria.repositories.UserRepository;
+import com.project.loteria.entities.User;
 import com.project.loteria.service.BetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,34 +19,28 @@ import java.util.*;
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
     @Autowired
-    private UserRepository repository;
-    @Autowired
-    private BetService service;
+    private PoolDAOImpl poolrepository;
 
     @Autowired
-    private PoolRepository poolRepository;
+    private BetDAOImpl betrepository;
 
     @Override
     public void run(String... args) throws Exception {
-        List<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5));
-        Pool pool = new Pool();
-        pool.setTitle("Meu Bolão"); // Atribua algo ao título, pois ele pode ser obrigatório
-        pool.setType("Mega-Sena");
-        poolRepository.save(pool); // <-- Salve o pool primeiro
+        Pool pool = new Pool("Filipe");
+        pool.setId(UUID.randomUUID());
+        poolrepository.insert(pool);
 
         Bet bet = new Bet();
+        bet.setId(UUID.randomUUID());
+        bet.setValueInvested(100);
         bet.setPool(pool);
-        bet.setType("Mega-Sena");
+        betrepository.insert(bet);
 
-        Bet bet2 = new Bet();
-        bet.setPool(pool);
-        bet.setType("Mega-Sena");
+        pool.setValueTotal(100);
+        poolrepository.save(pool);
 
-        BetNumber n1 = new BetNumber(pool, bet, 1);
-        BetNumber n2 = new BetNumber(pool, bet, 2);
-        BetNumber n3 = new BetNumber(pool, bet, 3);
-        BetNumber n4 = new BetNumber(pool, bet, 4);
+        bet.setMatched(2);
+        betrepository.save(bet);
 
-        pool.getBets().add(bet); // opcional, mas ajuda a manter a consistência da entidade
     }
 }
