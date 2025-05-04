@@ -1,7 +1,7 @@
 package com.project.loteria.service;
 
 import com.project.loteria.entities.Bet;
-import com.project.loteria.entities.BetNumber;
+import com.project.loteria.entities.Number;
 import com.project.loteria.entities.Contest;
 import com.project.loteria.entities.Pool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class ResultService {
     private final BetService betService;
 
     @Autowired
-    private BetNumberService betNumberService;
+    private NumberService betNumberService;
 
     @Autowired
     public ResultService(BetService betService) {
@@ -37,7 +37,7 @@ public class ResultService {
 
     public void verifyBetNumbers(Pool pool){
         Contest contest = pool.getContest();
-        for (BetNumber number : pool.getBetNumbers()){
+        for (Number number : pool.getNumbers()){
             if (contest.getDrawnNumbers().contains(number.getNumber())){
                 number.setMatched(true);
                 betNumberService.insert(number);

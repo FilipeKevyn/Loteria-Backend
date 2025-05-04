@@ -27,7 +27,7 @@ public class Bet implements Serializable {
             joinColumns = @JoinColumn(name = "bet_id"),
             inverseJoinColumns = @JoinColumn(name = "bet_number_id")
     )
-    private Set<BetNumber> betNumbers = new HashSet<>();
+    private Set<Number> betNumbers = new HashSet<>();
     private int matched;
     private String gameType;
     @JsonIgnore
@@ -104,11 +104,11 @@ public class Bet implements Serializable {
         this.gameType = type;
     }
 
-    public Set<BetNumber> getBetNumbers() {
+    public Set<Number> getBetNumbers() {
         return betNumbers;
     }
 
-    public void setBetNumbers(Set<BetNumber> betNumbers) {
+    public void setBetNumbers(Set<Number> betNumbers) {
         this.betNumbers = betNumbers;
     }
 
