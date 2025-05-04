@@ -2,7 +2,6 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.PoolDTO;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,8 +12,6 @@ import java.util.UUID;
 public class Pool implements Serializable {
 
     private UUID id;
-
-    private String code = RandomStringUtils.randomAlphanumeric(6);
 
     private String title;
 
@@ -92,8 +89,17 @@ public class Pool implements Serializable {
         this.valueTotal = valueTotal;
     }
 
-    public String getCode() {
-        return code;
+
+    public void setBets(Set<Bet> bets) {
+        this.bets = bets;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public void setBetNumbers(Set<BetNumber> betNumbers) {
+        this.betNumbers = betNumbers;
     }
 
     public Set<Bet> getBets() {
