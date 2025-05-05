@@ -9,6 +9,7 @@ import com.project.loteria.interfaces.GameTypeStrategy;
 import com.project.loteria.repositories.BetRepository;
 import com.project.loteria.service.strategy.LotofacilStrategy;
 import com.project.loteria.service.strategy.MegaSenaStrategy;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -47,6 +48,7 @@ public class BetService {
         return betRepository.findByPool(pool, pageable);
     }
 
+    @Transactional
     public void addBetToPool(UUID poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);

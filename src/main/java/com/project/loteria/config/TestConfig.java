@@ -2,7 +2,6 @@ package com.project.loteria.config;
 
 import com.project.loteria.entities.Pool;
 import com.project.loteria.entities.Bet;
-import com.project.loteria.entities.BetNumber;
 import com.project.loteria.repositories.PoolRepository;
 import com.project.loteria.repositories.UserRepository;
 import com.project.loteria.service.BetService;
@@ -25,6 +24,7 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private PoolRepository poolRepository;
 
+
     @Override
     public void run(String... args) throws Exception {
         List<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5));
@@ -33,19 +33,21 @@ public class TestConfig implements CommandLineRunner {
         pool.setType("Mega-Sena");
         poolRepository.save(pool); // <-- Salve o pool primeiro
 
-        Bet bet = new Bet();
-        bet.setPool(pool);
-        bet.setType("Mega-Sena");
-
-        Bet bet2 = new Bet();
-        bet.setPool(pool);
-        bet.setType("Mega-Sena");
-
-        BetNumber n1 = new BetNumber(pool, bet, 1);
-        BetNumber n2 = new BetNumber(pool, bet, 2);
-        BetNumber n3 = new BetNumber(pool, bet, 3);
-        BetNumber n4 = new BetNumber(pool, bet, 4);
-
-        pool.getBets().add(bet); // opcional, mas ajuda a manter a consistência da entidade
+//        Bet bet = new Bet();
+//        bet.setPool(pool);
+//        bet.setType("Mega-Sena");
+//        bet.setBetNumbersArray(List.of(1,3,5,7));
+//
+//        service.addBetToPool(pool.getId(), bet);
+//
+//
+//        Bet bet2 = new Bet();
+//        bet2.setPool(pool);
+//        bet2.setType("Mega-Sena");
+//        bet2.setBetNumbersArray(List.of(2,4,6,8));
+//
+//        service.addBetToPool(pool.getId(), bet2);
+//
+//        pool.getBets().add(bet); // opcional, mas ajuda a manter a consistência da entidade
     }
 }

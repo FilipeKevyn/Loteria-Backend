@@ -36,6 +36,12 @@ public class Number {
         bets.add(bet);
     }
 
+    public Number(Pool pool, Contest contest, int number){
+        this.pool = pool;
+        this.contest = contest;
+        this.number = number;
+    }
+
     public Number(){}
 
     public UUID getId() {

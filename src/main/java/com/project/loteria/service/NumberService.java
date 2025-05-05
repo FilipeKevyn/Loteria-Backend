@@ -1,9 +1,18 @@
 package com.project.loteria.service;
 
 import com.project.loteria.entities.Bet;
+import com.project.loteria.entities.Contest;
 import com.project.loteria.entities.Number;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.repositories.NumberRepository;
+import com.project.loteria.service.resolver.ContestNumberResolver;
+import com.project.loteria.service.resolver.NumberResolver;
+import com.project.loteria.service.resolver.PoolNumberResolver;
+import com.project.loteria.service.validator.ContestNumbersValidator;
+import com.project.loteria.service.validator.NumberExistenceValidator;
+import com.project.loteria.service.validator.PoolNumbersValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +21,7 @@ import java.util.Set;
 
 @Service
 public class NumberService {
+    private static final Logger logger = LoggerFactory.getLogger(NumberService.class);
     @Autowired
     private NumberRepository repository;
 
@@ -28,47 +38,24 @@ public class NumberService {
     }
 
     public Set<Number> insertNumbersInBet(Bet bet, Pool pool){
-        Set<Number> numberSet = new HashSet<>();
-        for (int i = 0; i < bet.getQuantityNumbers(); i++) {
-            int num = bet.getBetNumbersArray().get(i);
+        logger.info("Inserindo numeros na Bet");
 
-            if (pool.getContest() != null || validateNumberExistInContest(pool.getContest().getNumbers(), num)){
-                Number number = repository.findByNumberAndContest(num, pool.getContest());
-                number.setMatched(true);
-                numberSet.add(number);
-            }
-            else if (validateNumberExistInPool(pool.getNumbers(), num)){
-                Number number = repository.findByNumberAndPool(num, pool);
-                numberSet.add(number);
-                System.out.println("Numero existente " + i);
-            }
-            else {
-                Number number = new Number(pool, bet, num);
-                numberSet.add(number);
-                System.out.println("Criando numero...");
-            }
-        }
+        PoolNumbersValidator poolValidator = new PoolNumbersValidator(pool);
+        ContestNumbersValidator contestValidator = new ContestNumbersValidator(pool.getContest());
+        NumberResolver resolver = new PoolNumberResolver(pool, bet, repository, contestValidator, poolValidator);
+        NumberInsertionService insertionService = new NumberInsertionService(resolver);
 
-        System.out.println("Numeros inseridos\n");
-
-        return numberSet;
+        return insertionService.insertNumbers(bet.getBetNumbersArray());
     }
 
-    public boolean validateNumberExistInPool(Set<Number> poolNumbers, int num){
-        for (Number betNumber : poolNumbers) {
-            if (betNumber.getNumber() == num) {
-                return true;
-            }
-        }
-        return false;
+    public Set<Number> insertNumbersInContest(Contest contest, Pool pool){
+        logger.info("Inserindo numeros ao contest");
+
+        PoolNumbersValidator poolNumbersValidator = new PoolNumbersValidator(pool);
+        NumberResolver resolver = new ContestNumberResolver(pool, contest, repository, poolNumbersValidator);
+        NumberInsertionService insertionService = new NumberInsertionService(resolver);
+
+        return insertionService.insertNumbers(contest.getDrawnNumbers());
     }
 
-    public boolean validateNumberExistInContest(Set<Number> contestNumbers, int num){
-        for (Number betNumber : contestNumbers) {
-            if (betNumber.getNumber() == num) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

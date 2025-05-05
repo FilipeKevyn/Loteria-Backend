@@ -47,7 +47,7 @@ public class ContestController {
     )
     public ResponseEntity<ContestDTO> create(@PathVariable UUID poolId, @RequestBody ContestDTO obj){
         Contest contest = new Contest(obj);
-        contestService.setContestInPool(poolId, contest);
+        contestService.insertContestInPool(poolId, contest);
         resultService.verifyAllBets(poolId);
         ContestDTO contestDTO = new ContestDTO(contest.getCodeContest(), contest.getDrawnNumbers());
         return ResponseEntity.status(HttpStatus.CREATED).body(contestDTO);

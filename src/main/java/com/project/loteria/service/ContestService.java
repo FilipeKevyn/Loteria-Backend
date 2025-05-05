@@ -17,22 +17,17 @@ public class ContestService {
     @Autowired
     private PoolService poolService;
 
-    public Contest findById(UUID id){
-        Optional<Contest> contest = contestRepository.findById(id);
-        return contest.orElseThrow(() -> new RuntimeException()); // criar excessão personalizada
-    }
+    @Autowired
+    private NumberService numberService;
 
-    public Contest insert(Contest obj){
-        return contestRepository.save(obj);
-    }
-
-    public void setContestInPool(UUID id, Contest contest){
-        Pool pool = poolService.findById(id);
+    public void insertContestInPool(UUID poolId, Contest contest){
+        Pool pool = poolService.findById(poolId);
         if (pool.getContest() != null){
             updateContest(pool);
         }
         pool.setContest(contest);
         contest.setPool(pool);
+        contest.setNumbers(numberService.insertNumbersInContest(contest, pool));
         contestRepository.save(contest);
         poolService.update(pool);
     }
