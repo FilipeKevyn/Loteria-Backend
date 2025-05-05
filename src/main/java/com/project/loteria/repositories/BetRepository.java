@@ -13,6 +13,6 @@ import java.util.UUID;
 public interface BetRepository extends JpaRepository<Bet, UUID> {
     Page<Bet> findByPool(Pool pool, Pageable pageable);
 
-    @Query("SELECT COUNT(bn) FROM BetNumber bn JOIN bn.bets b WHERE b = :bet AND bn.matched = true")
+    @Query("SELECT COUNT(bn) FROM Number bn JOIN bn.bets b WHERE b = :bet AND bn.matched = true")
     int countMatchedNumbersByBet(@Param("bet") Bet bet);
 }
