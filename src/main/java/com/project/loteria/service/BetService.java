@@ -52,9 +52,6 @@ public class BetService {
     public void addBetToPool(UUID poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
-        if (pool.getContest() != null) {
-            resultService.verifyBet(betSaved);
-        }
 
         poolService.addBetToPool(pool, betSaved);
     }

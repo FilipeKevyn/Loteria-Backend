@@ -2,8 +2,10 @@ package com.project.loteria.controller;
 
 import com.project.loteria.dtos.ContestDTO;
 import com.project.loteria.entities.Contest;
+import com.project.loteria.entities.Pool;
 import com.project.loteria.exceptions.handler.RestErrorMensage;
 import com.project.loteria.service.ContestService;
+import com.project.loteria.service.PoolService;
 import com.project.loteria.service.ResultService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -25,9 +27,6 @@ public class ContestController {
     @Autowired
     private ContestService contestService;
 
-    @Autowired
-    private ResultService resultService;
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
     @Operation(
@@ -48,7 +47,6 @@ public class ContestController {
     public ResponseEntity<ContestDTO> create(@PathVariable UUID poolId, @RequestBody ContestDTO obj){
         Contest contest = new Contest(obj);
         contestService.insertContestInPool(poolId, contest);
-        resultService.verifyAllBets(poolId);
         ContestDTO contestDTO = new ContestDTO(contest.getCodeContest(), contest.getDrawnNumbers());
         return ResponseEntity.status(HttpStatus.CREATED).body(contestDTO);
     }
