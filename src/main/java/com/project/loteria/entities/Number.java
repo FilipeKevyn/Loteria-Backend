@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class BetNumber {
+public class Number {
     private UUID id;
 
     private int number;
@@ -18,13 +18,13 @@ public class BetNumber {
 
     private Pool pool;
 
-    public BetNumber(Pool pool, Bet bet, int number) {
+    public Number(Pool pool, Bet bet, int number) {
         this.pool = pool;
         this.number = number;
         bets.add(bet);
     }
 
-    public BetNumber(){}
+    public Number(){}
 
     public UUID getId() {
         return id;
@@ -53,5 +53,6 @@ public class BetNumber {
     public void setMatched(boolean matched) {
         this.matched = matched;
     }
+
 
 }

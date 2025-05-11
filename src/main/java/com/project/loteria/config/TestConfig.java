@@ -4,9 +4,7 @@ import com.project.loteria.dao.repositories.BetDAOImpl;
 import com.project.loteria.dao.repositories.PoolDAOImpl;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.entities.Bet;
-import com.project.loteria.entities.BetNumber;
-import com.project.loteria.entities.User;
-import com.project.loteria.service.BetService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +21,7 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private BetDAOImpl betrepository;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -41,6 +40,5 @@ public class TestConfig implements CommandLineRunner {
 
         bet.setMatched(2);
         betrepository.save(bet);
-
     }
 }

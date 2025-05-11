@@ -28,7 +28,7 @@ public class Pool implements Serializable {
     private Set<User> users = new HashSet<>();
 
     @JsonIgnore
-    private Set<BetNumber> betNumbers = new HashSet<>();
+    private Set<Number> numbers = new HashSet<>();
 
 
     public Pool(String name){
@@ -98,16 +98,16 @@ public class Pool implements Serializable {
         this.users = users;
     }
 
-    public void setBetNumbers(Set<BetNumber> betNumbers) {
-        this.betNumbers = betNumbers;
+    public void setBetNumbers(Set<Number> betNumbers) {
+        this.numbers = betNumbers;
     }
 
     public Set<Bet> getBets() {
         return bets;
     }
 
-    public Set<BetNumber> getBetNumbers() {
-        return betNumbers;
+    public Set<Number> getNumbers() {
+        return numbers;
     }
 
     @Override

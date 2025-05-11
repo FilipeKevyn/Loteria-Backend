@@ -1,6 +1,5 @@
 package com.project.loteria.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.BetDTO;
 
 import java.io.Serializable;
@@ -8,18 +7,12 @@ import java.util.*;
 
 public class Bet implements Serializable {
     private UUID id;
-
     private double valueInvested;
-
     private int quantityNumbers = 0;
-
-    @JsonIgnore
     private List<Integer> betNumbersArray = new ArrayList<>();
-
-    private Set<BetNumber> betNumbers = new HashSet<>();
+    private Set<Number> betNumbers = new HashSet<>();
     private int matched;
     private String gameType;
-    @JsonIgnore
     private Pool pool;
 
     public Bet(){}
@@ -91,11 +84,11 @@ public class Bet implements Serializable {
         this.gameType = type;
     }
 
-    public Set<BetNumber> getBetNumbers() {
+    public Set<Number> getBetNumbers() {
         return betNumbers;
     }
 
-    public void setBetNumbers(Set<BetNumber> betNumbers) {
+    public void setBetNumbers(Set<Number> betNumbers) {
         this.betNumbers = betNumbers;
     }
 

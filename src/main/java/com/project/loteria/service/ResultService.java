@@ -1,14 +1,6 @@
 package com.project.loteria.service;
 
-import com.project.loteria.entities.Bet;
-import com.project.loteria.entities.BetNumber;
-import com.project.loteria.entities.Contest;
-import com.project.loteria.entities.Pool;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ResultService {

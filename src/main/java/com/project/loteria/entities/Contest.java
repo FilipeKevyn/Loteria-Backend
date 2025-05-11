@@ -14,6 +14,8 @@ public class Contest implements Serializable {
 
     private String codeContest;
 
+    private Set<Number> numbers = new HashSet<>();
+
     @JsonIgnore
     private Pool pool;
 
@@ -60,6 +62,14 @@ public class Contest implements Serializable {
 
     public void setPool(Pool pool) {
         this.pool = pool;
+    }
+
+    public Set<Number> getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(Set<Number> numbers) {
+        this.numbers = numbers;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.project.loteria.service;
 
-import com.project.loteria.entities.BetNumber;
+import com.project.loteria.entities.Number;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.exceptions.BetAlreadyExistsException;
@@ -20,7 +20,7 @@ public class BetService {
     private PoolService poolService;
 
     @Autowired
-    private BetNumberService betNumberService;
+    private NumberService betNumberService;
     @Autowired
     @Lazy
     private ResultService resultService;
