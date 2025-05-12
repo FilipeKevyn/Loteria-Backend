@@ -65,6 +65,14 @@ public class BetDAOImpl implements BetDAO {
     }
 
     @Override
+    public Set<Bet> saveAll(Set<Bet> bets) {
+        for (Bet bet : bets) {
+            save(bet);
+        }
+        return bets;
+    }
+
+    @Override
     public void delete(String id) {
         String query = "DELETE FROM tb_bet WHERE id = ?";
         jdbcTemplate.update(query, id);
