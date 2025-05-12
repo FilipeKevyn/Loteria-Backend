@@ -30,6 +30,11 @@ public class ContestDAOImpl implements ContestDAO {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 
         Map<String, Object> values = new HashMap<>();
+        values.put("id",contest.getId());
+        values.put("pool_id", contest.getPool().getId());
+
+        jdbcInsert.execute(values);
+
         return new Contest();
     }
 

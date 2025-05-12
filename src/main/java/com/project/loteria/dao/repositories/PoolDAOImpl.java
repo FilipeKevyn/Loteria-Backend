@@ -33,6 +33,7 @@ public class PoolDAOImpl implements PoolDAO {
         Map<String, Object> values = new HashMap<>();
         values.put("id", pool.getId());
         values.put("title", pool.getTitle());
+        values.put("type", pool.getType());
 
         jdbcInsert.execute(values);
 
