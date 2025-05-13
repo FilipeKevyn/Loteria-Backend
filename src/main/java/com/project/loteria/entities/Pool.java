@@ -40,7 +40,7 @@ public class Pool implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "pool")
-    private Set<BetNumber> betNumbers = new HashSet<>();
+    private Set<Number> numbers = new HashSet<>();
 
 
     public Pool(String name){
@@ -109,8 +109,8 @@ public class Pool implements Serializable {
         return bets;
     }
 
-    public Set<BetNumber> getBetNumbers() {
-        return betNumbers;
+    public Set<Number> getNumbers() {
+        return numbers;
     }
 
     @Override

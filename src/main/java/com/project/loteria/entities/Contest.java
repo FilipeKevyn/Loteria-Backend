@@ -16,6 +16,9 @@ public class Contest implements Serializable {
     private List<Integer> drawnNumbers = new ArrayList<>();
     private String codeContest;
 
+    @OneToMany(mappedBy = "contest")
+    private Set<Number> numbers = new HashSet<>();
+
     @JsonIgnore
     @OneToOne
     private Pool pool;
@@ -63,6 +66,14 @@ public class Contest implements Serializable {
 
     public void setPool(Pool pool) {
         this.pool = pool;
+    }
+
+    public Set<Number> getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(Set<Number> numbers) {
+        this.numbers = numbers;
     }
 
     @Override

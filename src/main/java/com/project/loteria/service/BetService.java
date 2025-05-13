@@ -1,6 +1,6 @@
 package com.project.loteria.service;
 
-import com.project.loteria.entities.BetNumber;
+import com.project.loteria.entities.Number;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.exceptions.BetAlreadyExistsException;
@@ -9,6 +9,7 @@ import com.project.loteria.interfaces.GameTypeStrategy;
 import com.project.loteria.repositories.BetRepository;
 import com.project.loteria.service.strategy.LotofacilStrategy;
 import com.project.loteria.service.strategy.MegaSenaStrategy;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class BetService {
     private PoolService poolService;
 
     @Autowired
-    private BetNumberService betNumberService;
+    private NumberService betNumberService;
     @Autowired
     @Lazy
     private ResultService resultService;
@@ -47,18 +48,16 @@ public class BetService {
         return betRepository.findByPool(pool, pageable);
     }
 
+    @Transactional
     public void addBetToPool(UUID poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
-        if (pool.getContest() != null) {
-            resultService.verifyBet(betSaved);
-        }
 
         poolService.addBetToPool(pool, betSaved);
     }
 
     public Bet prepareBet(Bet bet, Pool pool){
-        Set<BetNumber> betNumbers = betNumberService.insertNumbers(bet, pool);
+        Set<Number> betNumbers = betNumberService.insertNumbersInBet(bet, pool);
         bet.setBetNumbers(betNumbers);
 
         if (verifySameBet(bet, pool)){
