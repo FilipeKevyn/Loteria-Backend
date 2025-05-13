@@ -36,13 +36,14 @@ public class PoolNumberResolver implements NumberResolver{
     public Number resolve(int num) {
         if (pool.getContest() != null && contestValidator.exists(num)){
             logger.debug("Número {} encontrado no contest.", num);
-            Number number = repository.findByNumberAndContest(num, pool.getContest());
+            Number number = new Number();
+                    //repository.findByNumberAndContest(num, pool.getContest());
             number.setMatched(true);
             return number;
 
         } else if (pool.getNumbers() != null && poolValidator.exists(num)) {
             logger.debug("Número {} encontrado no pool.", num);
-            return repository.findByNumberAndPool(num, pool);
+            //return repository.findByNumberAndPool(num, pool);
         }
 
         logger.info("Número {} não encontrado. Criando novo número.", num);

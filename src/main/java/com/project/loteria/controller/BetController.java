@@ -45,12 +45,12 @@ public class BetController {
 
             }
     )
-    public ResponseEntity<Page<Bet>> findByPool(@PathVariable UUID poolId,
+    public ResponseEntity<Page<Bet>> findByPool(@PathVariable String poolId,
                                    @RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size){
         Pageable pageable = PageRequest.of(page, size);
-        Page<Bet> bets = betService.findBetsByPool(poolId, pageable);
-        return ResponseEntity.ok().body(bets);
+//        Page<Bet> bets = betService.findBetsByPool(poolId, pageable);
+        return ResponseEntity.ok().build(); // colocar bets
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -69,7 +69,7 @@ public class BetController {
                     }),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             })
-    public ResponseEntity<BetDTO> create(@PathVariable UUID poolId, @RequestBody BetDTO obj){
+    public ResponseEntity<BetDTO> create(@PathVariable String poolId, @RequestBody BetDTO obj){
         Bet bet = new Bet(obj);
         betService.addBetToPool(poolId, bet);
         BetDTO betDTO = new BetDTO(bet.getBetNumbersArray(), bet.getGameType());
@@ -92,7 +92,7 @@ public class BetController {
                 })
             }
     )
-    public ResponseEntity<Void> remove(@PathVariable UUID betId){
+    public ResponseEntity<Void> remove(@PathVariable String betId){
         betService.delete(betId);
         return ResponseEntity.noContent().build();
     }

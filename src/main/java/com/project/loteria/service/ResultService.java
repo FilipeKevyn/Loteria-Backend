@@ -54,6 +54,6 @@ public class ResultService {
     }
 
     public void setMatched(Bet bet){
-        betService.setMatched(bet, betService.countMatched(bet));
+//        betService.setMatched(bet, betService.countMatched(bet));
     }
 }

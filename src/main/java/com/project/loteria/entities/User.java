@@ -1,6 +1,7 @@
 package com.project.loteria.entities;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
@@ -20,6 +21,7 @@ public class User {
 
     private Set<User> friends = new HashSet<>();
 
+    @DBRef
     private Set<Pool> pools = new HashSet<>();
 
     public User(){}

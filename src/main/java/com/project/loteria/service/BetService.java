@@ -9,11 +9,8 @@ import com.project.loteria.interfaces.GameTypeStrategy;
 import com.project.loteria.repositories.BetRepository;
 import com.project.loteria.service.strategy.LotofacilStrategy;
 import com.project.loteria.service.strategy.MegaSenaStrategy;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -36,20 +33,19 @@ public class BetService {
             "Lotofácil", new LotofacilStrategy());
 
     public Bet insert(Bet obj){
-        return betRepository.save(obj);
+        return betRepository.insert(obj);
     }
 
-    public Bet findById(UUID id){
+    public Bet findById(String id){
         return betRepository.findById(id).orElseThrow(() -> new BetNotFoundException());
     }
 
-    public Page<Bet> findBetsByPool(UUID poolId, Pageable pageable){
-        Pool pool = poolService.findById(poolId);
-        return betRepository.findByPool(pool, pageable);
-    }
+//    public Page<Bet> findBetsByPool(String poolId, Pageable pageable){
+//        Pool pool = poolService.findById(poolId);
+//        return betRepository.findByPool(pool, pageable);
+//    }
 
-    @Transactional
-    public void addBetToPool(UUID poolId, Bet bet){
+    public void addBetToPool(String poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
 
@@ -88,9 +84,9 @@ public class BetService {
         betRepository.save(bet);
     }
 
-    public int countMatched(Bet bet){
-        return betRepository.countMatchedNumbersByBet(bet);
-    }
+//    public int countMatched(Bet bet){
+//        return betRepository.countMatchedNumbersByBet(bet);
+//    }
 
     public void setValueInvested(Bet bet){
         double valueInvested = strategyType.get(bet.getGameType())
@@ -102,7 +98,7 @@ public class BetService {
          return bet.stream().sorted().toList();
     }
 
-    public void delete(UUID id){
+    public void delete(String id){
         Bet bet = findById(id);
         Pool pool = bet.getPool();
         poolService.subtractValueTotal(pool, bet);
