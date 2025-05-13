@@ -6,6 +6,8 @@ import com.project.loteria.repositories.ContestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ContestService {
     @Autowired
@@ -20,18 +22,18 @@ public class ContestService {
     @Autowired
     private ResultService resultService;
 
-//    public void insertContestInPool(String poolId, Contest contest){
-//        Pool pool = poolService.findById(poolId);
-//        if (pool.getContest() != null){
-//            removeContestInPool(pool);
-//            resultService.updateContest(pool, contest);
-//            saveContest(contest, pool);
-//        }
-//        else {
-//            saveContest(contest, pool);
-//            resultService.verifyBetNumbers(pool);
-//        }
-//    }
+    public void insertContestInPool(UUID poolId, Contest contest){
+        Pool pool = poolService.findById(poolId);
+        if (pool.getContest() != null){
+            removeContestInPool(pool);
+            resultService.updateContest(pool, contest);
+            saveContest(contest, pool);
+        }
+        else {
+            saveContest(contest, pool);
+            resultService.verifyBetNumbers(pool);
+        }
+    }
 
     public void removeContestInPool(Pool pool){
         Contest contest = pool.getContest();

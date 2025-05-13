@@ -27,7 +27,7 @@ public class ContestNumberResolver implements NumberResolver{
     @Override
     public Number resolve(int num) {
         if (poolValidator.exists(num)){
-//            return repository.findByNumberAndPool(num, pool);
+            return repository.findByNumberAndPool(num, pool);
         }
         return new Number(pool, contest, num);
     }

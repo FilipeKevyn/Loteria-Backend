@@ -7,6 +7,9 @@ import com.project.loteria.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UserService {
     @Autowired
@@ -16,13 +19,13 @@ public class UserService {
 
     // pseudo métodos
 
-    public void createPool(String id, PoolDTO poolDTO){
+    public void createPool(UUID id, PoolDTO poolDTO){
         Pool pool = poolService.createPool(poolDTO);
         User user = repository.findById(id).orElseThrow(() -> new RuntimeException());
         user.getPools().add(pool);
     }
 
-    public void addFriend(String id, String idFriend){
+    public void addFriend(UUID id, UUID idFriend){
         User user = repository.findById(id).orElseThrow(() -> new RuntimeException());
         User friend = repository.findById(idFriend).orElseThrow(() -> new RuntimeException());
 
