@@ -1,9 +1,8 @@
 package com.project.loteria.repositories;
 
 import com.project.loteria.entities.Pool;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.UUID;
 
-public interface PoolRepository extends JpaRepository<Pool, UUID> {
+public interface PoolRepository extends MongoRepository<Pool, String> {
 }
