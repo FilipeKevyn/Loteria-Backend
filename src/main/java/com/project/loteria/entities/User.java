@@ -1,20 +1,16 @@
 package com.project.loteria.entities;
 
-import com.project.loteria.repositories.PoolRepository;
-import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
-@Entity
-@Table(name = "tb_user")
+@Document(collection = "tb_user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     private String name;
 
@@ -22,20 +18,8 @@ public class User {
 
     private Double valueTotalInvested;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend")
-    )
     private Set<User> friends = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_pool",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "pool_id")
-    )
     private Set<Pool> pools = new HashSet<>();
 
     public User(){}
@@ -44,11 +28,11 @@ public class User {
         this.email = email;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

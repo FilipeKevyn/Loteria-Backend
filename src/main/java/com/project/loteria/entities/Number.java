@@ -1,33 +1,26 @@
 package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
-@Entity
-@Table(name = "tb_numbers")
+@Document(collection = "tb_numbers")
 public class Number {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     private int number;
 
     private boolean matched = false;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "betNumbers")
     private Set<Bet> bets = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "contest_id")
     private Contest contest;
 
-    @ManyToOne
-    @JoinColumn(name = "pool_id")
     private Pool pool;
 
     public Number(Pool pool, Bet bet, int number) {
@@ -44,11 +37,11 @@ public class Number {
 
     public Number(){}
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

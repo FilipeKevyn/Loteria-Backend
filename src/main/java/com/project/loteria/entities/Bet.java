@@ -2,17 +2,17 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.BetDTO;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.*;
 
-@Entity
-@Table(name = "tb_bets")
+@Document(collection = "tb_bet")
 public class Bet implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
     private double valueInvested;
     @Transient
     private int quantityNumbers = 0;
@@ -21,18 +21,10 @@ public class Bet implements Serializable {
     @Transient
     private List<Integer> betNumbersArray = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "tb_bet_betnumbers",
-            joinColumns = @JoinColumn(name = "bet_id"),
-            inverseJoinColumns = @JoinColumn(name = "bet_number_id")
-    )
     private Set<Number> betNumbers = new HashSet<>();
     private int matched;
     private String gameType;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "pool_id")
     private Pool pool;
 
     public Bet(){}
@@ -48,11 +40,11 @@ public class Bet implements Serializable {
         setQuantityNumbers(betNumbersArray.size());
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

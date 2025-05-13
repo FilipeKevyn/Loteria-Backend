@@ -2,23 +2,20 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.PoolDTO;
-import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
-@Entity
-@Table(name = "tb_pool")
+@Document(collection = "tb_pool")
 public class Pool implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
-    @Column(unique = true)
     private String code = RandomStringUtils.randomAlphanumeric(6);
 
     private String title;
@@ -28,18 +25,14 @@ public class Pool implements Serializable {
     private double valueTotal;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
     private Contest contest;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pool", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Bet> bets = new HashSet<>();
 
-    @ManyToMany(mappedBy = "pools")
     private Set<User> users = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pool")
     private Set<Number> numbers = new HashSet<>();
 
 
@@ -47,7 +40,7 @@ public class Pool implements Serializable {
         this.title = name;
     }
 
-    public Pool(UUID id, Contest contest) {
+    public Pool(String id, Contest contest) {
         this.id = id;
         this.contest = contest;
     }
@@ -61,11 +54,11 @@ public class Pool implements Serializable {
 
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
