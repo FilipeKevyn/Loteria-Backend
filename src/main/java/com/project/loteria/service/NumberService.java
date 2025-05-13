@@ -33,9 +33,9 @@ public class NumberService {
         repository.saveAll(numbers);
     }
 
-    public Number findByNumberAndPool(int num, Pool pool){
-        return repository.findByNumberAndPool(num, pool);
-    }
+//    public Number findByNumberAndPool(int num, Pool pool){
+//        return repository.findByNumberAndPool(num, pool);
+//    }
 
     public Set<Number> insertNumbersInBet(Bet bet, Pool pool){
         logger.info("Inserindo numeros na Bet");

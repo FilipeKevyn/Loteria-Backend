@@ -18,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping(value = "/bet")
 @Tag(name= "Bet", description = "Endpoints for managing bets")
@@ -27,31 +25,31 @@ public class BetController {
     @Autowired
     private BetService betService;
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/{poolId}/")
-    @Operation(
-            summary = "Find bets by pool, return with pagination",
-            tags = {"Bet"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = {
-                            @Content(
-                                    array = @ArraySchema(schema = @Schema(implementation = RestErrorMensage.class))
-                            )
-                    }),
-                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
-
-            }
-    )
-    public ResponseEntity<Page<Bet>> findByPool(@PathVariable UUID poolId,
-                                   @RequestParam(defaultValue = "0") int page,
-                                   @RequestParam(defaultValue = "10") int size){
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Bet> bets = betService.findBetsByPool(poolId, pageable);
-        return ResponseEntity.ok().body(bets);
-    }
+//    @CrossOrigin(origins = "*", allowedHeaders = "*")
+//    @GetMapping(value = "/{poolId}/")
+//    @Operation(
+//            summary = "Find bets by pool, return with pagination",
+//            tags = {"Bet"},
+//            responses = {
+//                    @ApiResponse(description = "Success", responseCode = "200", content = @Content),
+//                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+//                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+//                    @ApiResponse(description = "Not Found", responseCode = "404", content = {
+//                            @Content(
+//                                    array = @ArraySchema(schema = @Schema(implementation = RestErrorMensage.class))
+//                            )
+//                    }),
+//                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+//
+//            }
+//    )
+//    public ResponseEntity<Page<Bet>> findByPool(@PathVariable String poolId,
+//                                   @RequestParam(defaultValue = "0") int page,
+//                                   @RequestParam(defaultValue = "10") int size){
+//        Pageable pageable = PageRequest.of(page, size);
+//        Page<Bet> bets = betService.findBetsByPool(poolId, pageable);
+//        return ResponseEntity.ok().body(bets);
+//    }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/{poolId}")
@@ -69,7 +67,7 @@ public class BetController {
                     }),
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             })
-    public ResponseEntity<BetDTO> create(@PathVariable UUID poolId, @RequestBody BetDTO obj){
+    public ResponseEntity<BetDTO> create(@PathVariable String poolId, @RequestBody BetDTO obj){
         Bet bet = new Bet(obj);
         betService.addBetToPool(poolId, bet);
         BetDTO betDTO = new BetDTO(bet.getBetNumbersArray(), bet.getGameType());
@@ -92,7 +90,7 @@ public class BetController {
                 })
             }
     )
-    public ResponseEntity<Void> remove(@PathVariable UUID betId){
+    public ResponseEntity<Void> remove(@PathVariable String betId){
         betService.delete(betId);
         return ResponseEntity.noContent().build();
     }
