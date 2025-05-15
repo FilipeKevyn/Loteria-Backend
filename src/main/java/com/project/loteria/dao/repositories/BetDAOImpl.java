@@ -1,8 +1,10 @@
 package com.project.loteria.dao.repositories;
 
 import com.project.loteria.dao.BetDAO;
+import com.project.loteria.dao.PoolDAO;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.mapper.BetRowMapper;
+import com.project.loteria.mapper.BetWithPoolRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,12 +19,21 @@ public class BetDAOImpl implements BetDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
     @Override
     public Bet findById(String id) {
-        String query = "SELECT * FROM tb_bet WHERE ID = ?";
-        Bet bet = jdbcTemplate.queryForObject(query, new BetRowMapper(), id);
+        String query = """
+        SELECT b.*, 
+               p.id as pool_id, 
+               p.title as pool_title, 
+               p.type as pool_type, 
+               p.value_total_invested as pool_value_total
+        FROM tb_bet b
+        JOIN tb_pool p ON b.pool_id = p.id
+        WHERE b.id = ?
+        """;
 
-        return bet;
+        return jdbcTemplate.queryForObject(query, new BetWithPoolRowMapper(), id);
     }
 
     @Override
