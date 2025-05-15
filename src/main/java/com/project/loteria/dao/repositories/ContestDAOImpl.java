@@ -19,9 +19,18 @@ public class ContestDAOImpl implements ContestDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private PoolDAOImpl poolRepository;
+
     @Override
     public Contest findById(String id) {
-        String query = "SELECT * FROM tb_contest WHERE id = ?";
+        String query = "SELECT c.id AS contest_id, c.pool_id, p.id AS pool_id, p.title AS pool_title, p.type AS pool_type, p.value_total_invested, " +
+                "n.id AS number_id, n.number, n.matched AS number_matched " +
+                "FROM tb_contest c " +
+                "JOIN tb_pool p ON c.pool_id = p.id " +
+                "LEFT JOIN tb_number n ON n.contest_id = c.id " +
+                "WHERE c.id = ?";
+
         Contest contest = jdbcTemplate.queryForObject(query, new ContestRowMapper(), id);
 
         return contest;
