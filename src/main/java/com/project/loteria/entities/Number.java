@@ -21,12 +21,24 @@ public class Number {
     private Contest contest;
 
     public Number(UUID id, Pool pool, Bet bet, int number, Contest contest) {
+        this.id = id;
         this.pool = pool;
         this.number = number;
         bets.add(bet);
+        this.contest = contest;
     }
 
-    public Number(){}
+    public Number(UUID numberId, Pool pool, Bet bet, int number, boolean numberMatched, Contest contest){
+        this.id = numberId;
+        this.pool = pool;
+        this.number = number;
+        bets.add(bet);
+        this.contest = contest;
+        this.matched = numberMatched;
+    }
+
+    public Number() {
+    }
 
     public UUID getId() {
         return id;
