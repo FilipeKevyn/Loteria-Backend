@@ -18,7 +18,9 @@ public class Number {
 
     private Pool pool;
 
-    public Number(Pool pool, Bet bet, int number) {
+    private Contest contest;
+
+    public Number(UUID id, Pool pool, Bet bet, int number, Contest contest) {
         this.pool = pool;
         this.number = number;
         bets.add(bet);
@@ -54,5 +56,27 @@ public class Number {
         this.matched = matched;
     }
 
+    public Set<Bet> getBets() {
+        return bets;
+    }
 
+    public void setBets(Set<Bet> bets) {
+        this.bets = bets;
+    }
+
+    public Pool getPool() {
+        return pool;
+    }
+
+    public void setPool(Pool pool) {
+        this.pool = pool;
+    }
+
+    public Contest getContest() {
+        return contest;
+    }
+
+    public void setContest(Contest contest) {
+        this.contest = contest;
+    }
 }
