@@ -4,12 +4,14 @@ import com.project.loteria.dao.ContestDAO;
 import com.project.loteria.entities.Contest;
 import com.project.loteria.mapper.ContestRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 public class ContestDAOImpl implements ContestDAO {
@@ -27,11 +29,17 @@ public class ContestDAOImpl implements ContestDAO {
 
     @Override
     public Contest insert(Contest contest) {
-        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("tb_contest");
 
         Map<String, Object> values = new HashMap<>();
         values.put("id",contest.getId());
         values.put("pool_id", contest.getPool().getId());
+
+        String insertNumber = "INSERT INTO tb_number (id, number, matched, contest_id, pool_id) VALUES (?, ?, ?, ?, ?)";
+        for (Integer num : contest.getDrawnNumbers()){
+            UUID numberId = UUID.randomUUID();
+            jdbcTemplate.update(insertNumber, numberId, num, false, contest.getId(), contest.getPool().getId());
+        }
 
         jdbcInsert.execute(values);
 
@@ -40,7 +48,26 @@ public class ContestDAOImpl implements ContestDAO {
 
     @Override
     public Contest save(Contest contest) {
-        return null;
+        String selectQuery = "SELECT id FROM tb_pool WHERE id = ?";
+        UUID existingContestId;
+        try {
+            existingContestId = jdbcTemplate.queryForObject(selectQuery, UUID.class, contest.getPool().getId());
+        }
+        catch (EmptyResultDataAccessException e){
+        }
+
+        String insertContest = "INSERT INTO tb_contest (id, poo_id) VALUES (?,?)";
+        UUID newContestId = UUID.randomUUID();
+        jdbcTemplate.update(insertContest, newContestId, contest.getPool().getId());
+
+        String insertNumber = "INSERT INTO tb_number (id, number, matched, contest_id, pool_id) VALUES (?, ?, ?, ?, ?)";
+        for (Integer num : contest.getDrawnNumbers()){
+            UUID numberId = UUID.randomUUID();
+            jdbcTemplate.update(insertNumber, numberId, num, false, contest.getId(), contest.getPool().getId());
+        }
+
+        contest.setId(newContestId);
+        return contest;
     }
 
     @Override
