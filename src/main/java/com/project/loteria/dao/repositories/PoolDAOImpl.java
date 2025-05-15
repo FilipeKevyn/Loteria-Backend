@@ -18,10 +18,17 @@ public class PoolDAOImpl implements PoolDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private BetDAOImpl betRespository;
+
     @Override
     public Pool findById(String id) {
-        String query = "SELECT * FROM tb_pool WHERE ID = ?";
-        return jdbcTemplate.queryForObject(query, new PoolRowMapper(), id);
+        String query = "SELECT * FROM tb_pool WHERE id = ?";
+        Pool pool = jdbcTemplate.queryForObject(query, new PoolRowMapper(), id);
+        pool.setBets(betRespository.findBetsByPool(id));
+
+
+        return pool;
     }
 
     @Override
