@@ -1,7 +1,9 @@
 package com.project.loteria.config;
 
 import com.project.loteria.dao.repositories.BetDAOImpl;
+import com.project.loteria.dao.repositories.ContestDAOImpl;
 import com.project.loteria.dao.repositories.PoolDAOImpl;
+import com.project.loteria.entities.Contest;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.entities.Bet;
 
@@ -22,6 +24,8 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private BetDAOImpl betrepository;
 
+    @Autowired
+    private ContestDAOImpl contestRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,6 +41,10 @@ public class TestConfig implements CommandLineRunner {
         betrepository.insert(bet);
         System.out.println("Adicionou a bet ao pool");
 
-        System.out.println(poolrepository.findById(pool.getId().toString()).getBets().toString());
+        Contest contest = new Contest();
+        contest.setId(UUID.randomUUID());
+        contest.setPool(pool);
+
+        contestRepository.insert(contest);
     }
 }
