@@ -28,7 +28,8 @@ public class PoolDAOImpl implements PoolDAO {
                 "FROM tb_pool p " +
                 "LEFT JOIN tb_contest c ON c.pool_id = p.id " +
                 "LEFT JOIN tb_number n ON n.pool_id = p.id " +
-                "LEFT JOIN tb_bet b ON b.pool_id = p.id " +
+                "LEFT JOIN tb_numbers_bet nb ON nb.number_id = n.id " +
+                "LEFT JOIN tb_bet b ON b.id = nb.bet_id " +
                 "WHERE p.id = ?";
 
         Pool pool = jdbcTemplate.queryForObject(query, new PoolRowMapper(), id);
