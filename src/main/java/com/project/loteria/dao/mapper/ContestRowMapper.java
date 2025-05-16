@@ -1,4 +1,4 @@
-package com.project.loteria.mapper;
+package com.project.loteria.dao.mapper;
 
 import com.project.loteria.entities.Contest;
 import com.project.loteria.entities.Number;

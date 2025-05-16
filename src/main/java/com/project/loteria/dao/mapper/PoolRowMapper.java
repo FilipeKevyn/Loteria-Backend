@@ -1,4 +1,4 @@
-package com.project.loteria.mapper;
+package com.project.loteria.dao.mapper;
 
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Contest;
@@ -30,7 +30,7 @@ public class PoolRowMapper implements RowMapper<Pool> {
         if (rs.getString("contest_id") != null) {
             contest = new Contest();
             contest.setId(UUID.fromString(rs.getString("contest_id")));
-            pool.setContest(contest);  // Adiciona o Contest ao Pool
+            pool.setContest(contest);
         }
 
         if (rs.getString("bet_id") != null) {

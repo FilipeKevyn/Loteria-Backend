@@ -1,13 +1,10 @@
 package com.project.loteria.dao.repositories;
 
 import com.project.loteria.dao.BetDAO;
-import com.project.loteria.dao.PoolDAO;
+import com.project.loteria.dao.mapper.BetRowMapper;
 import com.project.loteria.entities.Bet;
-import com.project.loteria.mapper.BetRowMapper;
-import com.project.loteria.mapper.BetWithPoolRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +30,7 @@ public class BetDAOImpl implements BetDAO {
         WHERE b.id = ?
         """;
 
-        return jdbcTemplate.queryForObject(query, new BetWithPoolRowMapper(), id);
+        return jdbcTemplate.queryForObject(query, new BetRowMapper(), id);
     }
 
     @Override
