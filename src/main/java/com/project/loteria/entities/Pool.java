@@ -2,19 +2,19 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.PoolDTO;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "tb_pool")
+@Document(collection = "tb_pool")
 public class Pool implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String title;
 
@@ -23,18 +23,18 @@ public class Pool implements Serializable {
     private double valueTotal;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
+    @DBRef
     private Contest contest;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pool", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @DBRef
     private Set<Bet> bets = new HashSet<>();
 
     public Pool(String name){
         this.title = name;
     }
 
-    public Pool(Long id, Contest contest) {
+    public Pool(String id, Contest contest) {
         this.id = id;
         this.contest = contest;
     }
@@ -48,11 +48,11 @@ public class Pool implements Serializable {
 
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

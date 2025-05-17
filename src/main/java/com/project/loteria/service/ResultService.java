@@ -19,7 +19,7 @@ public class ResultService {
         this.betService = betService;
     }
 
-    public void verifyAllBets(Long poolId){
+    public void verifyAllBets(String poolId){
         Pool pool = poolService.findById(poolId);
         List<Integer> drawnNumbers = pool.getContest().getDrawnNumbers();
         List<Bet> bets = poolService.getAllBets(pool);
@@ -30,7 +30,7 @@ public class ResultService {
         }
     }
 
-    public void verifyBet(Long poolId, Bet bet){
+    public void verifyBet(String poolId, Bet bet){
         List<Integer> drawNumbers = poolService.findById(poolId).getContest().getDrawnNumbers();
         int matched = verifyMatched(bet.getBetNumbers(), drawNumbers);
         betService.setMatched(bet, matched);

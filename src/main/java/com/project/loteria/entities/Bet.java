@@ -2,27 +2,28 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.BetDTO;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-@Entity
-@Table(name = "tb_bets")
+@Document(collection = "tb_bet")
 public class Bet implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
     private double valueInvested;
+
+    @Transient
     private int quantityNumbers = 0;
     private List<Integer> betNumbers = new ArrayList<>();
     private int matched;
     private String gameType;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "pool_id")
+    @DBRef
     private Pool pool;
 
     public Bet(){}
@@ -33,11 +34,11 @@ public class Bet implements Serializable {
         setQuantityNumbers(betNumbers.size());
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

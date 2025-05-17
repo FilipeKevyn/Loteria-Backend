@@ -57,7 +57,7 @@ public class PoolController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Pool> findPoolById(@PathVariable Long poolId) {
+    public ResponseEntity<Pool> findPoolById(@PathVariable String poolId) {
         return ResponseEntity.ok().body(service.findById(poolId));
     }
 
@@ -94,7 +94,7 @@ public class PoolController {
                     @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Void> remove(@PathVariable Long poolId){
+    public ResponseEntity<Void> remove(@PathVariable String poolId){
         service.deletePool(poolId);
         return ResponseEntity.noContent().build();
     }

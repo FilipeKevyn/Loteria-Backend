@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class BetService {
+
     @Autowired
     private BetRepository betRepository;
 
@@ -34,17 +34,17 @@ public class BetService {
             "Lotofácil", new LotofacilStrategy());
 
     public Bet insert(Bet obj){
-        return betRepository.save(obj);
+        return betRepository.insert(obj);
     }
 
-    public Bet findById(UUID id){
+    public Bet findById(String id){
         return betRepository.findById(id).orElseThrow(() -> new BetNotFoundException());
     }
 
-    public Page<Bet> findBetsByPool(Long poolId, Pageable pageable){
-        Pool pool = poolService.findById(poolId);
-        return betRepository.findByPool(pool, pageable);
-    }
+//    public Page<Bet> findBetsByPool(String poolId, Pageable pageable){
+//        Pool pool = poolService.findById(poolId);
+//        return betRepository.findByPool(pool, pageable);
+//    }
 
     public Bet prepareBet(Bet bet, Pool pool){
         bet.setBetNumbers(sortBet(bet.getBetNumbers()));
@@ -56,7 +56,7 @@ public class BetService {
         return insert(bet);
     }
 
-    public void addBetToPool(Long poolId, Bet bet){
+    public void addBetToPool(String poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
         if (pool.getContest() != null) {
@@ -89,7 +89,7 @@ public class BetService {
          return bet.stream().sorted().toList();
     }
 
-    public void delete(UUID id){
+    public void delete(String id){
         Bet bet = findById(id);
         Pool pool = bet.getPool();
         poolService.subtractValueTotal(pool, bet);

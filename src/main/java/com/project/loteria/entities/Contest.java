@@ -2,28 +2,27 @@ package com.project.loteria.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.loteria.dtos.ContestDTO;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.*;
 
-@Entity
-@Table(name = "tb_contest")
+@Document(collection = "tb_contest")
 public class Contest implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private List<Integer> drawnNumbers = new ArrayList<>();
     private String codeContest;
 
-
     @JsonIgnore
-    @OneToOne
+    @DBRef
     private Pool pool;
 
     public Contest(){}
 
-    public Contest(Long id, List<Integer> drawnNumbers, String codeContest) {
+    public Contest(String id, List<Integer> drawnNumbers, String codeContest) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
         this.codeContest = codeContest;
@@ -34,11 +33,11 @@ public class Contest implements Serializable {
         this.codeContest = msContestDTO.codeContest();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

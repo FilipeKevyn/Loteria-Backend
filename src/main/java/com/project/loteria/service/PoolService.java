@@ -17,10 +17,10 @@ public class PoolService {
 
     public Pool createPool(PoolDTO poolDTO){
         Pool pool = new Pool(poolDTO);
-        return repository.save(pool);
+        return repository.insert(pool);
     }
 
-    public void deletePool(Long id){
+    public void deletePool(String id){
         Pool pool = findById(id);
         repository.delete(pool);
     }
@@ -29,7 +29,7 @@ public class PoolService {
         return repository.save(pool);
     }
 
-    public Pool findById(Long id){
+    public Pool findById(String id){
         return repository.findById(id).orElseThrow(() -> new PoolNotFoundException(id));
     }
 

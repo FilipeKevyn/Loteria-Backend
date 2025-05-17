@@ -3,7 +3,6 @@ package com.project.loteria.controller;
 import com.project.loteria.dtos.ContestDTO;
 import com.project.loteria.entities.Contest;
 import com.project.loteria.exceptions.handler.RestErrorMensage;
-import com.project.loteria.service.BetService;
 import com.project.loteria.service.ContestService;
 import com.project.loteria.service.ResultService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,7 +43,7 @@ public class ContestController {
                 @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<ContestDTO> create(@PathVariable Long poolId, @RequestBody ContestDTO obj){
+    public ResponseEntity<ContestDTO> create(@PathVariable String poolId, @RequestBody ContestDTO obj){
         Contest contest = new Contest(obj);
         contestService.setContestInPool(poolId, contest);
         resultService.verifyAllBets(poolId);

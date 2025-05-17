@@ -4,10 +4,12 @@ import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-public interface BetRepository extends JpaRepository<Bet, UUID> {
-    Page<Bet> findByPool(Pool pool, Pageable pageable);
+@Repository
+public interface BetRepository extends MongoRepository<Bet, String> {
+    //Page<Bet> findByPool(Pool pool, Pageable pageable);
 }

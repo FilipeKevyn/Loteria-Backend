@@ -16,16 +16,16 @@ public class ContestService {
     @Autowired
     private PoolService poolService;
 
-    public Contest findById(Long id){
+    public Contest findById(String id){
         Optional<Contest> contest = contestRepository.findById(id);
         return contest.orElseThrow(() -> new RuntimeException()); // criar excessão personalizada
     }
 
     public Contest insert(Contest obj){
-        return contestRepository.save(obj);
+        return contestRepository.insert(obj);
     }
 
-    public void setContestInPool(Long id, Contest contest){
+    public void setContestInPool(String id, Contest contest){
         Pool pool = poolService.findById(id);
         if (pool.getContest() != null){
             updateContest(pool);
