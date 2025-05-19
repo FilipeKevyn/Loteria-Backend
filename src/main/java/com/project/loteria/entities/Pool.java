@@ -27,6 +27,8 @@ public class Pool implements Serializable {
 
     private double valueTotal;
 
+    private String imageReference;
+
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Contest contest;
@@ -99,6 +101,14 @@ public class Pool implements Serializable {
 
     public void setValueTotal(double valueTotal) {
         this.valueTotal = valueTotal;
+    }
+
+    public String getImageReference() {
+        return imageReference;
+    }
+
+    public void setImageReference(String imageReference) {
+        this.imageReference = imageReference;
     }
 
     public String getCode() {
