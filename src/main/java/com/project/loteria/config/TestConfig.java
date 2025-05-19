@@ -27,7 +27,7 @@ public class TestConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        List<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5));
+//        List<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5));
         Pool pool = new Pool();
         pool.setTitle("Meu Bolão"); // Atribua algo ao título, pois ele pode ser obrigatório
         pool.setType("Mega-Sena");

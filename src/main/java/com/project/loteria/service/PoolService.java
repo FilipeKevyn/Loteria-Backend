@@ -5,9 +5,14 @@ import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
 import com.project.loteria.exceptions.PoolNotFoundException;
 import com.project.loteria.repositories.PoolRepository;
+import io.minio.GetObjectArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +20,8 @@ import java.util.UUID;
 public class PoolService {
     @Autowired
     private PoolRepository repository;
+    @Autowired
+    private MinioClient minioClient;
 
     public Pool createPool(PoolDTO poolDTO){
         Pool pool = new Pool(poolDTO);
@@ -56,5 +63,34 @@ public class PoolService {
     public void subtractValueTotal(Pool pool, Bet bet){
         double valueTotal = pool.getValueTotal() - bet.getValueInvested();
         pool.setValueTotal(valueTotal);
+    }
+
+
+    public Pool uploadProof(UUID poolId, MultipartFile file) throws Exception {
+        Pool pool = repository.findById(poolId)
+                .orElseThrow(() -> new RuntimeException("Bolão não encontrado"));
+
+        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+
+        minioClient.putObject(
+                PutObjectArgs.builder()
+                        .bucket("proof")
+                        .object(fileName)
+                        .stream(file.getInputStream(), file.getSize(), -1)
+                        .contentType(file.getContentType())
+                        .build()
+        );
+
+        pool.setImageReference(fileName);
+        return repository.save(pool);
+    }
+
+    public InputStream getProof(String fileName) throws Exception {
+        return minioClient.getObject(
+                GetObjectArgs.builder()
+                        .bucket("proof")
+                        .object(fileName)
+                        .build()
+        );
     }
 }

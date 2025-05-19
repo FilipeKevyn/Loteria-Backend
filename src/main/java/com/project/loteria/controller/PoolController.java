@@ -11,10 +11,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -98,5 +102,29 @@ public class PoolController {
     public ResponseEntity<Void> remove(@PathVariable UUID poolId){
         service.deletePool(poolId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/proof")
+    public ResponseEntity<Pool> uploadProof(@PathVariable UUID id,
+                                               @RequestParam("file") MultipartFile file) {
+        try {
+            Pool pool = service.uploadProof(id, file);
+            return ResponseEntity.ok(pool);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/proof/{filename}")
+    public ResponseEntity<?> downloadProof(@PathVariable String filename) {
+        try {
+            InputStream inputStream = service.getProof(filename);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(new InputStreamResource(inputStream));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Comprovante não encontrado: " + e.getMessage());
+        }
     }
 }
