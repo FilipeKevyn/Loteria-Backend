@@ -70,13 +70,13 @@ public class PoolService {
         Pool pool = repository.findById(poolId)
                 .orElseThrow(() -> new RuntimeException("Bolão não encontrado"));
 
-        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+        String fileName = UUID.randomUUID().toString();
 
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket("proof")
                         .object(fileName)
-                        .stream(file.getInputStream(), file.getSize(), -1)
+                        .stream(file.getInputStream(), file.getInputStream().available(), -1)
                         .contentType(file.getContentType())
                         .build()
         );
