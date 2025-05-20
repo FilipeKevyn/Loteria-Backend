@@ -105,13 +105,13 @@ public class PoolController {
     }
 
     @PostMapping("/{id}/proof")
-    public ResponseEntity<Pool> uploadProof(@PathVariable UUID id,
+    public ResponseEntity<?> uploadProof(@PathVariable UUID id,
                                                @RequestParam("file") MultipartFile file) {
         try {
             Pool pool = service.uploadProof(id, file);
             return ResponseEntity.ok(pool);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
