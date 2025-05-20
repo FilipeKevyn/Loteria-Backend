@@ -41,6 +41,7 @@ public class Pool implements Serializable {
     }
 
     public Pool(PoolDTO pool) {
+        this.id = UUID.randomUUID();
         this.title = pool.title();
         this.type = pool.type();
     }
@@ -98,8 +99,8 @@ public class Pool implements Serializable {
         this.users = users;
     }
 
-    public void setBetNumbers(Set<Number> betNumbers) {
-        this.numbers = betNumbers;
+    public void setNumbers(Set<Number> numbers) {
+        this.numbers = numbers;
     }
 
     public Set<Bet> getBets() {
