@@ -22,34 +22,34 @@ import java.util.UUID;
 @RequestMapping(value = "/contest")
 @Tag(name = "Contest")
 public class ContestController {
-//    @Autowired
-//    private ContestService contestService;
-//
-//    @Autowired
-//    private ResultService resultService;
-//
-//    @CrossOrigin(origins = "*", allowedHeaders = "*")
-//    @PostMapping(value = "/{poolId}")
-//    @Operation(
-//            summary = "Add contest to pool",
-//            tags = {"Contest"},
-//            responses = {
-//                @ApiResponse(description = "Success", responseCode = "200", content = @Content),
-//                @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-//                @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-//                @ApiResponse(description = "Not Found", responseCode = "404", content = {
-//                        @Content(
-//                                array = @ArraySchema(schema = @Schema(implementation = RestErrorMensage.class))
-//                        )
-//                }),
-//                @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
-//            }
-//    )
-//    public ResponseEntity<ContestDTO> create(@PathVariable UUID poolId, @RequestBody ContestDTO obj){
-//        Contest contest = new Contest(obj);
-//        contestService.setContestInPool(poolId, contest);
-//        resultService.verifyAllBets(poolId);
-//        ContestDTO contestDTO = new ContestDTO(contest.getCodeContest(), contest.getDrawnNumbers());
-//        return ResponseEntity.status(HttpStatus.CREATED).body(contestDTO);
-//    }
+    @Autowired
+    private ContestService contestService;
+
+    @Autowired
+    private ResultService resultService;
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping(value = "/{poolId}")
+    @Operation(
+            summary = "Add contest to pool",
+            tags = {"Contest"},
+            responses = {
+                @ApiResponse(description = "Success", responseCode = "200", content = @Content),
+                @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                @ApiResponse(description = "Not Found", responseCode = "404", content = {
+                        @Content(
+                                array = @ArraySchema(schema = @Schema(implementation = RestErrorMensage.class))
+                        )
+                }),
+                @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            }
+    )
+    public ResponseEntity<ContestDTO> create(@PathVariable String poolId, @RequestBody ContestDTO obj){
+        Contest contest = new Contest(obj);
+        contestService.setContestInPool(poolId, contest);
+        resultService.verifyAllBets(poolId);
+        ContestDTO contestDTO = new ContestDTO(contest.getCodeContest(), contest.getDrawnNumbers());
+        return ResponseEntity.status(HttpStatus.CREATED).body(contestDTO);
+    }
 }
