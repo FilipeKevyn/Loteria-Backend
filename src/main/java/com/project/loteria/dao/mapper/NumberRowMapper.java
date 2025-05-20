@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.UUID;
 
 public class NumberRowMapper implements RowMapper<Number> {
@@ -21,7 +22,12 @@ public class NumberRowMapper implements RowMapper<Number> {
         pool.setId(UUID.fromString(rs.getString("pool_id")));
 
         Contest contest = new Contest();
-        contest.setId(UUID.fromString(rs.getString("contest_id")));
+        UUID contestId = Optional.ofNullable(rs.getString("contest_id"))
+                .filter(s -> !s.isBlank())
+                .map(UUID::fromString)
+                .orElse(null);
+
+        contest.setId(contestId);
 
         number.setPool(pool);
         number.setContest(contest);
