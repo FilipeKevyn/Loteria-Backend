@@ -86,15 +86,11 @@ public class BetDAOImpl implements BetDAO {
 
         simpleJdbcInsert.execute(values);
 
-        System.out.println("\n ***  BET INSERIDA  *** \n");
-
         return bet;
     }
 
     @Override
     public Bet save(Bet bet) {
-        System.out.println("\n ***  ATUALIZANDO BET  *** \n");
-
         String query = "UPDATE tb_bet SET value_invested = ?, matched = ? WHERE id = ?";
         jdbcTemplate.update(query, bet.getValueInvested(), bet.getMatched(), bet.getId());
 
@@ -119,5 +115,16 @@ public class BetDAOImpl implements BetDAO {
     public List<Bet> findAll() {
         String query = "SELECT * FROM tb_bet";
         return jdbcTemplate.query(query, new BetRowMapper());
+    }
+
+    public int countMatchedNumbersByBet(UUID betId){
+        String query = """
+            SELECT COUNT(*)
+            FROM tb_numbers_bet nb
+            JOIN tb_number n ON nb.number_id = n.id
+            WHERE nb.bet_id = ? AND n.matched = true
+        """;
+
+        return jdbcTemplate.queryForObject(query, Integer.class, betId);
     }
 }

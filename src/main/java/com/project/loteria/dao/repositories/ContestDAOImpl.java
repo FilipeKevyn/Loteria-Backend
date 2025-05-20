@@ -75,14 +75,14 @@ public class ContestDAOImpl implements ContestDAO {
         catch (EmptyResultDataAccessException e){
         }
 
-        String insertContest = "INSERT INTO tb_contest (id, poo_id) VALUES (?,?)";
+        String insertContest = "INSERT INTO tb_contest (id, pool_id) VALUES (?,?)";
         UUID newContestId = UUID.randomUUID();
         jdbcTemplate.update(insertContest, newContestId, contest.getPool().getId());
 
         String insertNumber = "INSERT INTO tb_number (id, number, matched, contest_id, pool_id) VALUES (?, ?, ?, ?, ?)";
         for (Integer num : contest.getDrawnNumbers()){
             UUID numberId = UUID.randomUUID();
-            jdbcTemplate.update(insertNumber, numberId, num, false, contest.getId(), contest.getPool().getId());
+            jdbcTemplate.update(insertNumber, numberId, num, true, contest.getId(), contest.getPool().getId());
         }
 
         contest.setId(newContestId);
