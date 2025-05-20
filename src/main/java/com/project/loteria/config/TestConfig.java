@@ -34,17 +34,7 @@ public class TestConfig implements CommandLineRunner {
         poolrepository.insert(pool);
         System.out.println("Adicionou o pool");
 
-        Bet bet = new Bet();
-        bet.setId(UUID.randomUUID());
-        bet.setValueInvested(100);
-        bet.setPool(pool);
-        betrepository.insert(bet);
-        System.out.println("Adicionou a bet ao pool");
-
-        Contest contest = new Contest();
-        contest.setId(UUID.randomUUID());
-        contest.setPool(pool);
-
-        contestRepository.insert(contest);
+        Pool poolSave = poolrepository.findById(pool.getId().toString());
+        System.out.println(poolSave.toString());
     }
 }
