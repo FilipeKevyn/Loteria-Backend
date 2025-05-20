@@ -1,12 +1,8 @@
 package com.project.loteria.dao.mapper;
 
-import com.fasterxml.jackson.annotation.JacksonInject;
-import com.project.loteria.dao.repositories.PoolDAOImpl;
 import com.project.loteria.entities.Bet;
 import com.project.loteria.entities.Pool;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,11 +14,10 @@ public class BetRowMapper implements RowMapper<Bet> {
     @Override
     public Bet mapRow(ResultSet rs, int rowNum) throws SQLException {
         Bet bet = new Bet();
-
-        bet.setId(UUID.fromString(rs.getString("id")));
+        bet.setId(UUID.fromString(rs.getString("bet_id")));
         bet.setValueInvested(rs.getDouble("value_invested"));
-        bet.setMatched(rs.getInt("matched"));
         bet.setType(rs.getString("game_type"));
+        bet.setMatched(rs.getInt("matched"));
 
         Pool pool = new Pool();
         pool.setId(UUID.fromString(rs.getString("pool_id")));
