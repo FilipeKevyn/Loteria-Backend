@@ -20,11 +20,11 @@ public class Number {
 
     private Contest contest;
 
-    public Number(UUID id, Pool pool, Bet bet, int number, Contest contest) {
+    public Number(UUID id, Pool pool, int number, boolean matched, Contest contest) {
         this.id = id;
         this.pool = pool;
         this.number = number;
-        bets.add(bet);
+        this.matched = matched;
         this.contest = contest;
     }
 
@@ -35,6 +35,13 @@ public class Number {
         bets.add(bet);
         this.contest = contest;
         this.matched = numberMatched;
+    }
+
+    public Number(Pool pool, Bet bet, int number){
+        this.id = UUID.randomUUID();
+        this.pool = pool;
+        bets.add(bet);
+        this.number = number;
     }
 
     public Number() {
