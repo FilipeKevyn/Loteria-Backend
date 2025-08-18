@@ -15,4 +15,7 @@ public interface BetRepository extends JpaRepository<Bet, UUID> {
 
     @Query("SELECT COUNT(bn) FROM Number bn JOIN bn.bets b WHERE b = :bet AND bn.matched = true")
     int countMatchedNumbersByBet(@Param("bet") Bet bet);
+
+    @Query(value = "SELECT most_repeated_number(:poolId", nativeQuery = true)
+    Integer findMostRepeatedNumber(@Param("poolId") Long poolId);
 }

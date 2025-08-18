@@ -43,17 +43,21 @@ public class BetService {
         return betRepository.findById(id).orElseThrow(() -> new BetNotFoundException());
     }
 
-    public Page<Bet> findBetsByPool(UUID poolId, Pageable pageable){
+    public Page<Bet> findBetsByPool(Long poolId, Pageable pageable){
         Pool pool = poolService.findById(poolId);
         return betRepository.findByPool(pool, pageable);
     }
 
     @Transactional
-    public void addBetToPool(UUID poolId, Bet bet){
+    public void addBetToPool(Long poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
 
         poolService.addBetToPool(pool, betSaved);
+
+        Integer mostRepeated = betRepository.findMostRepeatedNumber(poolId);
+        pool.setMostRepeatedNumber(mostRepeated);
+        poolService.update(pool);
     }
 
     public Bet prepareBet(Bet bet, Pool pool){
