@@ -2,11 +2,8 @@ package com.project.loteria.controller;
 
 import com.project.loteria.dtos.ContestDTO;
 import com.project.loteria.entities.Contest;
-import com.project.loteria.entities.Pool;
 import com.project.loteria.exceptions.handler.RestErrorMensage;
 import com.project.loteria.service.ContestService;
-import com.project.loteria.service.PoolService;
-import com.project.loteria.service.ResultService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/contest")
@@ -44,7 +39,7 @@ public class ContestController {
                 @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<ContestDTO> create(@PathVariable UUID poolId, @RequestBody ContestDTO obj){
+    public ResponseEntity<ContestDTO> create(@PathVariable Long poolId, @RequestBody ContestDTO obj){
         Contest contest = new Contest(obj);
         contestService.insertContestInPool(poolId, contest);
         ContestDTO contestDTO = new ContestDTO(contest.getCodeContest(), contest.getDrawnNumbers());
