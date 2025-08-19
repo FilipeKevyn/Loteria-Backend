@@ -94,9 +94,3 @@ cd seu-repositorio
 ```sh
 docker-compose up -d
 ```
-
-## 🌐 Interface Gráfica
-
-Para ter acesso a interface gráfica do projeto, basta acessar o repositório e rodar localmente junto desta aplicação.
-
-👉 [Acesse o repositório](https://github.com/Thoomaz/loteria-frontend)
