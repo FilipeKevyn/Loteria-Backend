@@ -71,8 +71,8 @@ public class BetController {
             })
     public ResponseEntity<BetDTO> create(@PathVariable Long poolId, @RequestBody BetDTO obj){
         Bet bet = new Bet(obj);
-        betService.addBetToPool(poolId, bet);
-        BetDTO betDTO = new BetDTO(bet.getBetNumbersArray(), bet.getGameType());
+        Integer mostRepeatNumber = betService.addBetToPool(poolId, bet);
+        BetDTO betDTO = new BetDTO(bet.getBetNumbersArray(), bet.getGameType(), mostRepeatNumber);
         return ResponseEntity.status(HttpStatus.CREATED).body(betDTO);
     }
 

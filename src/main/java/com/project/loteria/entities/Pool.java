@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tb_pool")
 public class Pool implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)

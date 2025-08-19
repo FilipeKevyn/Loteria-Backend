@@ -49,15 +49,16 @@ public class BetService {
     }
 
     @Transactional
-    public void addBetToPool(Long poolId, Bet bet){
+    public Integer addBetToPool(Long poolId, Bet bet){
         Pool pool = poolService.findById(poolId);
         Bet betSaved = prepareBet(bet, pool);
 
-        poolService.addBetToPool(pool, betSaved);
-
         Integer mostRepeated = betRepository.findMostRepeatedNumber(poolId);
         pool.setMostRepeatedNumber(mostRepeated);
-        poolService.update(pool);
+
+        poolService.addBetToPool(pool, betSaved);
+
+        return mostRepeated;
     }
 
     public Bet prepareBet(Bet bet, Pool pool){

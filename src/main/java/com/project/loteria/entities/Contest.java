@@ -11,8 +11,8 @@ import java.util.*;
 @Table(name = "tb_contest")
 public class Contest implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private List<Integer> drawnNumbers = new ArrayList<>();
     private String codeContest;
 
@@ -25,7 +25,7 @@ public class Contest implements Serializable {
 
     public Contest(){}
 
-    public Contest(UUID id, List<Integer> drawnNumbers, String codeContest) {
+    public Contest(Long id, List<Integer> drawnNumbers, String codeContest) {
         this.id = id;
         this.drawnNumbers = drawnNumbers;
         this.codeContest = codeContest;
@@ -36,11 +36,11 @@ public class Contest implements Serializable {
         this.codeContest = msContestDTO.codeContest();
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
